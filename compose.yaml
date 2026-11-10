@@ -1,0 +1,37 @@
+# La stack de développement. Versions figées : les mêmes qu'en production.
+name: hackathon
+
+services:
+  # Le poste de travail : VS Code s'y attache, on y lance l'API et le front
+  dev:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    volumes:
+      - .:/workspace:cached
+    
+    extra_hosts:
+      # Rend l'hôte joignable sous Linux (Docker Desktop le fait déjà)
+      - host.docker.internal:host-gateway
+    
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    volumes:
+      # Les données, dans un dossier du projet (ignoré par git)
+      - ./db/data:/var/lib/postgresql/data
+      # Schéma et données de test, joués au premier démarrage
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U app -d app']
+      interval: 5s
+      timeout: 3s
+      retries: 10
