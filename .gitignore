@@ -2,3 +2,9 @@
 db/data/
 db/data/
 db/data/
+__pycache__/
+.venv/
+venv/
+*.key
+.DS_Store
+data/sorties/
