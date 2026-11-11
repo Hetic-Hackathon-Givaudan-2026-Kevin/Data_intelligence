@@ -100,7 +100,7 @@
       "etape": "Frein",
       "question": "Qu'est-ce qui limite aujourd'hui votre montée en gamme : le goût, le prix ou l'image ?",
       "pourquoi": "Révèle la contrainte principale, souvent le budget.",
-      "champ_brief": "budget_matiere_eur_par_litre",
+      "champ_brief": "contraintes",
       "origine": "Amir",
       "statut": "Suggérée",
       "validee_par": null,
