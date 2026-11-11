@@ -1,0 +1,326 @@
+[
+  {
+    "id": "Q-01",
+    "opportunityId": "OPP-01",
+    "text": "Quels nouveaux segments de boissons envisagez-vous de développer dans les prochains mois ?",
+    "justification": "Comprendre les ambitions du client et repérer de nouveaux besoins.",
+    "status": "validated",
+    "step": "Ambition",
+    "briefField": "marche"
+  },
+  {
+    "id": "Q-02",
+    "opportunityId": "OPP-01",
+    "text": "Qu'est-ce qui freine aujourd'hui le développement de votre gamme : le goût, le coût ou la réglementation ?",
+    "justification": "Le frein cité montre où Givaudan peut aider.",
+    "status": "validated",
+    "step": "Frein",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-03",
+    "opportunityId": "OPP-01",
+    "text": "Si vous lanciez une boisson fonctionnelle, à quelle échéance pourriez-vous faire un premier test ?",
+    "justification": "Teste l'intérêt réel et donne le délai du brief.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "echeance_lancement"
+  },
+  {
+    "id": "Q-04",
+    "opportunityId": "OPP-02",
+    "text": "Quels engagements environnementaux avez-vous pris pour vos snacks, et pour quand ?",
+    "justification": "Un engagement daté révèle l'urgence du projet.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "echeance_lancement"
+  },
+  {
+    "id": "Q-05",
+    "opportunityId": "OPP-02",
+    "text": "Qu'est-ce qui vous empêche de rendre vos recettes plus responsables sans changer le goût ?",
+    "justification": "Givaudan peut garder le goût avec des ingrédients plus durables.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-06",
+    "opportunityId": "OPP-02",
+    "text": "Quelle place voulez-vous donner aux arômes d'origine naturelle dans vos recettes ?",
+    "justification": "Teste l'intérêt pour une offre Givaudan sans réponse oui/non.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-07",
+    "opportunityId": "OPP-03",
+    "text": "Quels segments premium voulez-vous développer, et pour quels consommateurs ?",
+    "justification": "Précise la cible de la montée en gamme.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "marche"
+  },
+  {
+    "id": "Q-08",
+    "opportunityId": "OPP-03",
+    "text": "Qu'est-ce qui limite aujourd'hui votre montée en gamme : le goût, le prix ou l'image ?",
+    "justification": "Révèle la contrainte principale, souvent le budget.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-09",
+    "opportunityId": "OPP-03",
+    "text": "Quel produit du marché incarne pour vous le goût premium, et que voudriez-vous faire de différent ?",
+    "justification": "Une référence concrète vaut mieux que dix adjectifs.",
+    "status": "validated",
+    "step": "Ouverture",
+    "briefField": "insights_concurrence"
+  },
+  {
+    "id": "Q-10",
+    "opportunityId": "OPP-04",
+    "text": "Quel niveau de réduction du sucre visez-vous, sur quelles gammes et pour quand ?",
+    "justification": "Fixe l'objectif chiffré et le calendrier.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-11",
+    "opportunityId": "OPP-04",
+    "text": "Qu'est-ce qui bloque aujourd'hui cette réduction : le goût, la texture ou le coût ?",
+    "justification": "Le blocage oriente vers la bonne solution de goût.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-12",
+    "opportunityId": "OPP-04",
+    "text": "Comment vos consommateurs ont-ils réagi à vos dernières recettes allégées ?",
+    "justification": "Révèle l'enjeu gustatif réel sans vendre trop tôt.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-13",
+    "opportunityId": "OPP-05",
+    "text": "Quelle place voulez-vous donner aux protéines végétales dans votre gamme d'ici deux ans ?",
+    "justification": "Mesure l'ambition du client et l'horizon du projet végétal.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "objectif"
+  },
+  {
+    "id": "Q-14",
+    "opportunityId": "OPP-05",
+    "text": "Qu'est-ce qui retient encore vos consommateurs face aux produits végétaux ?",
+    "justification": "Si le goût est en cause, c'est là que Givaudan peut apporter quelque chose.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-15",
+    "opportunityId": "OPP-05",
+    "text": "Quels allergènes ou ingrédients devez-vous exclure d'une recette végétale ?",
+    "justification": "Remplit les contraintes du brief avant tout essai.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-16",
+    "opportunityId": "OPP-06",
+    "text": "Pour quelles occasions de consommation voulez-vous lancer une boisson sans alcool ?",
+    "justification": "L'occasion (apéritif, repas, sport) définit le marché visé.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "marche"
+  },
+  {
+    "id": "Q-17",
+    "opportunityId": "OPP-06",
+    "text": "Qu'est-ce qui manque le plus aux boissons sans alcool que vous avez goûtées ?",
+    "justification": "Le manque cité (corps, amertume, complexité) oriente le profil de goût.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-18",
+    "opportunityId": "OPP-06",
+    "text": "Dans quelle fourchette de budget matière par litre ce projet doit-il rester ?",
+    "justification": "Chiffre le budget du brief pour proposer des pistes réalistes.",
+    "status": "validated",
+    "step": "Ouverture",
+    "briefField": "budget_matiere_eur_par_litre"
+  },
+  {
+    "id": "Q-19",
+    "opportunityId": "OPP-07",
+    "text": "Quel objectif de réduction du sel vous êtes-vous fixé ?",
+    "justification": "Fixe l'objectif chiffré du projet.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "objectif"
+  },
+  {
+    "id": "Q-20",
+    "opportunityId": "OPP-07",
+    "text": "Que perdent vos recettes en goût quand vous baissez le sel ?",
+    "justification": "Fait décrire la perte de goût que la solution devra compenser.",
+    "status": "validated",
+    "step": "Frein",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-21",
+    "opportunityId": "OPP-07",
+    "text": "À quelle date ces recettes allégées en sel doivent-elles être en rayon ?",
+    "justification": "Donne l'échéance de lancement du brief.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "echeance_lancement"
+  },
+  {
+    "id": "Q-22",
+    "opportunityId": "OPP-08",
+    "text": "Que signifie pour vous une liste d'ingrédients « propre » ?",
+    "justification": "Chaque client a sa définition du clean label : elle fixe l'objectif.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "objectif"
+  },
+  {
+    "id": "Q-23",
+    "opportunityId": "OPP-08",
+    "text": "Quels ingrédients ne voulez-vous plus voir sur vos étiquettes ?",
+    "justification": "Remplit directement la liste des ingrédients interdits.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-24",
+    "opportunityId": "OPP-08",
+    "text": "Quels concurrents vous semblent en avance sur le naturel, et sur quoi ?",
+    "justification": "Un repère concurrent concret vaut mieux qu'une intention vague.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "insights_concurrence"
+  },
+  {
+    "id": "Q-25",
+    "opportunityId": "OPP-09",
+    "text": "Quels sportifs voulez-vous toucher avec cette gamme ?",
+    "justification": "Précise le marché visé : amateurs, endurance ou musculation.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "marche"
+  },
+  {
+    "id": "Q-26",
+    "opportunityId": "OPP-09",
+    "text": "Que reprochent vos consommateurs au goût des produits protéinés actuels ?",
+    "justification": "Fait nommer l'arrière-goût à masquer, cœur du profil de goût.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-27",
+    "opportunityId": "OPP-09",
+    "text": "Quelles règles de formulation devez-vous respecter : sans sucre ajouté, sans lactose, autre ?",
+    "justification": "Remplit le régime et les allergènes exclus du brief.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-28",
+    "opportunityId": "OPP-10",
+    "text": "Quel bénéfice voulez-vous mettre en avant avec cette gamme ?",
+    "justification": "Clarifie l'objectif et le positionnement du produit.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "objectif"
+  },
+  {
+    "id": "Q-29",
+    "opportunityId": "OPP-10",
+    "text": "Qu'est-ce qui limite aujourd'hui ce que vous pouvez dire sur le bien-être digestif ?",
+    "justification": "Fait parler des contraintes réglementaires avant de formuler.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "contraintes"
+  },
+  {
+    "id": "Q-30",
+    "opportunityId": "OPP-10",
+    "text": "Quel goût vos consommateurs attendent-ils d'un produit bon pour la digestion ?",
+    "justification": "Relie le bénéfice au profil de goût, sans rien promettre.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-31",
+    "opportunityId": "OPP-11",
+    "text": "Quels jeunes consommateurs voulez-vous toucher avec de nouvelles saveurs ?",
+    "justification": "Précise le marché visé avant de parler de goût.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "marche"
+  },
+  {
+    "id": "Q-32",
+    "opportunityId": "OPP-11",
+    "text": "Jusqu'où vos consommateurs acceptent-ils d'être surpris par une saveur ?",
+    "justification": "Mesure le risque gustatif acceptable.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "profil_gout"
+  },
+  {
+    "id": "Q-33",
+    "opportunityId": "OPP-11",
+    "text": "Quelles saveurs avez-vous vues réussir chez vos concurrents ou à l'étranger ?",
+    "justification": "Les réussites observées nourrissent les insights concurrence du brief.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "insights_concurrence"
+  },
+  {
+    "id": "Q-34",
+    "opportunityId": "OPP-12",
+    "text": "Qu'attendez-vous de la relance de cette gamme dans les douze prochains mois ?",
+    "justification": "Fixe l'objectif de la relance : volume, image ou nouveaux clients.",
+    "status": "suggested",
+    "step": "Ambition",
+    "briefField": "objectif"
+  },
+  {
+    "id": "Q-35",
+    "opportunityId": "OPP-12",
+    "text": "D'après vous, pourquoi cette gamme a-t-elle perdu des consommateurs ?",
+    "justification": "Le diagnostic du client dit ce que la relance doit corriger.",
+    "status": "suggested",
+    "step": "Frein",
+    "briefField": "marche"
+  },
+  {
+    "id": "Q-36",
+    "opportunityId": "OPP-12",
+    "text": "À quelle date la nouvelle version doit-elle être prête pour vos acheteurs ?",
+    "justification": "Donne l'échéance de lancement, souvent liée aux négociations annuelles avec la distribution.",
+    "status": "suggested",
+    "step": "Ouverture",
+    "briefField": "echeance_lancement"
+  }
+]

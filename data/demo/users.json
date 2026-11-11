@@ -1,0 +1,12 @@
+[
+  {
+    "id": "U-JUNIOR",
+    "name": "Commercial Junior (démo)",
+    "role": "junior"
+  },
+  {
+    "id": "U-SENIOR",
+    "name": "Commercial Senior (démo)",
+    "role": "senior"
+  }
+]

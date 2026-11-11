@@ -1,0 +1,218 @@
+[
+  {
+    "id": "OPP-01",
+    "clientId": "C-01",
+    "title": "Boissons fonctionnelles",
+    "category": "Santé et bien-être",
+    "priority": "high",
+    "estimatedRevenue": 1800000,
+    "description": "Le client envisage une gamme de boissons à bénéfice fonctionnel.",
+    "triggers": [
+      "Intérêt exprimé pour une nouvelle catégorie",
+      "Croissance du marché : +8 %",
+      "Lancement concurrent récent"
+    ],
+    "recommendedQuestions": [
+      "Q-01",
+      "Q-02",
+      "Q-03"
+    ]
+  },
+  {
+    "id": "OPP-02",
+    "clientId": "C-01",
+    "title": "Snacks écoresponsables",
+    "category": "Durabilité",
+    "priority": "high",
+    "estimatedRevenue": 1200000,
+    "description": "Le client veut rendre ses snacks plus responsables sans perdre en goût.",
+    "triggers": [
+      "Engagement environnemental annoncé",
+      "Demande des distributeurs : recettes plus durables",
+      "Croissance du marché : +5 %"
+    ],
+    "recommendedQuestions": [
+      "Q-04",
+      "Q-05",
+      "Q-06"
+    ]
+  },
+  {
+    "id": "OPP-03",
+    "clientId": "C-01",
+    "title": "Marché premium",
+    "category": "Premiumisation",
+    "priority": "medium",
+    "estimatedRevenue": 900000,
+    "description": "Le client étudie une montée en gamme sur une partie de son offre.",
+    "triggers": [
+      "Montée en gamme évoquée en RDV",
+      "Croissance du segment premium : +6 %"
+    ],
+    "recommendedQuestions": [
+      "Q-07",
+      "Q-08",
+      "Q-09"
+    ]
+  },
+  {
+    "id": "OPP-04",
+    "clientId": "C-02",
+    "title": "Réduction du sucre",
+    "category": "Reformulation",
+    "priority": "high",
+    "estimatedRevenue": 1100000,
+    "description": "Le client doit réduire le sucre de ses recettes en gardant leur goût.",
+    "triggers": [
+      "Objectif de réduction du sucre annoncé",
+      "Évolution réglementaire attendue",
+      "Retours consommateurs sur le goût trop sucré"
+    ],
+    "recommendedQuestions": [
+      "Q-10",
+      "Q-11",
+      "Q-12"
+    ]
+  },
+  {
+    "id": "OPP-05",
+    "clientId": "C-03",
+    "title": "Protéines végétales",
+    "category": "Végétal",
+    "priority": "medium",
+    "estimatedRevenue": 650000,
+    "description": "Le client veut élargir sa gamme de produits à base de protéines végétales.",
+    "triggers": [
+      "Croissance du marché végétal : +10 %",
+      "Intérêt exprimé pour une gamme végétale"
+    ],
+    "recommendedQuestions": [
+      "Q-13",
+      "Q-14",
+      "Q-15"
+    ]
+  },
+  {
+    "id": "OPP-06",
+    "clientId": "C-04",
+    "title": "Boissons sans alcool",
+    "category": "Nouvelle catégorie",
+    "priority": "high",
+    "estimatedRevenue": 750000,
+    "description": "Le client prépare une boisson sans alcool pour de nouvelles occasions de consommation.",
+    "triggers": [
+      "Croissance du marché sans alcool : +12 %",
+      "Projet de nouvelle boisson évoqué en RDV",
+      "Demande des distributeurs : alternatives sans alcool"
+    ],
+    "recommendedQuestions": [
+      "Q-16",
+      "Q-17",
+      "Q-18"
+    ]
+  },
+  {
+    "id": "OPP-07",
+    "clientId": "C-05",
+    "title": "Réduction du sel",
+    "category": "Reformulation",
+    "priority": "medium",
+    "estimatedRevenue": 500000,
+    "description": "Le client doit baisser le sel de ses plats sans les rendre fades.",
+    "triggers": [
+      "Objectif de réduction du sel annoncé",
+      "Évolution réglementaire attendue"
+    ],
+    "recommendedQuestions": [
+      "Q-19",
+      "Q-20",
+      "Q-21"
+    ]
+  },
+  {
+    "id": "OPP-08",
+    "clientId": "C-05",
+    "title": "Clean label",
+    "category": "Naturalité",
+    "priority": "watch",
+    "estimatedRevenue": 400000,
+    "description": "Le client souhaite des listes d'ingrédients plus courtes et plus lisibles.",
+    "triggers": [
+      "Intérêt exprimé pour des étiquettes plus courtes"
+    ],
+    "recommendedQuestions": [
+      "Q-22",
+      "Q-23",
+      "Q-24"
+    ]
+  },
+  {
+    "id": "OPP-09",
+    "clientId": "C-06",
+    "title": "Nutrition sportive",
+    "category": "Santé et bien-être",
+    "priority": "watch",
+    "estimatedRevenue": 350000,
+    "description": "Le client cherche à améliorer le goût de ses produits protéinés.",
+    "triggers": [
+      "Croissance de la nutrition sportive : +7 %"
+    ],
+    "recommendedQuestions": [
+      "Q-25",
+      "Q-26",
+      "Q-27"
+    ]
+  },
+  {
+    "id": "OPP-10",
+    "clientId": "C-02",
+    "title": "Bien-être digestif",
+    "category": "Santé et bien-être",
+    "priority": "medium",
+    "estimatedRevenue": 800000,
+    "description": "Le client veut développer une gamme orientée bien-être digestif.",
+    "triggers": [
+      "Intérêt exprimé pour des produits bien-être",
+      "Croissance du marché : +4 %"
+    ],
+    "recommendedQuestions": [
+      "Q-28",
+      "Q-29",
+      "Q-30"
+    ]
+  },
+  {
+    "id": "OPP-11",
+    "clientId": "C-01",
+    "title": "Saveurs du monde pour les jeunes",
+    "category": "Innovation goût",
+    "priority": "watch",
+    "estimatedRevenue": 600000,
+    "description": "Le client veut attirer les jeunes consommateurs avec des saveurs du monde.",
+    "triggers": [
+      "Succès des saveurs du monde chez les 18-25 ans"
+    ],
+    "recommendedQuestions": [
+      "Q-31",
+      "Q-32",
+      "Q-33"
+    ]
+  },
+  {
+    "id": "OPP-12",
+    "clientId": "C-07",
+    "title": "Relance d'une gamme vieillissante",
+    "category": "Relance de gamme",
+    "priority": "watch",
+    "estimatedRevenue": 300000,
+    "description": "Le client veut relancer une gamme dont les ventes baissent.",
+    "triggers": [
+      "Baisse des ventes de la gamme : -6 %"
+    ],
+    "recommendedQuestions": [
+      "Q-34",
+      "Q-35",
+      "Q-36"
+    ]
+  }
+]

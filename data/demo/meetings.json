@@ -1,0 +1,24 @@
+[
+  {
+    "id": "M-01",
+    "clientId": "C-01",
+    "opportunityId": "OPP-01",
+    "date": "2026-10-20",
+    "questionsAsked": [
+      "Q-01",
+      "Q-02",
+      "Q-03"
+    ],
+    "customerFeedback": "Intérêt pour une boisson fonctionnelle aux agrumes ; un premier test est envisagé au printemps.",
+    "status": "completed"
+  },
+  {
+    "id": "M-02",
+    "clientId": "C-04",
+    "opportunityId": "OPP-06",
+    "date": "2026-11-18",
+    "questionsAsked": [],
+    "customerFeedback": null,
+    "status": "planned"
+  }
+]

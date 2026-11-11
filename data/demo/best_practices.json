@@ -1,0 +1,42 @@
+[
+  {
+    "id": "BP-01",
+    "title": "Comprendre les ambitions du client",
+    "content": "Quels nouveaux segments de boissons envisagez-vous de développer dans les prochains mois ? Une question ouverte sur ses projets fait parler le client de ses priorités avant de parler produit.",
+    "author": "Commercial Senior (démo)",
+    "status": "validated",
+    "questionId": "Q-01"
+  },
+  {
+    "id": "BP-02",
+    "title": "Faire nommer le frein principal",
+    "content": "Qu'est-ce qui freine aujourd'hui le développement de votre gamme : le goût, le coût ou la réglementation ? Le frein nommé par le client montre où notre offre peut vraiment aider.",
+    "author": "Commercial Senior (démo)",
+    "status": "validated",
+    "questionId": "Q-02"
+  },
+  {
+    "id": "BP-03",
+    "title": "Demander une référence concrète",
+    "content": "Quel produit du marché incarne pour vous le goût premium, et que voudriez-vous faire de différent ? Un produit de référence cadre mieux le goût recherché qu'une liste d'adjectifs.",
+    "author": "Commercial Senior (démo)",
+    "status": "validated",
+    "questionId": "Q-09"
+  },
+  {
+    "id": "BP-04",
+    "title": "Chiffrer le budget tôt",
+    "content": "Dans quelle fourchette de budget matière par litre ce projet doit-il rester ? Un budget chiffré dès le premier RDV évite de proposer des pistes hors de portée.",
+    "author": "Commercial Senior (démo)",
+    "status": "validated",
+    "questionId": "Q-18"
+  },
+  {
+    "id": "BP-05",
+    "title": "Faire décrire la perte de goût",
+    "content": "Que perdent vos recettes en goût quand vous baissez le sel ? La perte décrite par le client donne la cible que la solution devra atteindre.",
+    "author": "Commercial Senior (démo)",
+    "status": "validated",
+    "questionId": "Q-20"
+  }
+]

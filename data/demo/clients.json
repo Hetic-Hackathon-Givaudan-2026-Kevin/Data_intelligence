@@ -1,0 +1,77 @@
+[
+  {
+    "id": "C-01",
+    "name": "Boissons Altitude",
+    "sector": "Boissons & Snacks",
+    "status": "strategic",
+    "opportunityIds": [
+      "OPP-01",
+      "OPP-02",
+      "OPP-03",
+      "OPP-11"
+    ]
+  },
+  {
+    "id": "C-02",
+    "name": "Laiterie Clairval",
+    "sector": "Produits laitiers",
+    "status": "active",
+    "opportunityIds": [
+      "OPP-04",
+      "OPP-10"
+    ]
+  },
+  {
+    "id": "C-03",
+    "name": "Verdane Foods",
+    "sector": "Produits végétaux",
+    "status": "to_develop",
+    "opportunityIds": [
+      "OPP-05"
+    ]
+  },
+  {
+    "id": "C-04",
+    "name": "Brasserie Orvane",
+    "sector": "Boissons",
+    "status": "active",
+    "opportunityIds": [
+      "OPP-06"
+    ]
+  },
+  {
+    "id": "C-05",
+    "name": "Saveurs Marcelin",
+    "sector": "Plats préparés",
+    "status": "active",
+    "opportunityIds": [
+      "OPP-07",
+      "OPP-08"
+    ]
+  },
+  {
+    "id": "C-06",
+    "name": "Vitalpas Nutrition",
+    "sector": "Nutrition sportive",
+    "status": "to_develop",
+    "opportunityIds": [
+      "OPP-09"
+    ]
+  },
+  {
+    "id": "C-07",
+    "name": "Confiserie Belmonde",
+    "sector": "Confiserie",
+    "status": "to_develop",
+    "opportunityIds": [
+      "OPP-12"
+    ]
+  },
+  {
+    "id": "C-08",
+    "name": "Maison Ilvane",
+    "sector": "Cosmétique",
+    "status": "active",
+    "opportunityIds": []
+  }
+]
