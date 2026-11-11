@@ -37,7 +37,11 @@ SEPARATEUR_GRILLE = ";"  # colonne questions_proposees de data/eval/grille_fiabi
 
 # Déduction de l'opportunité à partir du brief
 CHAMPS_POUR_OPPORTUNITE = ["objectif", "marche", "profil_gout"]
-MOTS_VIDES = {"de", "des", "du", "d", "la", "le", "les", "l", "un", "une", "pour", "et", "en", "au", "aux"}
+MOTS_VIDES = {
+    "de", "des", "du", "d", "la", "le", "les", "l", "un", "une", "pour", "et", "en", "au", "aux",
+    # présents dans presque tous les briefs : faussaient le choix (ex. « marché » -> OPP-03)
+    "marche", "gamme",
+}
 MOTS_GARDES_AVEC_S = {"sans"}  # « sans » est gardé tel quel (utile pour « sans alcool »)
 
 

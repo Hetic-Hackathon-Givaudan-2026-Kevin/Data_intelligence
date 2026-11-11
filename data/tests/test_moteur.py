@@ -129,6 +129,14 @@ def test_aucune_opportunite_sans_mot_reconnu():
     assert moteur.deduire_opportunite(brief) == (None, [])
 
 
+def test_marche_et_gamme_ne_comptent_pas_pour_l_opportunite():
+    # Avant le correctif : « marché » donnait OPP-03 (Marché premium), « gamme » OPP-12.
+    brief = {"brief": {"objectif": "Nouvelle gamme", "marche": "Marché français, grande distribution"}}
+    assert moteur.deduire_opportunite(brief) == (None, [])
+    assert "marche" not in moteur.mots_significatifs("Marché premium")
+    assert "gamme" not in moteur.mots_significatifs("Relance d'une gamme vieillissante")
+
+
 def test_champ_non_renseigne_hors_champs_manquants_est_ajoute():
     brief = {"brief": {"objectif": "non renseigné", "marche": "France", "contraintes": {"regime": "Non renseigné"}},
              "incertitudes": {"champs_manquants": ["brief.profil_gout"]}}
