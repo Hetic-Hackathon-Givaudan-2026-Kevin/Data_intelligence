@@ -1,0 +1,50 @@
+{
+  "version_schema": "1.0",
+  "note_id": "string",
+  "type_note": "brief | suivi_commande | hors_sujet | incomplete",
+  "rdv": {
+    "date": "AAAA-MM-JJ ou non renseigné",
+    "client": "string ou non renseigné",
+    "interlocuteurs": ["string"]
+  },
+  "alertes_prioritaires": [
+    {
+      "categorie": "date_modifiee | budget | conflit | reglementaire | sans_responsable | suivi_urgent",
+      "description": "string",
+      "extrait_source": "string"
+    }
+  ],
+  "brief": {
+    "objectif": "string ou non renseigné",
+    "marche": "string ou non renseigné",
+    "profil_gout": ["string"],
+    "echeance_lancement": "AAAA-MM-JJ ou non renseigné",
+    "budget_matiere_eur_par_litre": "nombre ou non renseigné",
+    "contraintes": {
+      "regime": "string ou non renseigné",
+      "allergenes_exclus": ["string"],
+      "ingredients_interdits": ["string"]
+    }
+  },
+  "positions_contradictoires": [
+    {
+      "sujet": "string",
+      "position_a": "string",
+      "position_b": "string"
+    }
+  ],
+  "actions": [
+    {
+      "action": "string",
+      "responsable": "string ou non renseigné",
+      "echeance": "AAAA-MM-JJ ou non renseigné"
+    }
+  ],
+  "insights_concurrence": ["string"],
+  "donnees_personnelles_ecartees": true,
+  "incertitudes": {
+    "champs_manquants": ["string"],
+    "contradictions_detectees": true,
+    "niveau_confiance": "élevé | moyen | faible"
+  }
+}
