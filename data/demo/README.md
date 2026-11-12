@@ -24,9 +24,11 @@ texte (**extension de la section 9.3**) :
 - `type: "real"` : signal de marché calculé sur Open Food Facts
   (`data/signaux/signaux_marche.json`), `source` renseignée. Il remplace
   l'ancien trigger inventé « croissance du marché » des opportunités 01, 02,
-  03, 05, 06, 09 et 10. `counted` vaut `true` seulement si la part des nouveaux
-  produits augmente entre 2023 et 2025 avec au moins 50 produits chaque année ;
-  sinon le texte précise « signal contraire » ou « indicatif ».
+  03, 05, 06, 09 et 10. Le chiffre affiché porte sur 2020→2022 (période
+  « mûre ») et est arrondi à la dizaine. `counted` vaut `true` seulement si la
+  part des nouveaux produits monte à la fois sur 2019→2022 et sur 2020→2022,
+  avec au moins 50 produits chaque année ; sinon le texte précise « signal
+  contraire » (baisse sur les deux périodes) ou « indicatif ».
 - `type: "fictional"` : signal client inventé, `source: null`, `counted: true`.
 
 ## Valeurs possibles

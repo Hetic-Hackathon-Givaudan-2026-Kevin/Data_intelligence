@@ -4,7 +4,7 @@
     "clientId": "C-01",
     "title": "Boissons fonctionnelles",
     "category": "Santé et bien-être",
-    "priority": "medium",
+    "priority": "high",
     "estimatedRevenue": 1800000,
     "description": "Le client envisage une gamme de boissons à bénéfice fonctionnel.",
     "triggers": [
@@ -15,9 +15,9 @@
         "source": null
       },
       {
-        "text": "Part des nouveaux produits boissons fonctionnelles en France : -4 % (2023→2025, Open Food Facts) — signal contraire",
+        "text": "Part des nouveaux produits boissons fonctionnelles en France : +100 % (2020→2022, Open Food Facts)",
         "type": "real",
-        "counted": false,
+        "counted": true,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
       },
       {
@@ -38,7 +38,7 @@
     "clientId": "C-01",
     "title": "Snacks écoresponsables",
     "category": "Durabilité",
-    "priority": "medium",
+    "priority": "high",
     "estimatedRevenue": 1200000,
     "description": "Le client veut rendre ses snacks plus responsables sans perdre en goût.",
     "triggers": [
@@ -55,9 +55,9 @@
         "source": null
       },
       {
-        "text": "Part des nouveaux produits snacks bio ou équitables en France : -9 % (2023→2025, Open Food Facts) — signal contraire",
+        "text": "Part des nouveaux produits snacks bio ou équitables en France : +10 % (2020→2022, Open Food Facts)",
         "type": "real",
-        "counted": false,
+        "counted": true,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
       }
     ],
@@ -83,7 +83,7 @@
         "source": null
       },
       {
-        "text": "Part des nouveaux produits AOP, AOC ou Label Rouge en France : -13 % (2023→2025, Open Food Facts) — signal contraire",
+        "text": "Part des nouveaux produits AOP, AOC ou Label Rouge en France : -30 % (2020→2022, Open Food Facts) — signal contraire",
         "type": "real",
         "counted": false,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
@@ -139,7 +139,7 @@
     "description": "Le client veut élargir sa gamme de produits à base de protéines végétales.",
     "triggers": [
       {
-        "text": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +45 % (2023→2025, Open Food Facts)",
+        "text": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +30 % (2020→2022, Open Food Facts)",
         "type": "real",
         "counted": true,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
@@ -162,14 +162,14 @@
     "clientId": "C-04",
     "title": "Boissons sans alcool",
     "category": "Nouvelle catégorie",
-    "priority": "medium",
+    "priority": "high",
     "estimatedRevenue": 750000,
     "description": "Le client prépare une boisson sans alcool pour de nouvelles occasions de consommation.",
     "triggers": [
       {
-        "text": "Part des nouveaux produits bières, vins et cocktails sans alcool en France : -25 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année",
+        "text": "Part des nouveaux produits bières, vins et cocktails sans alcool en France : +30 % (2020→2022, Open Food Facts)",
         "type": "real",
-        "counted": false,
+        "counted": true,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
       },
       {
@@ -251,9 +251,9 @@
     "description": "Le client cherche à améliorer le goût de ses produits protéinés.",
     "triggers": [
       {
-        "text": "Part des nouveaux produits de nutrition sportive en France : -37 % (2023→2025, Open Food Facts) — signal contraire",
+        "text": "Part des nouveaux produits de nutrition sportive en France : +30 % (2020→2022, Open Food Facts)",
         "type": "real",
-        "counted": false,
+        "counted": true,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
       }
     ],
@@ -268,7 +268,7 @@
     "clientId": "C-02",
     "title": "Bien-être digestif",
     "category": "Santé et bien-être",
-    "priority": "watch",
+    "priority": "medium",
     "estimatedRevenue": 800000,
     "description": "Le client veut développer une gamme orientée bien-être digestif.",
     "triggers": [
@@ -279,9 +279,9 @@
         "source": null
       },
       {
-        "text": "Part des nouveaux produits kéfirs et yaourts au bifidus en France : +12 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année",
+        "text": "Part des nouveaux produits kéfirs et yaourts au bifidus en France : +10 % (2020→2022, Open Food Facts)",
         "type": "real",
-        "counted": false,
+        "counted": true,
         "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
       }
     ],

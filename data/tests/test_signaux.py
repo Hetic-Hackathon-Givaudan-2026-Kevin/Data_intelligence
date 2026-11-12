@@ -6,6 +6,7 @@ du repo : ces tests vérifient sa cohérence interne, pas son recalcul.
 """
 
 import json
+import math
 from datetime import date
 from pathlib import Path
 
@@ -13,6 +14,7 @@ import pytest
 
 FICHIER = Path(__file__).resolve().parents[1] / "signaux" / "signaux_marche.json"
 MIN_PRODUITS = 50
+PRINCIPALE, ROBUSTESSE, RECENTE = "2020-2022", "2019-2022", "2023-2025"
 
 
 @pytest.fixture(scope="module")
@@ -21,13 +23,23 @@ def signaux():
         return json.load(fichier)
 
 
+def avec_signal(signaux):
+    return [(s["opportunite_id"], s["signal"]) for s in signaux["signaux"] if s["signal"]]
+
+
+def evolution(annees, debut, fin):
+    part = {a: annees[str(a)]["produits"] / annees[str(a)]["base"] for a in (debut, fin)}
+    return 100 * part[fin] / part[debut] - 100
+
+
 def test_source_et_licence(signaux):
     assert signaux["source"]["nom"] == "Open Food Facts"
     assert "ODbL" in signaux["source"]["licence"] and "ODbL" in signaux["licence_fichier"]
     date.fromisoformat(signaux["date_extraction"])
     date.fromisoformat(signaux["source"]["dernier_produit_ajoute"])
-    assert signaux["periode"] == {"debut": 2023, "fin": 2025}
     assert signaux["pays"] == "en:france"
+    assert set(signaux["periodes"]) == {PRINCIPALE, ROBUSTESSE, RECENTE}
+    assert "non mûr" in signaux["periodes"][RECENTE]
 
 
 def test_12_opportunites(signaux):
@@ -46,29 +58,45 @@ def test_sans_signal_explique(signaux):
 
 
 def test_chiffres_coherents(signaux):
-    for s in signaux["signaux"]:
-        g = s["signal"]
-        if g is None:
-            continue
-        annees = g["annees"]
-        assert list(annees) == ["2023", "2024", "2025"], s["opportunite_id"]
-        for v in annees.values():
+    for opp, g in avec_signal(signaux):
+        assert list(g["annees"]) == [str(a) for a in range(2019, 2026)], opp
+        for v in g["annees"].values():
             assert 0 <= v["produits"] <= v["base"]
             assert v["part_pct"] == pytest.approx(100 * v["produits"] / v["base"], abs=1e-3)
-        part = {a: v["produits"] / v["base"] for a, v in annees.items()}
-        assert g["evolution_part_pct"] == pytest.approx(100 * part["2025"] / part["2023"] - 100, abs=0.06)
-        assert g["produits_min_par_an"] == min(v["produits"] for v in annees.values())
+        for cle, p in g["periodes"].items():
+            assert cle == f"{p['debut']}-{p['fin']}"
+            assert p["evolution_part_pct"] == pytest.approx(evolution(g["annees"], p["debut"], p["fin"]), abs=0.06)
+            assert p["produits_min_par_an"] == min(g["annees"][str(a)]["produits"]
+                                                   for a in range(p["debut"], p["fin"] + 1))
+        assert "non mûr" in g["periodes"][RECENTE]["role"]
 
 
-def test_regle_de_comptage(signaux):
-    for s in signaux["signaux"]:
-        g = s["signal"]
-        if g is None:
-            continue
-        attendu = g["evolution_part_pct"] > 0 and g["produits_min_par_an"] >= MIN_PRODUITS
-        assert g["compte"] == attendu, s["opportunite_id"]
-        assert "Open Food Facts" in g["trigger"] and "2023→2025" in g["trigger"]
-        if g["produits_min_par_an"] < MIN_PRODUITS:
-            assert "indicatif" in g["trigger"]
-        elif not g["compte"]:
-            assert "signal contraire" in g["trigger"]
+def test_regle_de_robustesse(signaux):
+    for opp, g in avec_signal(signaux):
+        e_p = g["periodes"][PRINCIPALE]["evolution_part_pct"]
+        e_r = g["periodes"][ROBUSTESSE]["evolution_part_pct"]
+        assez = g["produits_min_par_an_2019_2022"] >= MIN_PRODUITS
+        assert g["produits_min_par_an_2019_2022"] == min(g["annees"][str(a)]["produits"] for a in range(2019, 2023))
+        attendu = ("compte" if assez and e_p > 0 and e_r > 0
+                   else "contraire" if assez and e_p < 0 and e_r < 0 else "indicatif")
+        assert g["statut"] == attendu, opp
+        assert g["compte"] == (attendu == "compte")
+
+
+def test_texte_et_arrondi_a_la_dizaine(signaux):
+    for opp, g in avec_signal(signaux):
+        exacte = g["periodes"][PRINCIPALE]["evolution_part_pct"]
+        assert g["evolution_affichee_pct"] % 10 == 0
+        assert g["evolution_affichee_pct"] == int(math.copysign(math.floor(abs(exacte) / 10 + 0.5) * 10, exacte))
+        assert g["trigger"].startswith("Part des nouveaux produits ")
+        assert " en France : " in g["trigger"] and "(2020→2022, Open Food Facts)" in g["trigger"]
+        pourcentage = "0 %" if g["evolution_affichee_pct"] == 0 else f"{g['evolution_affichee_pct']:+d} %"
+        assert f" : {pourcentage} (" in g["trigger"], opp
+        assert ("signal contraire" in g["trigger"]) == (g["statut"] == "contraire")
+        assert ("indicatif" in g["trigger"]) == (g["statut"] == "indicatif")
+
+
+def test_cas_valides_par_l_equipe(signaux):
+    statut = {opp: g["statut"] for opp, g in avec_signal(signaux)}
+    assert statut["OPP-03"] == "contraire"  # en baisse sur les deux périodes
+    assert statut["OPP-07"] == "indicatif"  # 2019→2022 et 2020→2022 divergent

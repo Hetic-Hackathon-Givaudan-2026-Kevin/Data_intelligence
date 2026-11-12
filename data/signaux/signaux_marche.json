@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "source": {
     "nom": "Open Food Facts",
     "url": "https://world.openfoodfacts.org/data",
@@ -9,11 +9,12 @@
   },
   "date_extraction": "2026-11-12",
   "pays": "en:france",
-  "periode": {
-    "debut": 2023,
-    "fin": 2025
+  "periodes": {
+    "2020-2022": "principale (affichée)",
+    "2019-2022": "robustesse",
+    "2023-2025": "récente : non mûr, indicatif"
   },
-  "methode": "Part des produits portant au moins un des tags parmi les produits vendus en France ajoutés dans l'année et ayant au moins une catégorie (ou un label, selon les tags). Évolution relative de la part entre 2023 et 2025. Le signal compte s'il augmente et s'il y a au moins 50 produits chaque année. Nombre de produits référencés ≠ ventes.",
+  "methode": "Part des produits portant au moins un des tags parmi les produits vendus en France ajoutés dans l'année et ayant au moins une catégorie (ou un label, selon les tags). Évolution relative de la part sur 2020→2022 (affichée, arrondie à la dizaine) et 2019→2022 (robustesse). Le signal compte si la part monte sur les deux périodes avec au moins 50 produits chaque année ; contraire si elle baisse sur les deux ; indicatif sinon. 2023→2025 est non mûr (biais de maturité), indicatif. Nombre de produits référencés ≠ ventes.",
   "licence_fichier": "ODbL 1.0 : base dérivée d'Open Food Facts.",
   "signaux": [
     {
@@ -31,6 +32,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins une catégorie",
         "annees": {
+          "2019": {
+            "produits": 197,
+            "base": 83411,
+            "part_pct": 0.236
+          },
+          "2020": {
+            "produits": 139,
+            "base": 59785,
+            "part_pct": 0.232
+          },
+          "2021": {
+            "produits": 217,
+            "base": 50240,
+            "part_pct": 0.432
+          },
+          "2022": {
+            "produits": 172,
+            "base": 36885,
+            "part_pct": 0.466
+          },
           "2023": {
             "produits": 163,
             "base": 34895,
@@ -47,10 +68,34 @@
             "part_pct": 0.45
           }
         },
-        "evolution_part_pct": -3.7,
-        "produits_min_par_an": 101,
-        "compte": false,
-        "trigger": "Part des nouveaux produits boissons fonctionnelles en France : -4 % (2023→2025, Open Food Facts) — signal contraire"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 100.6,
+            "produits_min_par_an": 139
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 97.4,
+            "produits_min_par_an": 139
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -3.7,
+            "produits_min_par_an": 101
+          }
+        },
+        "produits_min_par_an_2019_2022": 139,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 100,
+        "trigger": "Part des nouveaux produits boissons fonctionnelles en France : +100 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -69,6 +114,26 @@
         "regle": "catégories ET labels",
         "denominateur": "au moins une catégorie et au moins un label",
         "annees": {
+          "2019": {
+            "produits": 1784,
+            "base": 39836,
+            "part_pct": 4.478
+          },
+          "2020": {
+            "produits": 1397,
+            "base": 28688,
+            "part_pct": 4.87
+          },
+          "2021": {
+            "produits": 1121,
+            "base": 24335,
+            "part_pct": 4.607
+          },
+          "2022": {
+            "produits": 882,
+            "base": 16752,
+            "part_pct": 5.265
+          },
           "2023": {
             "produits": 922,
             "base": 18212,
@@ -85,10 +150,34 @@
             "part_pct": 4.625
           }
         },
-        "evolution_part_pct": -8.6,
-        "produits_min_par_an": 659,
-        "compte": false,
-        "trigger": "Part des nouveaux produits snacks bio ou équitables en France : -9 % (2023→2025, Open Food Facts) — signal contraire"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 8.1,
+            "produits_min_par_an": 882
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 17.6,
+            "produits_min_par_an": 882
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -8.6,
+            "produits_min_par_an": 659
+          }
+        },
+        "produits_min_par_an_2019_2022": 882,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 10,
+        "trigger": "Part des nouveaux produits snacks bio ou équitables en France : +10 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -105,6 +194,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins un label",
         "annees": {
+          "2019": {
+            "produits": 2526,
+            "base": 61079,
+            "part_pct": 4.136
+          },
+          "2020": {
+            "produits": 1801,
+            "base": 44934,
+            "part_pct": 4.008
+          },
+          "2021": {
+            "produits": 1604,
+            "base": 40462,
+            "part_pct": 3.964
+          },
+          "2022": {
+            "produits": 754,
+            "base": 26664,
+            "part_pct": 2.828
+          },
           "2023": {
             "produits": 850,
             "base": 29235,
@@ -121,10 +230,34 @@
             "part_pct": 2.522
           }
         },
-        "evolution_part_pct": -13.3,
-        "produits_min_par_an": 674,
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": -29.4,
+            "produits_min_par_an": 754
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": -31.6,
+            "produits_min_par_an": 754
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -13.3,
+            "produits_min_par_an": 674
+          }
+        },
+        "produits_min_par_an_2019_2022": 754,
+        "statut": "contraire",
         "compte": false,
-        "trigger": "Part des nouveaux produits AOP, AOC ou Label Rouge en France : -13 % (2023→2025, Open Food Facts) — signal contraire"
+        "evolution_affichee_pct": -30,
+        "trigger": "Part des nouveaux produits AOP, AOC ou Label Rouge en France : -30 % (2020→2022, Open Food Facts) — signal contraire"
       }
     },
     {
@@ -143,6 +276,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins un label",
         "annees": {
+          "2019": {
+            "produits": 2153,
+            "base": 61079,
+            "part_pct": 3.525
+          },
+          "2020": {
+            "produits": 1496,
+            "base": 44934,
+            "part_pct": 3.329
+          },
+          "2021": {
+            "produits": 1362,
+            "base": 40462,
+            "part_pct": 3.366
+          },
+          "2022": {
+            "produits": 1041,
+            "base": 26664,
+            "part_pct": 3.904
+          },
           "2023": {
             "produits": 1016,
             "base": 29235,
@@ -159,10 +312,34 @@
             "part_pct": 3.059
           }
         },
-        "evolution_part_pct": -12.0,
-        "produits_min_par_an": 1016,
-        "compte": false,
-        "trigger": "Part des nouveaux produits sans sucres ajoutés ou allégés en sucre en France : -12 % (2023→2025, Open Food Facts) — signal contraire"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 17.3,
+            "produits_min_par_an": 1041
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 10.8,
+            "produits_min_par_an": 1041
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -12.0,
+            "produits_min_par_an": 1016
+          }
+        },
+        "produits_min_par_an_2019_2022": 1041,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 20,
+        "trigger": "Part des nouveaux produits sans sucres ajoutés ou allégés en sucre en France : +20 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -178,6 +355,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins une catégorie",
         "annees": {
+          "2019": {
+            "produits": 614,
+            "base": 83411,
+            "part_pct": 0.736
+          },
+          "2020": {
+            "produits": 500,
+            "base": 59785,
+            "part_pct": 0.836
+          },
+          "2021": {
+            "produits": 533,
+            "base": 50240,
+            "part_pct": 1.061
+          },
+          "2022": {
+            "produits": 404,
+            "base": 36885,
+            "part_pct": 1.095
+          },
           "2023": {
             "produits": 346,
             "base": 34895,
@@ -194,10 +391,34 @@
             "part_pct": 1.438
           }
         },
-        "evolution_part_pct": 45.0,
-        "produits_min_par_an": 312,
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 31.0,
+            "produits_min_par_an": 404
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 48.8,
+            "produits_min_par_an": 404
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": 45.0,
+            "produits_min_par_an": 312
+          }
+        },
+        "produits_min_par_an_2019_2022": 404,
+        "statut": "compte",
         "compte": true,
-        "trigger": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +45 % (2023→2025, Open Food Facts)"
+        "evolution_affichee_pct": 30,
+        "trigger": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +30 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -214,6 +435,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins une catégorie",
         "annees": {
+          "2019": {
+            "produits": 90,
+            "base": 83411,
+            "part_pct": 0.108
+          },
+          "2020": {
+            "produits": 77,
+            "base": 59785,
+            "part_pct": 0.129
+          },
+          "2021": {
+            "produits": 72,
+            "base": 50240,
+            "part_pct": 0.143
+          },
+          "2022": {
+            "produits": 63,
+            "base": 36885,
+            "part_pct": 0.171
+          },
           "2023": {
             "produits": 64,
             "base": 34895,
@@ -230,10 +471,34 @@
             "part_pct": 0.138
           }
         },
-        "evolution_part_pct": -24.7,
-        "produits_min_par_an": 31,
-        "compte": false,
-        "trigger": "Part des nouveaux produits bières, vins et cocktails sans alcool en France : -25 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 32.6,
+            "produits_min_par_an": 63
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 58.3,
+            "produits_min_par_an": 63
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -24.7,
+            "produits_min_par_an": 31
+          }
+        },
+        "produits_min_par_an_2019_2022": 63,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 30,
+        "trigger": "Part des nouveaux produits bières, vins et cocktails sans alcool en France : +30 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -251,6 +516,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins un label",
         "annees": {
+          "2019": {
+            "produits": 210,
+            "base": 61079,
+            "part_pct": 0.344
+          },
+          "2020": {
+            "produits": 181,
+            "base": 44934,
+            "part_pct": 0.403
+          },
+          "2021": {
+            "produits": 119,
+            "base": 40462,
+            "part_pct": 0.294
+          },
+          "2022": {
+            "produits": 106,
+            "base": 26664,
+            "part_pct": 0.398
+          },
           "2023": {
             "produits": 88,
             "base": 29235,
@@ -267,10 +552,34 @@
             "part_pct": 0.027
           }
         },
-        "evolution_part_pct": -91.1,
-        "produits_min_par_an": 11,
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": -1.3,
+            "produits_min_par_an": 106
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 15.6,
+            "produits_min_par_an": 106
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -91.1,
+            "produits_min_par_an": 11
+          }
+        },
+        "produits_min_par_an_2019_2022": 106,
+        "statut": "indicatif",
         "compte": false,
-        "trigger": "Part des nouveaux produits allégés en sel en France : -91 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année"
+        "evolution_affichee_pct": 0,
+        "trigger": "Part des nouveaux produits allégés en sel en France : 0 % (2020→2022, Open Food Facts) — indicatif (2019→2022 et 2020→2022 divergent)"
       }
     },
     {
@@ -288,6 +597,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins un label",
         "annees": {
+          "2019": {
+            "produits": 5932,
+            "base": 61079,
+            "part_pct": 9.712
+          },
+          "2020": {
+            "produits": 4155,
+            "base": 44934,
+            "part_pct": 9.247
+          },
+          "2021": {
+            "produits": 3675,
+            "base": 40462,
+            "part_pct": 9.083
+          },
+          "2022": {
+            "produits": 2895,
+            "base": 26664,
+            "part_pct": 10.857
+          },
           "2023": {
             "produits": 2734,
             "base": 29235,
@@ -304,10 +633,34 @@
             "part_pct": 8.207
           }
         },
-        "evolution_part_pct": -12.2,
-        "produits_min_par_an": 2610,
-        "compte": false,
-        "trigger": "Part des nouveaux produits sans additifs ni conservateurs en France : -12 % (2023→2025, Open Food Facts) — signal contraire"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 17.4,
+            "produits_min_par_an": 2895
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 11.8,
+            "produits_min_par_an": 2895
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -12.2,
+            "produits_min_par_an": 2610
+          }
+        },
+        "produits_min_par_an_2019_2022": 2895,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 20,
+        "trigger": "Part des nouveaux produits sans additifs ni conservateurs en France : +20 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -325,6 +678,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins une catégorie",
         "annees": {
+          "2019": {
+            "produits": 713,
+            "base": 83411,
+            "part_pct": 0.855
+          },
+          "2020": {
+            "produits": 462,
+            "base": 59785,
+            "part_pct": 0.773
+          },
+          "2021": {
+            "produits": 407,
+            "base": 50240,
+            "part_pct": 0.81
+          },
+          "2022": {
+            "produits": 369,
+            "base": 36885,
+            "part_pct": 1.0
+          },
           "2023": {
             "produits": 382,
             "base": 34895,
@@ -341,10 +714,34 @@
             "part_pct": 0.69
           }
         },
-        "evolution_part_pct": -37.0,
-        "produits_min_par_an": 155,
-        "compte": false,
-        "trigger": "Part des nouveaux produits de nutrition sportive en France : -37 % (2023→2025, Open Food Facts) — signal contraire"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 29.5,
+            "produits_min_par_an": 369
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 17.0,
+            "produits_min_par_an": 369
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": -37.0,
+            "produits_min_par_an": 155
+          }
+        },
+        "produits_min_par_an_2019_2022": 369,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 30,
+        "trigger": "Part des nouveaux produits de nutrition sportive en France : +30 % (2020→2022, Open Food Facts)"
       }
     },
     {
@@ -360,6 +757,26 @@
         "regle": "au moins un des tags",
         "denominateur": "au moins une catégorie",
         "annees": {
+          "2019": {
+            "produits": 65,
+            "base": 83411,
+            "part_pct": 0.078
+          },
+          "2020": {
+            "produits": 81,
+            "base": 59785,
+            "part_pct": 0.135
+          },
+          "2021": {
+            "produits": 71,
+            "base": 50240,
+            "part_pct": 0.141
+          },
+          "2022": {
+            "produits": 56,
+            "base": 36885,
+            "part_pct": 0.152
+          },
           "2023": {
             "produits": 39,
             "base": 34895,
@@ -376,10 +793,34 @@
             "part_pct": 0.125
           }
         },
-        "evolution_part_pct": 11.5,
-        "produits_min_par_an": 22,
-        "compte": false,
-        "trigger": "Part des nouveaux produits kéfirs et yaourts au bifidus en France : +12 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année"
+        "periodes": {
+          "2020-2022": {
+            "debut": 2020,
+            "fin": 2022,
+            "role": "principale (affichée)",
+            "evolution_part_pct": 12.1,
+            "produits_min_par_an": 56
+          },
+          "2019-2022": {
+            "debut": 2019,
+            "fin": 2022,
+            "role": "robustesse",
+            "evolution_part_pct": 94.8,
+            "produits_min_par_an": 56
+          },
+          "2023-2025": {
+            "debut": 2023,
+            "fin": 2025,
+            "role": "récente : non mûr, indicatif",
+            "evolution_part_pct": 11.5,
+            "produits_min_par_an": 22
+          }
+        },
+        "produits_min_par_an_2019_2022": 56,
+        "statut": "compte",
+        "compte": true,
+        "evolution_affichee_pct": 10,
+        "trigger": "Part des nouveaux produits kéfirs et yaourts au bifidus en France : +10 % (2020→2022, Open Food Facts)"
       }
     },
     {

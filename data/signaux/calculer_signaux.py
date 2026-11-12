@@ -6,13 +6,18 @@ Usage (venv avec duckdb), après extraire_off.py :
 Méthode : pour chaque opportunité, part des produits portant au moins un des tags parmi
 les produits vendus en France ajoutés dans l'année (created_t) et ayant au moins une
 catégorie (tags de catégories), au moins un label (tags de labels), ou les deux (règle
-« catégories ET labels »). Évolution relative de cette part entre 2023 et 2025.
+« catégories ET labels »).
+
+Les produits récents ont eu moins de temps pour recevoir des catégories et labels précis
+(biais de maturité, voir biais_maturite.py) : le signal affiché porte sur une période
+« mûre », 2020→2022, contrôlée par 2019→2022. 2023→2025 est gardé, marqué non mûr.
 
 Données Open Food Facts (https://world.openfoodfacts.org), licence ODbL : le fichier
 produit est une base dérivée, elle aussi sous ODbL.
 """
 
 import json
+import math
 import sys
 from datetime import date
 from pathlib import Path
@@ -21,8 +26,19 @@ import duckdb
 
 CIBLE = Path(__file__).resolve().parent / "signaux_marche.json"
 PAYS = "en:france"
-ANNEES = [2023, 2024, 2025]  # 3 dernières années complètes à la date d'extraction
+ANNEES = list(range(2019, 2026))  # 2019 à 2025, dernières années complètes à la date d'extraction
 MIN_PRODUITS = 50  # en dessous, une année est jugée trop petite : signal indicatif
+
+# Périodes : (début, fin, rôle). La principale est affichée ; la robustesse doit aller dans le
+# même sens ; la récente est seulement informative (non mûre).
+PERIODE_PRINCIPALE = (2020, 2022)
+PERIODE_ROBUSTESSE = (2019, 2022)
+PERIODE_RECENTE = (2023, 2025)
+PERIODES = {
+    PERIODE_PRINCIPALE: "principale (affichée)",
+    PERIODE_ROBUSTESSE: "robustesse",
+    PERIODE_RECENTE: "récente : non mûr, indicatif",
+}
 
 # Tags validés avec l'équipe le 2026-11-12. libelle : complète « Part des nouveaux produits … ».
 OPPORTUNITES = {
@@ -55,14 +71,30 @@ OPPORTUNITES = {
 }
 
 
-def libelle_trigger(libelle, evolution, compte, min_annuel):
-    texte = (f"Part des nouveaux produits {libelle} en France : {evolution:+.0f} % "
-             f"({ANNEES[0]}→{ANNEES[-1]}, Open Food Facts)")
+def arrondi_dizaine(valeur):
+    """+101,3 -> 100 ; -24,7 -> -20 ; -1,3 -> 0 (arrondi au plus proche, symétrique)."""
+    return int(math.copysign(math.floor(abs(valeur) / 10 + 0.5) * 10, valeur)) or 0
+
+
+def texte_pourcentage(valeur):
+    return "0 %" if valeur == 0 else f"{valeur:+d} %"
+
+
+def evolution(annees, debut, fin):
+    part = {a: annees[str(a)]["produits"] / annees[str(a)]["base"] for a in (debut, fin)}
+    return 100 * part[fin] / part[debut] - 100 if part[debut] else float("inf")
+
+
+def statut_signal(evol_principale, evol_robustesse, min_annuel):
+    """compte : hausse sur les deux périodes et >= 50 produits chaque année ;
+    contraire : baisse sur les deux ; indicatif : sinon (sens divergents ou trop peu de produits)."""
     if min_annuel < MIN_PRODUITS:
-        texte += f" — indicatif, moins de {MIN_PRODUITS} produits sur une année"
-    elif not compte:
-        texte += " — signal contraire"
-    return texte
+        return "indicatif", f"moins de {MIN_PRODUITS} produits sur une année"
+    if evol_principale > 0 and evol_robustesse > 0:
+        return "compte", None
+    if evol_principale < 0 and evol_robustesse < 0:
+        return "contraire", None
+    return "indicatif", "2019→2022 et 2020→2022 divergent"
 
 
 def calculer(con, config):
@@ -83,20 +115,40 @@ def calculer(con, config):
     """, {"annees": ANNEES, **({"categories": categories} if categories else {}),
           **({"labels": labels} if labels else {})}).fetchall()
     annees = {str(a): {"produits": p, "base": b, "part_pct": round(100 * p / b, 3)} for a, b, p in lignes}
-    debut, fin = annees[str(ANNEES[0])], annees[str(ANNEES[-1])]
-    evolution = 100 * (fin["produits"] / fin["base"]) / (debut["produits"] / debut["base"]) - 100
-    min_annuel = min(v["produits"] for v in annees.values())
-    compte = evolution > 0 and min_annuel >= MIN_PRODUITS
+
+    periodes = {}
+    for (debut, fin), role in PERIODES.items():
+        periodes[f"{debut}-{fin}"] = {
+            "debut": debut, "fin": fin, "role": role,
+            "evolution_part_pct": round(evolution(annees, debut, fin), 1),
+            "produits_min_par_an": min(annees[str(a)]["produits"] for a in range(debut, fin + 1)),
+        }
+
+    evol_p = evolution(annees, *PERIODE_PRINCIPALE)
+    evol_r = evolution(annees, *PERIODE_ROBUSTESSE)
+    min_annuel = min(annees[str(a)]["produits"]
+                     for a in range(min(PERIODE_ROBUSTESSE[0], PERIODE_PRINCIPALE[0]), PERIODE_PRINCIPALE[1] + 1))
+    statut, raison = statut_signal(evol_p, evol_r, min_annuel)
+    affichee = arrondi_dizaine(evol_p)
+    trigger = (f"Part des nouveaux produits {config['libelle']} en France : {texte_pourcentage(affichee)} "
+               f"({PERIODE_PRINCIPALE[0]}→{PERIODE_PRINCIPALE[1]}, Open Food Facts)")
+    if statut == "contraire":
+        trigger += " — signal contraire"
+    elif statut == "indicatif":
+        trigger += f" — indicatif ({raison})"
+
     return {
         "regle": "catégories ET labels" if categories and labels else "au moins un des tags",
         "denominateur": " et ".join(
             (["au moins une catégorie"] if categories else []) + (["au moins un label"] if labels else [])
         ),
         "annees": annees,
-        "evolution_part_pct": round(evolution, 1),
-        "produits_min_par_an": min_annuel,
-        "compte": compte,
-        "trigger": libelle_trigger(config["libelle"], evolution, compte, min_annuel),
+        "periodes": periodes,
+        "produits_min_par_an_2019_2022": min_annuel,
+        "statut": statut,
+        "compte": statut == "compte",
+        "evolution_affichee_pct": affichee,
+        "trigger": trigger,
     }
 
 
@@ -123,7 +175,7 @@ def main(parquet):
         signaux.append(entree)
 
     sortie = {
-        "version": "1.0",
+        "version": "1.1",
         "source": {
             "nom": "Open Food Facts",
             "url": "https://world.openfoodfacts.org/data",
@@ -133,12 +185,16 @@ def main(parquet):
         },
         "date_extraction": date.today().isoformat(),
         "pays": PAYS,
-        "periode": {"debut": ANNEES[0], "fin": ANNEES[-1]},
+        "periodes": {f"{d}-{f}": role for (d, f), role in PERIODES.items()},
         "methode": (
             "Part des produits portant au moins un des tags parmi les produits vendus en France ajoutés "
             "dans l'année et ayant au moins une catégorie (ou un label, selon les tags). Évolution relative "
-            f"de la part entre {ANNEES[0]} et {ANNEES[-1]}. Le signal compte s'il augmente et s'il y a au "
-            f"moins {MIN_PRODUITS} produits chaque année. Nombre de produits référencés ≠ ventes."
+            f"de la part sur {PERIODE_PRINCIPALE[0]}→{PERIODE_PRINCIPALE[1]} (affichée, arrondie à la "
+            f"dizaine) et {PERIODE_ROBUSTESSE[0]}→{PERIODE_ROBUSTESSE[1]} (robustesse). Le signal compte "
+            f"si la part monte sur les deux périodes avec au moins {MIN_PRODUITS} produits chaque année ; "
+            "contraire si elle baisse sur les deux ; indicatif sinon. "
+            f"{PERIODE_RECENTE[0]}→{PERIODE_RECENTE[1]} est non mûr (biais de maturité), indicatif. "
+            "Nombre de produits référencés ≠ ventes."
         ),
         "licence_fichier": "ODbL 1.0 : base dérivée d'Open Food Facts.",
         "signaux": signaux,
