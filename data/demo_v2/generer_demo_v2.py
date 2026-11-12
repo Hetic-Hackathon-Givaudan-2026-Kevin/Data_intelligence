@@ -1,4 +1,4 @@
-"""Génère data/demo_v2/clients.json : portefeuille de clients fictifs (doc fonctionnelle v2, DATA-US03).
+"""Génère data/demo_v2 : clients fictifs (DATA-US03) et leurs projets (DATA-US04), doc fonctionnelle v2.
 
 Usage, depuis la racine du repo :
     python data/demo_v2/generer_demo_v2.py
@@ -69,15 +69,93 @@ CLIENTS = [
 ]
 
 
+PROJETS = [
+    # C-01 Maison Nova Drinks : 3 projets actifs.
+    {
+        "id": "P-01",
+        "client_id": "C-01",
+        "name": "Reformulation de l'arôme agrumes de la gamme existante",
+        "description": (
+            "Travail en cours sur la gamme de boissons aromatisées existante : reformulation de son arôme "
+            "agrumes, sans nouvelle saveur. Projet lancé le 10/10/2026, échantillon envoyé le 20/10/2026."
+        ),
+        "status": "active",
+        "start_date": "2026-10-10",
+    },
+    {
+        "id": "P-02",
+        "client_id": "C-01",
+        "name": "Boisson gazeuse à teneur réduite en sucre",
+        "description": "Reformulation d'une boisson gazeuse pour réduire le sucre en gardant le profil aromatique.",
+        "status": "active",
+        "start_date": "2026-06-15",
+    },
+    {
+        "id": "P-03",
+        "client_id": "C-01",
+        "name": "Boisson pétillante en édition saisonnière",
+        "description": "Création d'un arôme pour une édition limitée d'hiver d'une boisson pétillante.",
+        "status": "active",
+        "start_date": "2026-09-01",
+    },
+    # C-02 Nordic Food Industries : 2 projets actifs et 1 terminé.
+    {
+        "id": "P-04",
+        "client_id": "C-02",
+        "name": "Arôme pour une gamme de soupes",
+        "description": "Développement d'un arôme d'herbes aromatiques pour une gamme de soupes du client.",
+        "status": "active",
+        "start_date": "2026-09-15",
+    },
+    {
+        "id": "P-05",
+        "client_id": "C-02",
+        "name": "Arôme pour une gamme de sauces",
+        "description": "Développement d'un arôme fumé pour une gamme de sauces barbecue du client.",
+        "status": "active",
+        "start_date": "2026-10-01",
+    },
+    {
+        "id": "P-06",
+        "client_id": "C-02",
+        "name": "Dessert végétal aromatisé",
+        "description": (
+            "Projet livré. Le client a fait un retour technique sur la texture, jugée trop épaisse en bouche."
+        ),
+        "status": "completed",
+        "start_date": "2026-03-02",
+    },
+    # C-03 Alimenta Distribution : 1 projet actif.
+    {
+        "id": "P-07",
+        "client_id": "C-03",
+        "name": "Yaourt à la vanille de marque de distributeur",
+        "description": "Premier projet avec le client : arôme vanille pour un yaourt de sa marque de distributeur.",
+        "status": "active",
+        "start_date": "2026-09-21",
+    },
+]
+
+
+def texte_json(objets):
+    return json.dumps(objets, ensure_ascii=False, indent=2) + "\n"
+
+
 def generer():
     """Renvoie le texte JSON exact de clients.json, sans rien écrire."""
-    return json.dumps(CLIENTS, ensure_ascii=False, indent=2) + "\n"
+    return texte_json(CLIENTS)
+
+
+def generer_fichiers():
+    """Renvoie {nom de fichier: texte JSON exact}, sans rien écrire."""
+    return {"clients.json": generer(), "projects.json": texte_json(PROJETS)}
 
 
 def main():
-    with open(DOSSIER / "clients.json", "w", encoding="utf-8", newline="\n") as fichier:
-        fichier.write(generer())
-    print(f"clients.json : {len(CLIENTS)} clients")
+    for nom, texte in generer_fichiers().items():
+        with open(DOSSIER / nom, "w", encoding="utf-8", newline="\n") as fichier:
+            fichier.write(texte)
+        print(f"{nom} : {len(json.loads(texte))} objets")
 
 
 if __name__ == "__main__":
