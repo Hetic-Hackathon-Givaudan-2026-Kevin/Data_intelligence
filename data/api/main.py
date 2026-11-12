@@ -6,11 +6,15 @@ puis ouvrir http://localhost:8001/docs
 
 Les données viennent de data/demo/*.json et de data/questions/questions.json ;
 les questions proposées viennent de data/questions/moteur.py. Rien n'est recopié ici.
+Les routes /v2 (doc fonctionnelle v2) lisent data/demo_v2/*.json ; compteurs et dates y sont
+calculés à partir des fichiers.
 """
 
 import json
 import sys
+import unicodedata
 import warnings
+from datetime import date
 from pathlib import Path
 from typing import Optional
 
@@ -169,3 +173,344 @@ def proposer_questions(demande: DemandeQuestions):
 def lister_bonnes_pratiques():
     """Renvoie les 5 bonnes pratiques de démo (`data/demo/best_practices.json`)."""
     return BONNES_PRATIQUES
+
+
+# ---------------------------------------------------------------------------------------------
+# V2 (doc fonctionnelle v2) : lit data/demo_v2/. Compteurs et dates calculés à partir des fichiers.
+# ---------------------------------------------------------------------------------------------
+
+DOSSIER_V2 = DATA / "demo_v2"
+sys.path.insert(0, str(DOSSIER_V2))
+import generer_demo_v2 as regles_v2  # noqa: E402  (checklist, date de référence, règle de priorité)
+
+
+def _lire_v2(nom):
+    with open(DOSSIER_V2 / nom, encoding="utf-8") as fichier:
+        return json.load(fichier)
+
+
+CLIENTS_V2 = {c["id"]: c for c in _lire_v2("clients.json")}
+PROJETS_V2 = _lire_v2("projects.json")
+OPPORTUNITES_V2 = {o["id"]: o for o in _lire_v2("opportunities.json")}
+SIGNAUX_V2 = _lire_v2("signals.json")
+CONTEXTES_RDV = {c["opportunity_id"]: c for c in _lire_v2("meeting_context.json")}
+RDV_V2 = _lire_v2("meetings.json") if (DOSSIER_V2 / "meetings.json").exists() else []
+CHECKLIST = regles_v2.CHECKLIST
+DATE_REFERENCE = date.fromisoformat(regles_v2.DATE_REFERENCE)
+JOURS_SIGNAL_RECENT = 90
+MOTS_REGLEMENTAIRES = ("réglement", "reglement", "allégation", "allegation", "étiquet", "etiquet", "additif")
+
+app.openapi_tags += [
+    {"name": "V2 – Portefeuille", "description": "Doc v2 : tableau de bord, portefeuille et fiche client."},
+    {"name": "V2 – Opportunités", "description": "Doc v2 : détail d'une opportunité et justification."},
+    {"name": "V2 – Meeting Copilot", "description": "Doc v2 : préparation du RDV et compte rendu (V1, par modèle)."},
+]
+
+
+def _sans_accents(texte):
+    return unicodedata.normalize("NFKD", texte).encode("ascii", "ignore").decode().lower()
+
+
+def _projets(client_id):
+    return [p for p in PROJETS_V2 if p["client_id"] == client_id]
+
+
+def _opportunites(client_id):
+    return [o for o in OPPORTUNITES_V2.values() if o["client_id"] == client_id]
+
+
+def _signaux(opportunity_id):
+    return [s for s in SIGNAUX_V2 if s["opportunity_id"] == opportunity_id]
+
+
+def _compteurs(client_id):
+    opps = _opportunites(client_id)
+    return {
+        "active_projects": sum(p["status"] == "active" for p in _projets(client_id)),
+        "detected_opportunities": len(opps),  # toutes les opportunités du client
+        "to_qualify": sum(o["status"] == "to_qualify" for o in opps),
+    }
+
+
+def _avec_dernier_signal(opp):
+    return {**opp, "last_signal_date": max(s["source_date"] for s in _signaux(opp["id"]))}
+
+
+def _phrase(texte, evidence_type, source):
+    return {"text": texte, "evidence_type": evidence_type, "source": source}
+
+
+def _date_fr(iso):
+    return date.fromisoformat(iso).strftime("%d/%m/%Y")
+
+
+def _synthese(client):
+    """« Ce qu'il faut savoir sur ce client » (V1, par règles). Chaque phrase porte fact,
+    hypothesis ou to_confirm (section 5.5) et sa source."""
+    opps = _opportunites(client["id"])
+    signaux = [s for o in opps for s in _signaux(o["id"])]
+    actifs = sorted((p for p in _projets(client["id"]) if p["status"] == "active"),
+                    key=lambda p: p["start_date"], reverse=True)
+    besoins = [s for s in signaux if s["source_type"] in regles_v2.SOURCES_CLIENT]
+    recents = [s for s in signaux if s not in besoins
+               and (DATE_REFERENCE - date.fromisoformat(s["source_date"])).days <= JOURS_SIGNAL_RECENT]
+    attention = []
+    for o in opps:
+        if o["status"] == "to_qualify":
+            action = o["next_action"][0].lower() + o["next_action"][1:]
+            attention.append(_phrase(f"« {o['title']} » est à qualifier : {action}", "to_confirm", o["id"]))
+        elif o["feasibility"] == "to_confirm":
+            attention.append(_phrase(f"La faisabilité de « {o['title']} » reste à confirmer.", "to_confirm", o["id"]))
+    attention += [_phrase(f"Hypothèse à vérifier : {s['description']}", "hypothesis", s["id"])
+                  for s in signaux if s["evidence_type"] == "hypothesis"]
+    return {
+        "title": "Ce qu'il faut savoir sur ce client",
+        "situation": [_phrase(client["commercial_situation"], "fact", f"clients.json#{client['id']}")],
+        "important_projects": [_phrase(f"{p['name']} (en cours depuis le {_date_fr(p['start_date'])}).", "fact",
+                                       p["id"]) for p in actifs],
+        "expressed_needs": [_phrase(s["description"], s["evidence_type"], s["id"]) for s in besoins],
+        "recent_signals": [_phrase(f"{s['description']} ({_date_fr(s['source_date'])})", s["evidence_type"], s["id"])
+                           for s in sorted(recents, key=lambda s: s["source_date"], reverse=True)],
+        "attention_points": attention,
+    }
+
+
+def _chronologie(client_id):
+    evenements = [{"date": p["start_date"], "type": "project_start", "ref": p["id"],
+                   "event": f"Début du projet {p['id']} : {p['name']}"} for p in _projets(client_id)]
+    evenements += [{"date": s["source_date"], "type": "signal", "ref": s["id"],
+                    "event": s["description"]} for o in _opportunites(client_id) for s in _signaux(o["id"])]
+    return sorted(evenements, key=lambda e: (e["date"], e["ref"]), reverse=True)
+
+
+@app.get("/v2/dashboard", tags=["V2 – Portefeuille"], summary="Indicateurs du tableau de bord")
+def tableau_de_bord_v2():
+    """Clients suivis, opportunités détectées, à qualifier et RDV à préparer, calculés à partir des
+    fichiers. RDV à préparer : 0 tant qu'il n'y a pas de `meetings.json`."""
+    return {
+        "followed_clients": len(CLIENTS_V2),
+        "detected_opportunities": len(OPPORTUNITES_V2),
+        "to_qualify": sum(o["status"] == "to_qualify" for o in OPPORTUNITES_V2.values()),
+        "meetings_to_prepare": sum(r.get("status") != "completed" for r in RDV_V2),
+    }
+
+
+@app.get("/v2/clients", tags=["V2 – Portefeuille"], summary="Portefeuille clients, avec recherche par nom")
+def lister_clients_v2(q: Optional[str] = None):
+    """Chaque client avec `active_projects`, `detected_opportunities` (toutes ses opportunités) et
+    `to_qualify`. `q` filtre par nom, sans tenir compte des majuscules ni des accents."""
+    clients = CLIENTS_V2.values()
+    if q:
+        clients = [c for c in clients if _sans_accents(q) in _sans_accents(c["name"])]
+    return [{**c, **_compteurs(c["id"])} for c in clients]
+
+
+@app.get("/v2/clients/{client_id}", tags=["V2 – Portefeuille"], summary="Fiche client")
+def lire_client_v2(client_id: str):
+    """Le client et ses compteurs, ses projets, ses opportunités (avec `last_signal_date`), la
+    chronologie (de la plus récente à la plus ancienne) et la synthèse « Ce qu'il faut savoir ».
+    404 si l'id est inconnu."""
+    client = CLIENTS_V2.get(client_id) or _introuvable("Client inconnu", client_id)
+    return {
+        **client, **_compteurs(client_id),
+        "projects": _projets(client_id),
+        "opportunities": [_avec_dernier_signal(o) for o in _opportunites(client_id)],
+        "timeline": _chronologie(client_id),
+        "summary": _synthese(client),
+    }
+
+
+def _justification(opp, signaux):
+    """Section 5.2 : informations utilisées, provenance, raisonnement, éléments à vérifier."""
+    points = regles_v2.detail_priorite(opp, SIGNAUX_V2)
+    client = CLIENTS_V2[opp["client_id"]]
+    types = sorted({s["source_type"] for s in signaux})
+    raisonnement = (
+        f"{len(signaux)} signal(s) relient {client['name']} à « {opp['title']} » ({', '.join(types)}). "
+        f"Priorité {opp['priority']} : score {sum(points.values())}/7 (confiance du meilleur signal "
+        f"{points['confidence']}, potentiel {points['potential']}, faisabilité {points['feasibility']}, "
+        f"urgence {points['urgency']})."
+    )
+    a_verifier = []
+    if opp["status"] != "confirmed":
+        a_verifier.append(f"Le besoin n'est pas confirmé auprès du client (statut : {opp['status']}).")
+    a_verifier += [f"Hypothèse : {s['description']}" for s in signaux if s["evidence_type"] != "fact"]
+    if opp["feasibility"] == "to_confirm":
+        a_verifier.append("Faisabilité à confirmer.")
+    if opp["estimated_potential"] is None:
+        a_verifier.append("Potentiel commercial non renseigné.")
+    a_verifier += [f"Information manquante : {CHECKLIST[p]}." for p in CONTEXTES_RDV[opp["id"]]["missing"]]
+    return {
+        "information_used": [f"{s['id']} : {s['description']}" for s in signaux],
+        "provenance": [{"signal_id": s["id"], "source_type": s["source_type"], "source_date": s["source_date"],
+                        "source": s["source_ref"] if s["is_real_source"] else "source fictive (démo)",
+                        "is_real_source": s["is_real_source"]} for s in signaux],
+        "reasoning": raisonnement,
+        "to_verify": a_verifier,
+    }
+
+
+@app.get("/v2/opportunities/{opportunity_id}", tags=["V2 – Opportunités"], summary="Détail d'une opportunité")
+def lire_opportunite_v2(opportunity_id: str):
+    """L'opportunité (avec `last_signal_date`), son client, ses signaux complets et la justification
+    par règles (section 5.2). 404 si l'id est inconnu."""
+    opp = OPPORTUNITES_V2.get(opportunity_id) or _introuvable("Opportunité inconnue", opportunity_id)
+    signaux = sorted(_signaux(opportunity_id), key=lambda s: s["source_date"], reverse=True)
+    return {**_avec_dernier_signal(opp), "client": CLIENTS_V2[opp["client_id"]], "signals": signaux,
+            "justification": _justification(opp, signaux)}
+
+
+@app.get("/v2/opportunities/{opportunity_id}/meeting", tags=["V2 – Meeting Copilot"],
+         summary="Contexte du Meeting Copilot")
+def contexte_rdv_v2(opportunity_id: str):
+    """Client, opportunité, objectif du RDV, informations connues et manquantes parmi les 6 points
+    de la checklist, et 3 questions suggérées. 404 si l'id est inconnu."""
+    opp = OPPORTUNITES_V2.get(opportunity_id) or _introuvable("Opportunité inconnue", opportunity_id)
+    contexte = CONTEXTES_RDV[opportunity_id]
+    connus = {k["point"] for k in contexte["known"]}
+    return {
+        "client": {"id": opp["client_id"], "name": CLIENTS_V2[opp["client_id"]]["name"]},
+        "opportunity": {"id": opp["id"], "title": opp["title"], "status": opp["status"]},
+        "objective": contexte["objective"],
+        "known": [{**k, "label": CHECKLIST[k["point"]]} for k in contexte["known"]],
+        "missing": [{"point": p, "label": CHECKLIST[p]} for p in contexte["missing"]],
+        "questions": [{**q, "information_sought_label": CHECKLIST[q["information_sought"]]}
+                      for q in contexte["questions"]],
+        "checklist": [{"point": p, "label": l, "known": p in connus} for p, l in CHECKLIST.items()],
+    }
+
+
+class Reponse(BaseModel):
+    """Objet de Meeting.answers (MODELE_DONNEES.md)."""
+    information_sought: str = Field(description=f"Point de la checklist : {', '.join(CHECKLIST)}.")
+    answer: str = Field(description="Réponse obtenue.")
+
+
+class DemandeCompteRendu(BaseModel):
+    opportunity_id: str = Field(description="Opportunité du rendez-vous, ex. O-01.")
+    collected_points: list[str] = Field(default=[], description=f"Points cochés parmi : {', '.join(CHECKLIST)}.")
+    answers: list[Reponse] = Field(default=[], description="Réponses, chacune reliée à un point de la checklist.")
+    notes: str = Field("", description="Notes libres du rendez-vous.")
+    date: Optional[str] = Field(None, description="Date du rendez-vous (AAAA-MM-JJ) ; par défaut, la date du jeu.")
+
+    model_config = {"json_schema_extra": {"examples": [{
+        "opportunity_id": "O-01",
+        "collected_points": ["client_objectives", "technical_constraints"],
+        "answers": [{"information_sought": "client_objectives",
+                     "answer": "Lancer une gamme de boissons fonctionnelles l'an prochain."}],
+        "notes": "Goût et coût sont les freins cités.",
+    }]}}
+
+
+# Équipes internes (section 2.4), codes du modèle de données ; libellés français pour le texte.
+LIBELLES_EQUIPES = {"application": "Application", "creation": "Création", "marketing": "Marketing",
+                    "regulatory": "Réglementation"}
+CATEGORIES_CREATION = {"Nouvelle gamme", "Extension de gamme", "Nouvelle formulation", "Nouvelle référence"}
+SOURCES_MARCHE = {"market_trend", "company_report"}
+POINTS_BESOIN = ["client_objectives", "real_need"]
+POINTS_CONTRAINTE = ["technical_constraints", "budget_constraints", "timeline"]
+
+
+def _equipes(opp, collectes, texte):
+    """application : contraintes techniques recueillies ; creation : nouvel arôme à créer (catégorie)
+    et objectifs ou besoin recueillis ; marketing : objectifs recueillis et signal de marché ;
+    regulatory : mot-clé réglementaire dans les notes ou réponses, ou signal réglementaire."""
+    types = {s["source_type"] for s in _signaux(opp["id"])}
+    equipes = []
+    if "technical_constraints" in collectes:
+        equipes.append("application")
+    if opp["category"] in CATEGORIES_CREATION and collectes & set(POINTS_BESOIN):
+        equipes.append("creation")
+    if "client_objectives" in collectes and types & SOURCES_MARCHE:
+        equipes.append("marketing")
+    if any(m in texte.lower() for m in MOTS_REGLEMENTAIRES) or "regulation" in types:
+        equipes.append("regulatory")
+    return equipes
+
+
+@app.post("/v2/meetings/report", tags=["V2 – Meeting Copilot"], summary="Générer le compte rendu (V1)")
+def compte_rendu_v2(demande: DemandeCompteRendu):
+    """Renvoie un **Meeting** complet (voir `data/demo_v2/MODELE_DONNEES.md`), non enregistré, dont
+    `summary` est le **MeetingReport** produit par un modèle de texte (`generated_by: rules_v1`,
+    `validated: false`). Les prochaines actions sont seulement dans `next_actions`.
+
+    - `collected_points` = points cochés + points qui ont une réponse dans `answers`.
+    - Points non recueillis → `missing_information` (ceux connus avant le RDV : « à reconfirmer »).
+    - `opportunity_decision` : `confirmed` si objectifs et besoin réel sont recueillis, sinon
+      `to_qualify` ; jamais `discarded` automatiquement (c'est au commercial d'écarter).
+    - `internal_teams` : application, creation, marketing, regulatory (règles dans `_equipes`).
+
+    404 si l'opportunité est inconnue, 422 si un point de checklist ou la date est invalide.
+    """
+    opp = OPPORTUNITES_V2.get(demande.opportunity_id) or _introuvable("Opportunité inconnue", demande.opportunity_id)
+    inconnus = [p for p in demande.collected_points + [r.information_sought for r in demande.answers]
+                if p not in CHECKLIST]
+    if inconnus:
+        raise HTTPException(status_code=422, detail=f"Points de checklist inconnus : {', '.join(inconnus)}")
+    try:
+        jour = date.fromisoformat(demande.date) if demande.date else DATE_REFERENCE
+    except ValueError:
+        raise HTTPException(status_code=422, detail=f"Date invalide (AAAA-MM-JJ attendu) : {demande.date}")
+
+    contexte, client = CONTEXTES_RDV[opp["id"]], CLIENTS_V2[opp["client_id"]]
+    reponses = {r.information_sought: r.answer.strip() for r in demande.answers}
+    collectes = set(demande.collected_points) | set(reponses)
+    ordonnes = [p for p in CHECKLIST if p in collectes]
+    manquants = [p for p in CHECKLIST if p not in collectes]
+    connus = {k["point"]: k["information"] for k in contexte["known"]}
+    notes = demande.notes.strip()
+
+    def recueilli(points):
+        return [f"{CHECKLIST[p]} : {reponses[p]}" if reponses.get(p)
+                else f"{CHECKLIST[p]} : information recueillie pendant le rendez-vous (voir notes)."
+                for p in points if p in collectes]
+
+    besoins = recueilli(POINTS_BESOIN)
+    besoins += [s["description"] for s in _signaux(opp["id"]) if s["source_type"] in regles_v2.SOURCES_CLIENT]
+    contraintes = recueilli(POINTS_CONTRAINTE)
+    contraintes += [f"{CHECKLIST[p]} (connu avant le rendez-vous) : {i}" for p, i in connus.items()
+                    if p in POINTS_CONTRAINTE and p not in collectes]
+
+    besoin_manquant = [CHECKLIST[p].lower() for p in POINTS_BESOIN if p not in collectes]
+    if not besoin_manquant:
+        decision, raison = "confirmed", ("Objectifs du client et besoin réel recueillis : statut proposé "
+                                         "« confirmed », à valider par le commercial.")
+    elif not collectes:
+        decision, raison = "to_qualify", "Aucune information de la checklist n'a été recueillie."
+    else:
+        decision, raison = "to_qualify", (f"Il manque encore : {', '.join(besoin_manquant)}. À écarter seulement "
+                                          "si le client confirme ne pas avoir ce besoin.")
+
+    equipes = _equipes(opp, collectes, " ".join([notes, *reponses.values()]))
+    actions = [f"Obtenir l'information manquante : {CHECKLIST[p].lower()}." for p in manquants]
+    actions += [f"Transmettre les éléments recueillis à l'équipe {LIBELLES_EQUIPES[e]}." for e in equipes]
+    if "budget_constraints" in collectes:
+        actions.append("Intégrer la contrainte budgétaire à la proposition commerciale.")
+
+    return {
+        "id": f"M-{len(RDV_V2) + 1:02d}",
+        "client_id": client["id"],
+        "opportunity_id": opp["id"],
+        "date": jour.isoformat(),
+        "status": "completed",
+        "objective": contexte["objective"],
+        "questions": [{k: q[k] for k in ("question", "why", "information_sought")} for q in contexte["questions"]],
+        "answers": [{"information_sought": p, "answer": reponses[p]} for p in CHECKLIST if p in reponses],
+        "collected_points": ordonnes,
+        "notes": notes,
+        "summary": {
+            "summary": (f"Rendez-vous avec {client['name']} au sujet de « {opp['title']} ». "
+                        f"Objectif : {contexte['objective']} "
+                        + (f"Notes du commercial : {notes}" if notes else "Aucune note saisie.")),
+            "identified_needs": besoins,
+            "communicated_constraints": contraintes,
+            "missing_information": [CHECKLIST[p] + (" (connu avant le rendez-vous, à reconfirmer)"
+                                                    if p in connus else "") for p in manquants],
+            "opportunity_decision": decision,
+            "decision_reason": raison,
+            "internal_teams": equipes,
+            "generated_by": "rules_v1",
+            "validated": False,
+        },
+        "next_actions": actions,
+    }

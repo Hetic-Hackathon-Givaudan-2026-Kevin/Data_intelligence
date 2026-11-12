@@ -253,16 +253,23 @@ FICHIER_OFF = DOSSIER.parent / "signaux" / "signaux_marche.json"
 GIVAUDAN = "Rapport intégré Givaudan 2025 (giv-2025-integrated-report.pdf)"
 
 
+def detail_priorite(opportunite, signaux):
+    """Points de chaque critère : confiance (meilleur signal), potentiel, faisabilité, urgence."""
+    propres = [s for s in signaux if s["opportunity_id"] == opportunite["id"]]
+    reference = date.fromisoformat(DATE_REFERENCE)
+    return {
+        "confidence": max(POINTS_CONFIANCE[s["confidence"]] for s in propres),
+        "potential": POINTS_POTENTIEL[opportunite["estimated_potential"]],
+        "feasibility": POINTS_FAISABILITE[opportunite["feasibility"]],
+        "urgency": int(any(s["source_type"] in SOURCES_CLIENT
+                           and (reference - date.fromisoformat(s["source_date"])).days <= JOURS_URGENCE
+                           for s in propres)),
+    }
+
+
 def score_priorite(opportunite, signaux):
     """Confiance (meilleur signal) + potentiel + faisabilité + urgence, de 0 à 7."""
-    propres = [s for s in signaux if s["opportunity_id"] == opportunite["id"]]
-    confiance = max(POINTS_CONFIANCE[s["confidence"]] for s in propres)
-    reference = date.fromisoformat(DATE_REFERENCE)
-    urgence = int(any(s["source_type"] in SOURCES_CLIENT
-                      and (reference - date.fromisoformat(s["source_date"])).days <= JOURS_URGENCE
-                      for s in propres))
-    return (confiance + POINTS_POTENTIEL[opportunite["estimated_potential"]]
-            + POINTS_FAISABILITE[opportunite["feasibility"]] + urgence)
+    return sum(detail_priorite(opportunite, signaux).values())
 
 
 def priorite(opportunite, signaux):
@@ -357,6 +364,114 @@ def construire_signaux(signaux_off):
     ]
 
 
+# Meeting Copilot (doc v2, section 4.4) : checklist de rendez-vous, dans l'ordre de la doc.
+CHECKLIST = {
+    "client_objectives": "Objectifs du client",
+    "real_need": "Besoin réel",
+    "technical_constraints": "Contraintes techniques",
+    "budget_constraints": "Contraintes budgétaires",
+    "timeline": "Calendrier",
+    "decision_criteria": "Critères de décision",
+}
+FICHIER_BANQUE = DOSSIER.parent / "questions" / "questions.json"
+
+# Par opportunité : objectif du RDV, points déjà connus (avec le signal qui les apporte) et
+# 3 questions. ("Q-xx", point) = question reprise de la banque ; sinon question rédigée ici.
+CONTEXTE_RDV = {
+    "O-01": {
+        "objective": ("Comprendre les intentions du client concernant le développement d'une nouvelle gamme "
+                      "et déterminer les contraintes associées."),
+        "known": {},
+        "questions": [("Q-01", "client_objectives"), ("Q-02", "technical_constraints"), ("Q-03", "timeline")],
+    },
+    "O-02": {
+        "objective": "Recueillir le retour sur l'échantillon de P-01 et tester l'intérêt pour de nouvelles saveurs.",
+        "known": {"technical_constraints": ("La gamme existante et son arôme agrumes sont connus : projet P-01 "
+                                            "en cours, échantillon envoyé le 20/10/2026.", "S-03")},
+        "questions": [
+            ("Quelles saveurs aimeriez-vous voir rejoindre la gamme, et pour quels moments de consommation ?",
+             "Fait émerger l'ambition du client pour sa gamme.", "client_objectives"),
+            ("Qu'attendent vos clients de plus que ce que la gamme propose aujourd'hui ?",
+             "Vérifie qu'il existe un vrai besoin d'extension.", "real_need"),
+            ("Comment allez-vous juger le retour sur l'échantillon envoyé le 20/10 ?",
+             "Montre sur quels critères le client décidera.", "decision_criteria"),
+        ],
+    },
+    "O-03": {
+        "objective": "Qualifier la demande sur les alternatives végétales : produit visé, ambition et contraintes.",
+        "known": {"budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
+                                         "projets.", "S-07")},
+        "questions": [("Q-13", "client_objectives"), ("Q-14", "real_need"), ("Q-15", "technical_constraints")],
+    },
+    "O-04": {
+        "objective": "Comprendre le problème de texture de P-06 et ce qu'il faudrait pour le résoudre.",
+        "known": {
+            "technical_constraints": ("Texture de P-06 jugée trop épaisse en bouche (retour technique).", "S-06"),
+            "budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
+                                   "projets.", "S-07"),
+        },
+        "questions": [
+            ("Sur quels produits ce problème de texture se pose-t-il encore aujourd'hui ?",
+             "Vérifie que le besoin d'amélioration existe toujours.", "real_need"),
+            ("Quels critères utiliserez-vous pour juger qu'une nouvelle texture vous convient ?",
+             "Donne les critères de réussite d'un nouvel essai.", "decision_criteria"),
+            ("Quel calendrier envisagez-vous pour tester une version améliorée ?",
+             "Mesure l'urgence et planifie les essais.", "timeline"),
+        ],
+    },
+    "O-05": {
+        "objective": "Identifier la formulation à optimiser et ce qui ne doit pas changer, dans le budget communiqué.",
+        "known": {"budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
+                                         "projets.", "S-07")},
+        "questions": [
+            ("Quelle formulation existante souhaiteriez-vous optimiser en priorité, et pourquoi celle-là ?",
+             "Précise le besoin réel derrière la contrainte budgétaire.", "real_need"),
+            ("Quelles caractéristiques du produit ne doivent pas changer pendant l'optimisation ?",
+             "Fixe les contraintes techniques avant tout essai.", "technical_constraints"),
+            ("Comment arbitrerez-vous entre le coût et le goût ?",
+             "Montre sur quels critères le client décidera.", "decision_criteria"),
+        ],
+    },
+    "O-06": {
+        "objective": "Découvrir les attentes du client pour sa marque de distributeur et tester l'intérêt pour des "
+                     "arômes naturels.",
+        "known": {},
+        "questions": [
+            ("Quelle place voulez-vous donner aux références naturelles dans votre marque de distributeur ?",
+             "Fait émerger l'ambition du client pour sa marque.", "client_objectives"),
+            ("Quelles attentes de vos clients voulez-vous couvrir avec une nouvelle référence aromatique ?",
+             "Vérifie qu'il existe un besoin réel.", "real_need"),
+            ("Sur quels critères choisissez-vous un nouvel arôme pour vos produits ?",
+             "Montre sur quels critères le client décidera.", "decision_criteria"),
+        ],
+    },
+}
+
+
+def construire_contexte_rdv(banque):
+    """meeting_context.json : objectif, points connus et manquants de la checklist, 3 questions."""
+    par_id = {q["id"]: q for q in banque}
+    contextes = []
+    for opp_id, c in CONTEXTE_RDV.items():
+        questions = []
+        for q in c["questions"]:
+            if len(q) == 2:  # reprise de la banque
+                b = par_id[q[0]]
+                questions.append({"id": q[0], "question": b["question"], "why": b["pourquoi"],
+                                  "information_sought": q[1], "origin": "banque de questions"})
+            else:
+                questions.append({"id": f"{opp_id}-Q{len(questions) + 1}", "question": q[0], "why": q[1],
+                                  "information_sought": q[2], "origin": "rédigée pour la démo"})
+        contextes.append({
+            "opportunity_id": opp_id,
+            "objective": c["objective"],
+            "known": [{"point": p, "information": info, "signal_id": s} for p, (info, s) in c["known"].items()],
+            "missing": [p for p in CHECKLIST if p not in c["known"]],
+            "questions": questions,
+        })
+    return contextes
+
+
 def construire_opportunites(signaux):
     """Ajoute priority, calculée par la règle, juste après status (ordre des champs de la doc)."""
     resultat = []
@@ -377,16 +492,19 @@ def generer():
     return texte_json(CLIENTS)
 
 
-def generer_fichiers(signaux_off=None):
+def generer_fichiers(signaux_off=None, banque=None):
     """Renvoie {nom de fichier: texte JSON exact}, sans rien écrire."""
     if signaux_off is None:
         signaux_off = json.loads(FICHIER_OFF.read_text(encoding="utf-8"))
+    if banque is None:
+        banque = json.loads(FICHIER_BANQUE.read_text(encoding="utf-8"))["questions"]
     signaux = construire_signaux(signaux_off)
     return {
         "clients.json": generer(),
         "projects.json": texte_json(PROJETS),
         "opportunities.json": texte_json(construire_opportunites(signaux)),
         "signals.json": texte_json(signaux),
+        "meeting_context.json": texte_json(construire_contexte_rdv(banque)),
     }
 
 
