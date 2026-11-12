@@ -458,11 +458,53 @@ CONTEXTE_RDV = {
              "Fait émerger l'ambition du client pour sa marque.", "client_objectives"),
             ("Quelles attentes de vos clients voulez-vous couvrir avec une nouvelle référence aromatique ?",
              "Vérifie qu'il existe un besoin réel.", "real_need"),
-            ("Sur quels critères choisissez-vous un nouvel arôme pour vos produits ?",
-             "Montre sur quels critères le client décidera.", "decision_criteria"),
+            # DATA-US10 : faisabilité et complexité inconnues, la question technique remplace celle
+            # sur les critères de décision.
+            ("Quelles contraintes techniques ou d'étiquetage cette nouvelle référence devra-t-elle respecter ?",
+             "Renseigne la faisabilité et la complexité de la nouvelle référence.", "technical_constraints"),
         ],
     },
 }
+
+
+def lien_question(question, opp):
+    """DATA-US10 : relie la question à l'opportunité (titre), au point manquant qu'elle remplit et à
+    son utilité pour le commercial (critères inconnus de la grille qu'elle renseigne, sinon son « why »)."""
+    point = question["information_sought"]
+    texte = (f"Opportunité « {opp['title']} » ({opp['id']}) : la question sert à remplir le point manquant "
+             f"« {CHECKLIST[point]} ».")
+    criteres = [c for c in opp["missing_criteria"] if CRITERES[c]["point_de_rdv_si_inconnu"] == point]
+    if criteres:
+        noms = " et ".join(CRITERES[c]["nom"].lower() for c in criteres)
+        pluriel = len(criteres) > 1
+        quoi = "des critères encore inconnus" if pluriel else "un critère encore inconnu"
+        tant_que = "tant qu'ils restent inconnus" if pluriel else "tant qu'il reste inconnu"
+        texte += f" Utile au commercial : elle renseigne {quoi} de la grille de qualification ({noms})"
+        if opp["priority_status"] == "provisional":
+            texte += (f" ; {tant_que}, la priorité est provisoire "
+                      f"({justification.LIBELLES_PRIORITE[opp['priority']]} à "
+                      f"{justification.LIBELLES_PRIORITE[opp['priority_max']]}).")
+        else:
+            texte += "."
+    else:
+        why = question["why"].rstrip(".")
+        texte += f" Utile au commercial : {why[0].lower() + why[1:]}."
+    return texte
+
+
+def ajouter_liens(contextes, opportunites):
+    """Ajoute opportunity_link à chaque question (après information_sought)."""
+    par_id = {o["id"]: o for o in opportunites}
+    resultat = []
+    for c in contextes:
+        questions = []
+        for q in c["questions"]:
+            champs = list(q.items())
+            i = [k for k, _ in champs].index("information_sought") + 1
+            questions.append(dict(champs[:i] + [("opportunity_link", lien_question(q, par_id[c["opportunity_id"]]))]
+                                  + champs[i:]))
+        resultat.append({**c, "questions": questions})
+    return resultat
 
 
 def construire_contexte_rdv(banque):
@@ -474,11 +516,12 @@ def construire_contexte_rdv(banque):
         for q in c["questions"]:
             if len(q) == 2:  # reprise de la banque
                 b = par_id[q[0]]
-                questions.append({"id": q[0], "question": b["question"], "why": b["pourquoi"],
-                                  "information_sought": q[1], "origin": "banque de questions"})
+                questions.append({"id": q[0], "opportunity_id": opp_id, "question": b["question"],
+                                  "why": b["pourquoi"], "information_sought": q[1], "origin": "banque de questions"})
             else:
-                questions.append({"id": f"{opp_id}-Q{len(questions) + 1}", "question": q[0], "why": q[1],
-                                  "information_sought": q[2], "origin": "rédigée pour la démo"})
+                questions.append({"id": f"{opp_id}-Q{len(questions) + 1}", "opportunity_id": opp_id,
+                                  "question": q[0], "why": q[1], "information_sought": q[2],
+                                  "origin": "rédigée pour la démo"})
         contextes.append({
             "opportunity_id": opp_id,
             "objective": c["objective"],
@@ -558,13 +601,13 @@ def generer_fichiers(signaux_off=None, banque=None):
         banque = json.loads(FICHIER_BANQUE.read_text(encoding="utf-8"))["questions"]
     detectees, signaux = detecter_demo(construire_signaux(signaux_off))
     contextes = construire_contexte_rdv(banque)
+    opportunites = ajouter_justifications(construire_opportunites(detectees, signaux), signaux, contextes)
     return {
         "clients.json": generer(),
         "projects.json": texte_json(PROJETS),
-        "opportunities.json": texte_json(ajouter_justifications(construire_opportunites(detectees, signaux),
-                                                                signaux, contextes)),
+        "opportunities.json": texte_json(opportunites),
         "signals.json": texte_json(signaux),
-        "meeting_context.json": texte_json(contextes),
+        "meeting_context.json": texte_json(ajouter_liens(contextes, opportunites)),
     }
 
 

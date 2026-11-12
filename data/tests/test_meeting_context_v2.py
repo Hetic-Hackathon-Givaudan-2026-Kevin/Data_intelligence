@@ -87,3 +87,54 @@ def test_fichier_a_jour_avec_le_generateur():
     spec.loader.exec_module(module)
     texte = (DOSSIER / "meeting_context.json").read_text(encoding="utf-8")
     assert texte == module.generer_fichiers()["meeting_context.json"]
+
+
+# --- DATA-US10 : questions contextualisées -------------------------------------------------------
+
+CHECKLIST_FR = {"client_objectives": "Objectifs du client", "real_need": "Besoin réel",
+                "technical_constraints": "Contraintes techniques", "budget_constraints": "Contraintes budgétaires",
+                "timeline": "Calendrier", "decision_criteria": "Critères de décision"}
+
+
+def test_chaque_question_garde_son_opportunite_et_a_un_lien(contextes):
+    opps = {o["id"]: o for o in charger(DOSSIER / "opportunities.json")}
+    for c in contextes:
+        opp = opps[c["opportunity_id"]]
+        for q in c["questions"]:
+            assert q["opportunity_id"] == c["opportunity_id"], q["id"]
+            lien = q["opportunity_link"]
+            assert lien.strip(), q["id"]
+            assert f"« {opp['title']} »" in lien, q["id"]  # quelle opportunité
+            assert f"« {CHECKLIST_FR[q['information_sought']]} »" in lien, q["id"]  # quel point manquant
+            assert "Utile au commercial" in lien, q["id"]  # pourquoi c'est utile
+
+
+def test_chaque_critere_manquant_est_couvert(contextes):
+    grille = {c["id"]: c for c in charger(DOSSIER / "grille_qualification.json")["criteres"]}
+    par_opp = {c["opportunity_id"]: c for c in contextes}
+    for opp in charger(DOSSIER / "opportunities.json"):
+        visees = {q["information_sought"] for q in par_opp[opp["id"]]["questions"]}
+        for critere in opp["missing_criteria"]:
+            point = grille[critere]["point_de_rdv_si_inconnu"]
+            assert point in visees, (opp["id"], critere)
+            assert any(grille[critere]["nom"].lower() in q["opportunity_link"]
+                       for q in par_opp[opp["id"]]["questions"] if q["information_sought"] == point), (opp["id"], critere)
+
+
+def test_criteres_manquants_attendus(contextes):
+    """O-01 et O-05 : faisabilité ; O-06 : potentiel, faisabilité, complexité (grille DATA-US09)."""
+    par_opp = {c["opportunity_id"]: {q["information_sought"] for q in c["questions"]} for c in contextes}
+    assert "technical_constraints" in par_opp["O-01"]
+    assert "technical_constraints" in par_opp["O-05"]
+    assert {"client_objectives", "technical_constraints"} <= par_opp["O-06"]
+
+
+def test_aucune_question_sur_un_point_deja_connu(contextes):
+    for c in contextes:
+        connus = {k["point"] for k in c["known"]}
+        for q in c["questions"]:
+            assert q["information_sought"] not in connus, q["id"]
+
+
+def test_au_moins_trois_questions_par_opportunite(contextes):
+    assert all(len(c["questions"]) >= 3 for c in contextes)

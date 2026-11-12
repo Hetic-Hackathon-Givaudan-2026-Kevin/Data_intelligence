@@ -211,6 +211,36 @@ Les prochaines actions n'y sont pas répétées : elles restent dans
 | `generated_by` | enum | oui | `rules_v1` (modèle de texte), `llm_v2` | Mode de génération | `rules_v1` |
 | `validated` | bool | oui | `true`, `false` | Validé par le commercial | `false` |
 
+## Contexte de rendez-vous (`meeting_context.json`)
+
+Fichier généré, une entrée par opportunité : ce que le Meeting Copilot affiche
+avant le rendez-vous (section 4.4). Ce n'est pas une entité de la section 8.
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `opportunity_id` | string | `id` d'une Opportunity | Opportunité préparée |
+| `objective` | string | texte | Objectif du rendez-vous |
+| `known` | liste d'objets | `{point, information, signal_id}` | Points de la checklist déjà connus, avec le signal qui les apporte |
+| `missing` | liste d'enum | points de la checklist absents de `known` | Points encore manquants |
+| `questions` | liste d'objets | au moins 3 (voir ci-dessous) | Questions suggérées |
+
+Objet `questions[]` (DATA-US10) :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `id` | string | `Q-xx` (banque de questions) ou `O-xx-Qn` | Identifiant |
+| `opportunity_id` | string | celui de l'entrée | Opportunité de la question |
+| `question` | string | question ouverte, une seule idée | La question |
+| `why` | string | texte | Pourquoi elle est importante |
+| `information_sought` | enum | un point de `missing`, jamais un point de `known` | Point manquant qu'elle remplit |
+| `opportunity_link` | string | texte en français | Lien avec l'opportunité : titre, point manquant rempli, utilité pour le commercial (critères inconnus de la grille qu'elle renseigne et effet sur la priorité provisoire, sinon `why`) |
+| `origin` | string | `banque de questions`, `rédigée pour la démo` | Origine |
+
+Les questions visent d'abord les critères inconnus de l'opportunité
+(`missing_criteria`) : chaque critère inconnu est couvert par au moins une
+question sur le point de RDV que la grille lui associe
+(`point_de_rdv_si_inconnu`).
+
 ## Champs calculés, jamais stockés
 
 Ils se calculent à partir des fichiers à chaque lecture, pour ne jamais se

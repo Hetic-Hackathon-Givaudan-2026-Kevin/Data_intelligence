@@ -137,6 +137,17 @@ quand un nouvel arôme est à créer (nouvelle gamme, extension de gamme, nouvel
 formulation, nouvelle référence) ; marketing si un signal de marché ou un
 rapport est rattaché ; réglementation si un règlement l'est.
 
+## `meeting_context.json` (Meeting Copilot)
+
+Une entrée par opportunité : objectif du RDV, points connus et manquants de la
+checklist, au moins 3 questions. Chaque question porte son `opportunity_id` et
+un `opportunity_link` en français (DATA-US10) : l'opportunité visée, le point
+manquant qu'elle remplit et son utilité pour le commercial. Les questions
+visent d'abord les critères inconnus de la grille : faisabilité pour O-01 et
+O-05 (contraintes techniques) ; potentiel (objectifs du client), faisabilité et
+complexité (contraintes techniques) pour O-06. Aucune question ne porte sur un
+point déjà connu.
+
 ## `signals.json`
 
 Au moins un signal par opportunité. Clés de la section 8 (`id`,
