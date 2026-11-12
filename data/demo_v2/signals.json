@@ -1,0 +1,123 @@
+[
+  {
+    "id": "S-01",
+    "opportunity_id": "O-01",
+    "description": "Compte rendu de l'échange commercial du 05/11/2026 : le client exprime un intérêt pour une nouvelle catégorie, les boissons fonctionnelles.",
+    "source_type": "meeting_report",
+    "source_date": "2026-11-05",
+    "confidence": "high",
+    "evidence_type": "fact",
+    "is_real_source": false,
+    "source_ref": null
+  },
+  {
+    "id": "S-02",
+    "opportunity_id": "O-01",
+    "description": "Part des nouveaux produits boissons fonctionnelles en France : +100 % entre 2020 et 2022 (Open Food Facts). Petit échantillon : 139 produits en 2020, 172 en 2022. Produits référencés, pas des ventes.",
+    "source_type": "market_trend",
+    "source_date": "2022-12-31",
+    "confidence": "medium",
+    "evidence_type": "fact",
+    "is_real_source": true,
+    "source_ref": "data/signaux/signaux_marche.json#OPP-01 (données Open Food Facts au 2026-11-11, extraites le 2026-11-12)"
+  },
+  {
+    "id": "S-03",
+    "opportunity_id": "O-02",
+    "description": "Projet existant P-01 : reformulation de l'arôme agrumes de la gamme existante, échantillon envoyé le 20/10/2026.",
+    "source_type": "project_history",
+    "source_date": "2026-10-20",
+    "confidence": "medium",
+    "evidence_type": "fact",
+    "is_real_source": false,
+    "source_ref": "data/demo_v2/projects.json#P-01"
+  },
+  {
+    "id": "S-04",
+    "opportunity_id": "O-03",
+    "description": "Demande du client concernant des alternatives végétales.",
+    "source_type": "client_request",
+    "source_date": "2026-10-22",
+    "confidence": "high",
+    "evidence_type": "fact",
+    "is_real_source": false,
+    "source_ref": null
+  },
+  {
+    "id": "S-05",
+    "opportunity_id": "O-03",
+    "description": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +30 % entre 2020 et 2022 (Open Food Facts ; 500 produits en 2020, 404 en 2022). Chiffre français : le client est en Suède, la tendance n'y est pas mesurée.",
+    "source_type": "market_trend",
+    "source_date": "2022-12-31",
+    "confidence": "low",
+    "evidence_type": "hypothesis",
+    "is_real_source": true,
+    "source_ref": "data/signaux/signaux_marche.json#OPP-05 (données Open Food Facts au 2026-11-11, extraites le 2026-11-12)"
+  },
+  {
+    "id": "S-06",
+    "opportunity_id": "O-04",
+    "description": "Retour technique du client sur le projet terminé P-06 : texture jugée trop épaisse en bouche.",
+    "source_type": "project_history",
+    "source_date": "2026-06-30",
+    "confidence": "high",
+    "evidence_type": "fact",
+    "is_real_source": false,
+    "source_ref": "data/demo_v2/projects.json#P-06"
+  },
+  {
+    "id": "S-07",
+    "opportunity_id": "O-05",
+    "description": "Compte rendu : le client a communiqué une contrainte budgétaire pour ses prochains projets.",
+    "source_type": "meeting_report",
+    "source_date": "2026-10-28",
+    "confidence": "high",
+    "evidence_type": "fact",
+    "is_real_source": false,
+    "source_ref": null
+  },
+  {
+    "id": "S-08",
+    "opportunity_id": "O-05",
+    "description": "Coût de matière première : indice INSEE du sucre importé, en euros, +15 % sur un an (09/2025 → 09/2026), mais environ −39 % depuis octobre 2023. Prix mondial à l'import, pas le coût réel du client.",
+    "source_type": "commodity_price",
+    "source_date": "2026-09-30",
+    "confidence": "medium",
+    "evidence_type": "fact",
+    "is_real_source": true,
+    "source_ref": "https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010002028 (échantillon : D:/open_data/insee_ippmp_sucre/010002028.csv)"
+  },
+  {
+    "id": "S-09",
+    "opportunity_id": "O-06",
+    "description": "Givaudan cite la demande de transparence, de produits durables et clean label, et d'ingrédients naturels parmi les tendances de sa stratégie 2030 (rapport intégré 2025, pp. 49-50). Tendance mondiale, pas propre aux marques de distributeur.",
+    "source_type": "company_report",
+    "source_date": "2026-01-29",
+    "confidence": "medium",
+    "evidence_type": "fact",
+    "is_real_source": true,
+    "source_ref": "Rapport intégré Givaudan 2025 (giv-2025-integrated-report.pdf), pp. 49-50"
+  },
+  {
+    "id": "S-10",
+    "opportunity_id": "O-06",
+    "description": "Premier projet en cours avec le client : P-07 (arôme vanille pour un yaourt de sa marque de distributeur).",
+    "source_type": "project_history",
+    "source_date": "2026-09-21",
+    "confidence": "medium",
+    "evidence_type": "fact",
+    "is_real_source": false,
+    "source_ref": "data/demo_v2/projects.json#P-07"
+  },
+  {
+    "id": "S-11",
+    "opportunity_id": "O-06",
+    "description": "Fait réglementaire : le limonène (note d'agrumes) figure dans la liste de l'Union des substances aromatisantes pour la catégorie « All categories of flavoured foods », sans restriction indiquée (règlement d'exécution (UE) n° 872/2012, JO L 267 du 02/10/2012). L'autorisation est un fait ; son lien avec la nouvelle référence (par exemple une référence agrumes) est une piste.",
+    "source_type": "regulation",
+    "source_date": "2012-10-02",
+    "confidence": "high",
+    "evidence_type": "fact",
+    "is_real_source": true,
+    "source_ref": "https://ec.europa.eu/food/food-feed-portal/screen/food-flavourings/search/details/POL-FFL-IMPORT-3388 (échantillon : D:/open_data/eu_food_flavourings/food_flavourings_200.json)"
+  }
+]

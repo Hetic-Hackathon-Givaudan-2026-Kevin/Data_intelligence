@@ -1,0 +1,80 @@
+[
+  {
+    "id": "O-01",
+    "client_id": "C-01",
+    "title": "Nouvelle gamme de boissons fonctionnelles",
+    "description": "Le client s'intéresse à une nouvelle catégorie, les boissons fonctionnelles : possibilité d'accompagner le lancement d'une nouvelle gamme.",
+    "category": "Nouvelle gamme",
+    "status": "to_qualify",
+    "priority": "high",
+    "estimated_potential": "high",
+    "feasibility": "to_confirm",
+    "complexity": "high",
+    "next_action": "Organiser un échange avec le client afin de confirmer son intérêt pour une nouvelle gamme de boissons fonctionnelles et identifier ses contraintes de formulation."
+  },
+  {
+    "id": "O-02",
+    "client_id": "C-01",
+    "title": "Extension d'une gamme aromatique",
+    "description": "Le travail en cours sur la gamme existante (P-01) peut ouvrir sur de nouvelles saveurs pour cette gamme.",
+    "category": "Extension de gamme",
+    "status": "detected",
+    "priority": "medium",
+    "estimated_potential": "medium",
+    "feasibility": "high",
+    "complexity": "low",
+    "next_action": "Faire le point sur le retour de l'échantillon envoyé le 20/10/2026 (P-01) avant de proposer une extension de la gamme."
+  },
+  {
+    "id": "O-03",
+    "client_id": "C-02",
+    "title": "Développement d'une formulation végétale",
+    "description": "Le client a demandé des alternatives végétales : possibilité de développer une formulation dédiée.",
+    "category": "Nouvelle formulation",
+    "status": "to_qualify",
+    "priority": "high",
+    "estimated_potential": "medium",
+    "feasibility": "medium",
+    "complexity": "high",
+    "next_action": "Qualifier la demande : produit visé, marché suédois, calendrier et budget."
+  },
+  {
+    "id": "O-04",
+    "client_id": "C-02",
+    "title": "Amélioration de la texture d'un produit",
+    "description": "Le retour technique sur la texture du projet terminé P-06 peut justifier une proposition d'amélioration.",
+    "category": "Amélioration produit",
+    "status": "detected",
+    "priority": "medium",
+    "estimated_potential": "low",
+    "feasibility": "medium",
+    "complexity": "medium",
+    "next_action": "Revoir avec les équipes techniques le retour sur la texture de P-06 avant de recontacter le client."
+  },
+  {
+    "id": "O-05",
+    "client_id": "C-02",
+    "title": "Optimisation d'une formulation existante",
+    "description": "Le client a communiqué une contrainte budgétaire : possibilité d'optimiser le coût d'une formulation existante.",
+    "category": "Optimisation",
+    "status": "detected",
+    "priority": "medium",
+    "estimated_potential": "low",
+    "feasibility": "medium",
+    "complexity": "medium",
+    "next_action": "Confirmer le budget communiqué et identifier la formulation à optimiser."
+  },
+  {
+    "id": "O-06",
+    "client_id": "C-03",
+    "title": "Nouvelle référence aromatique pour une marque de distributeur",
+    "description": "La demande de produits plus naturels et à l'étiquette plus claire peut ouvrir une nouvelle référence aromatique pour la marque de distributeur du client.",
+    "category": "Nouvelle référence",
+    "status": "detected",
+    "priority": "low",
+    "estimated_potential": null,
+    "feasibility": "to_confirm",
+    "complexity": "low",
+    "next_action": "Présenter des pistes d'arômes naturels pour la marque de distributeur et confirmer l'intérêt du client."
+  }
+]

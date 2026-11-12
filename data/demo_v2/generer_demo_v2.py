@@ -1,13 +1,16 @@
-"""Génère data/demo_v2 : clients fictifs (DATA-US03) et leurs projets (DATA-US04), doc fonctionnelle v2.
+"""Génère data/demo_v2 (doc fonctionnelle v2) : clients (DATA-US03), projets (DATA-US04),
+opportunités (DATA-US05) et signaux (DATA-US06).
 
 Usage, depuis la racine du repo :
     python data/demo_v2/generer_demo_v2.py
 
-Tout est fictif : aucun vrai client, aucun vrai nom de personne. Le fichier ne contient
-aucun compteur (projets, opportunités) : ils seront calculés à partir des autres fichiers.
+Clients, projets et opportunités sont fictifs : aucun vrai client, aucun vrai nom de personne.
+Les signaux marqués is_real_source citent leur source exacte. Aucun compteur ni date du dernier
+signal n'est stocké : ils se calculent à partir des autres fichiers.
 """
 
 import json
+from datetime import date
 from pathlib import Path
 
 DOSSIER = Path(__file__).resolve().parent
@@ -137,6 +140,234 @@ PROJETS = [
 ]
 
 
+# Opportunités (DATA-US05) : les 6 de la doc v2, section 7. priority est calculée par priorite().
+OPPORTUNITES = [
+    {
+        "id": "O-01",
+        "client_id": "C-01",
+        "title": "Nouvelle gamme de boissons fonctionnelles",
+        "description": (
+            "Le client s'intéresse à une nouvelle catégorie, les boissons fonctionnelles : "
+            "possibilité d'accompagner le lancement d'une nouvelle gamme."
+        ),
+        "category": "Nouvelle gamme",
+        "status": "to_qualify",
+        "estimated_potential": "high",
+        "feasibility": "to_confirm",
+        "complexity": "high",
+        "next_action": (
+            "Organiser un échange avec le client afin de confirmer son intérêt pour une nouvelle gamme de "
+            "boissons fonctionnelles et identifier ses contraintes de formulation."
+        ),
+    },
+    {
+        "id": "O-02",
+        "client_id": "C-01",
+        "title": "Extension d'une gamme aromatique",
+        "description": (
+            "Le travail en cours sur la gamme existante (P-01) peut ouvrir sur de nouvelles saveurs "
+            "pour cette gamme."
+        ),
+        "category": "Extension de gamme",
+        "status": "detected",
+        "estimated_potential": "medium",
+        "feasibility": "high",
+        "complexity": "low",
+        "next_action": (
+            "Faire le point sur le retour de l'échantillon envoyé le 20/10/2026 (P-01) avant de proposer "
+            "une extension de la gamme."
+        ),
+    },
+    {
+        "id": "O-03",
+        "client_id": "C-02",
+        "title": "Développement d'une formulation végétale",
+        "description": "Le client a demandé des alternatives végétales : possibilité de développer une formulation dédiée.",
+        "category": "Nouvelle formulation",
+        "status": "to_qualify",
+        "estimated_potential": "medium",
+        "feasibility": "medium",
+        "complexity": "high",
+        "next_action": "Qualifier la demande : produit visé, marché suédois, calendrier et budget.",
+    },
+    {
+        "id": "O-04",
+        "client_id": "C-02",
+        "title": "Amélioration de la texture d'un produit",
+        "description": (
+            "Le retour technique sur la texture du projet terminé P-06 peut justifier une proposition "
+            "d'amélioration."
+        ),
+        "category": "Amélioration produit",
+        "status": "detected",
+        "estimated_potential": "low",
+        "feasibility": "medium",
+        "complexity": "medium",
+        "next_action": "Revoir avec les équipes techniques le retour sur la texture de P-06 avant de recontacter le client.",
+    },
+    {
+        "id": "O-05",
+        "client_id": "C-02",
+        "title": "Optimisation d'une formulation existante",
+        "description": (
+            "Le client a communiqué une contrainte budgétaire : possibilité d'optimiser le coût d'une "
+            "formulation existante."
+        ),
+        "category": "Optimisation",
+        "status": "detected",
+        "estimated_potential": "low",
+        "feasibility": "medium",
+        "complexity": "medium",
+        "next_action": "Confirmer le budget communiqué et identifier la formulation à optimiser.",
+    },
+    {
+        "id": "O-06",
+        "client_id": "C-03",
+        "title": "Nouvelle référence aromatique pour une marque de distributeur",
+        "description": (
+            "La demande de produits plus naturels et à l'étiquette plus claire peut ouvrir une nouvelle "
+            "référence aromatique pour la marque de distributeur du client."
+        ),
+        "category": "Nouvelle référence",
+        "status": "detected",
+        "estimated_potential": None,
+        "feasibility": "to_confirm",
+        "complexity": "low",
+        "next_action": (
+            "Présenter des pistes d'arômes naturels pour la marque de distributeur et confirmer l'intérêt "
+            "du client."
+        ),
+    },
+]
+
+# Règle de priorité (doc v2, section 5.3 : « une classification par règles métier suffit »).
+DATE_REFERENCE = "2026-11-12"  # date du jeu de démo, fixe
+JOURS_URGENCE = 30
+SOURCES_CLIENT = {"meeting_report", "client_request"}  # le client s'est exprimé lui-même
+POINTS_CONFIANCE = {"high": 2, "medium": 1, "low": 0}
+POINTS_POTENTIEL = {"high": 2, "medium": 1, "low": 0, None: 0}
+POINTS_FAISABILITE = {"high": 2, "medium": 1, "low": 0, "to_confirm": 0}
+SEUIL_HIGH, SEUIL_MEDIUM = 5, 3
+
+FICHIER_OFF = DOSSIER.parent / "signaux" / "signaux_marche.json"
+GIVAUDAN = "Rapport intégré Givaudan 2025 (giv-2025-integrated-report.pdf)"
+
+
+def score_priorite(opportunite, signaux):
+    """Confiance (meilleur signal) + potentiel + faisabilité + urgence, de 0 à 7."""
+    propres = [s for s in signaux if s["opportunity_id"] == opportunite["id"]]
+    confiance = max(POINTS_CONFIANCE[s["confidence"]] for s in propres)
+    reference = date.fromisoformat(DATE_REFERENCE)
+    urgence = int(any(s["source_type"] in SOURCES_CLIENT
+                      and (reference - date.fromisoformat(s["source_date"])).days <= JOURS_URGENCE
+                      for s in propres))
+    return (confiance + POINTS_POTENTIEL[opportunite["estimated_potential"]]
+            + POINTS_FAISABILITE[opportunite["feasibility"]] + urgence)
+
+
+def priorite(opportunite, signaux):
+    score = score_priorite(opportunite, signaux)
+    return "high" if score >= SEUIL_HIGH else "medium" if score >= SEUIL_MEDIUM else "low"
+
+
+def signal_off(signaux_off, opp_off):
+    """Chiffres Open Food Facts de la période affichée (2020→2022), relus dans signaux_marche.json.
+
+    source_date = fin de la période observée (et non la date d'extraction, qui va dans source_ref) :
+    sinon la « date du dernier signal » présenterait une tendance de 2022 comme récente.
+    """
+    g = next(s["signal"] for s in signaux_off["signaux"] if s["opportunite_id"] == opp_off)
+    periode = next(p for p in g["periodes"].values() if p["role"].startswith("principale"))
+    ref = (f"data/signaux/signaux_marche.json#{opp_off} (données Open Food Facts au "
+           f"{signaux_off['source']['dernier_produit_ajoute']}, extraites le {signaux_off['date_extraction']})")
+    return {"pct": f"{g['evolution_affichee_pct']:+d} %",
+            "n0": g["annees"][str(periode["debut"])]["produits"], "n1": g["annees"][str(periode["fin"])]["produits"],
+            "date": f"{periode['fin']}-12-31", "ref": ref}
+
+
+def construire_signaux(signaux_off):
+    """Signaux (DATA-US06) : fictifs de la doc, et réels avec leur source exacte."""
+    f01, f03 = signal_off(signaux_off, "OPP-01"), signal_off(signaux_off, "OPP-05")
+    return [
+        {"id": "S-01", "opportunity_id": "O-01",
+         "description": ("Compte rendu de l'échange commercial du 05/11/2026 : le client exprime un intérêt pour "
+                         "une nouvelle catégorie, les boissons fonctionnelles."),
+         "source_type": "meeting_report", "source_date": "2026-11-05", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": None},
+        {"id": "S-02", "opportunity_id": "O-01",
+         "description": (f"Part des nouveaux produits boissons fonctionnelles en France : {f01['pct']} entre "
+                         f"2020 et 2022 (Open Food Facts). Petit échantillon : {f01['n0']} produits en 2020, "
+                         f"{f01['n1']} en 2022. Produits référencés, pas des ventes."),
+         "source_type": "market_trend", "source_date": f01["date"], "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": True, "source_ref": f01["ref"]},
+        {"id": "S-03", "opportunity_id": "O-02",
+         "description": ("Projet existant P-01 : reformulation de l'arôme agrumes de la gamme existante, "
+                         "échantillon envoyé le 20/10/2026."),
+         "source_type": "project_history", "source_date": "2026-10-20", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": "data/demo_v2/projects.json#P-01"},
+        {"id": "S-04", "opportunity_id": "O-03",
+         "description": "Demande du client concernant des alternatives végétales.",
+         "source_type": "client_request", "source_date": "2026-10-22", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": None},
+        {"id": "S-05", "opportunity_id": "O-03",
+         "description": (f"Part des nouveaux produits alternatives végétales à la viande et aux laitiers en "
+                         f"France : {f03['pct']} entre 2020 et 2022 (Open Food Facts ; {f03['n0']} produits en "
+                         f"2020, {f03['n1']} en 2022). Chiffre français : le client est en Suède, la tendance "
+                         "n'y est pas mesurée."),
+         "source_type": "market_trend", "source_date": f03["date"], "confidence": "low",
+         "evidence_type": "hypothesis", "is_real_source": True, "source_ref": f03["ref"]},
+        {"id": "S-06", "opportunity_id": "O-04",
+         "description": "Retour technique du client sur le projet terminé P-06 : texture jugée trop épaisse en bouche.",
+         "source_type": "project_history", "source_date": "2026-06-30", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": "data/demo_v2/projects.json#P-06"},
+        {"id": "S-07", "opportunity_id": "O-05",
+         "description": "Compte rendu : le client a communiqué une contrainte budgétaire pour ses prochains projets.",
+         "source_type": "meeting_report", "source_date": "2026-10-28", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": None},
+        {"id": "S-08", "opportunity_id": "O-05",
+         "description": ("Coût de matière première : indice INSEE du sucre importé, en euros, +15 % sur un an "
+                         "(09/2025 → 09/2026), mais environ −39 % depuis octobre 2023. Prix mondial à "
+                         "l'import, pas le coût réel du client."),
+         "source_type": "commodity_price", "source_date": "2026-09-30", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": True,
+         "source_ref": ("https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010002028 "
+                        "(échantillon : D:/open_data/insee_ippmp_sucre/010002028.csv)")},
+        {"id": "S-09", "opportunity_id": "O-06",
+         "description": ("Givaudan cite la demande de transparence, de produits durables et clean label, et "
+                         "d'ingrédients naturels parmi les tendances de sa stratégie 2030 (rapport intégré "
+                         "2025, pp. 49-50). Tendance mondiale, pas propre aux marques de distributeur."),
+         "source_type": "company_report", "source_date": "2026-01-29", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": True, "source_ref": f"{GIVAUDAN}, pp. 49-50"},
+        {"id": "S-10", "opportunity_id": "O-06",
+         "description": ("Premier projet en cours avec le client : P-07 (arôme vanille pour un yaourt de sa "
+                         "marque de distributeur)."),
+         "source_type": "project_history", "source_date": "2026-09-21", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": "data/demo_v2/projects.json#P-07"},
+        {"id": "S-11", "opportunity_id": "O-06",
+         "description": ("Fait réglementaire : le limonène (note d'agrumes) figure dans la liste de l'Union des "
+                         "substances aromatisantes pour la catégorie « All categories of flavoured foods », "
+                         "sans restriction indiquée (règlement d'exécution (UE) n° 872/2012, JO L 267 du "
+                         "02/10/2012). L'autorisation est un fait ; son lien avec la nouvelle référence "
+                         "(par exemple une référence agrumes) est une piste."),
+         "source_type": "regulation", "source_date": "2012-10-02", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": True,
+         "source_ref": ("https://ec.europa.eu/food/food-feed-portal/screen/food-flavourings/search/details/"
+                        "POL-FFL-IMPORT-3388 (échantillon : D:/open_data/eu_food_flavourings/"
+                        "food_flavourings_200.json)")},
+    ]
+
+
+def construire_opportunites(signaux):
+    """Ajoute priority, calculée par la règle, juste après status (ordre des champs de la doc)."""
+    resultat = []
+    for o in OPPORTUNITES:
+        o = dict(o)
+        champs = list(o.items())
+        i = [k for k, _ in champs].index("status") + 1
+        resultat.append(dict(champs[:i] + [("priority", priorite(o, signaux))] + champs[i:]))
+    return resultat
+
+
 def texte_json(objets):
     return json.dumps(objets, ensure_ascii=False, indent=2) + "\n"
 
@@ -146,9 +377,17 @@ def generer():
     return texte_json(CLIENTS)
 
 
-def generer_fichiers():
+def generer_fichiers(signaux_off=None):
     """Renvoie {nom de fichier: texte JSON exact}, sans rien écrire."""
-    return {"clients.json": generer(), "projects.json": texte_json(PROJETS)}
+    if signaux_off is None:
+        signaux_off = json.loads(FICHIER_OFF.read_text(encoding="utf-8"))
+    signaux = construire_signaux(signaux_off)
+    return {
+        "clients.json": generer(),
+        "projects.json": texte_json(PROJETS),
+        "opportunities.json": texte_json(construire_opportunites(signaux)),
+        "signals.json": texte_json(signaux),
+    }
 
 
 def main():
