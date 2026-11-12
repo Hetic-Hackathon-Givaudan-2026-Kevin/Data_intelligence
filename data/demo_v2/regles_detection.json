@@ -1,0 +1,146 @@
+{
+  "description": "Règles de détection des opportunités (ticket DATA-US07). Chaque règle dit quels signaux d'un client font naître quel type d'opportunité. Appliquées par data/demo_v2/detection.py.",
+  "regles_communes": [
+    "Seuls les signaux propres à un client (client_id renseigné) déclenchent une règle. Les mots-clés sont cherchés dans la description du signal, sans tenir compte des majuscules ni des accents.",
+    "Une règle se déclenche pour un client quand il a au moins « nombre_min_signaux » signaux qui remplissent la condition.",
+    "Une hypothèse seule ne suffit pas : parmi les signaux qui déclenchent la règle, au moins un ne doit pas être de type « hypothesis ».",
+    "Anti-doublon : une règle produit au plus une opportunité par client ; tous les signaux qui la déclenchent sont rattachés à cette opportunité.",
+    "Travail déjà engagé : si un projet actif du client contient un des mots de « deja_engage_si_un_projet_actif_contient » (dans son nom ou sa description), aucune opportunité n'est créée. {theme} y désigne le mot-clé du thème trouvé.",
+    "Signaux de marché (Open Food Facts, INSEE, rapport Givaudan, règlement UE) : ils ne sont propres à aucun client et ne créent jamais d'opportunité. Chacun se rattache à l'opportunité détectée de sa catégorie ; si l'opportunité a un thème, le signal doit aussi le mentionner.",
+    "Les opportunités sont numérotées O-01, O-02… dans l'ordre des clients, puis des règles."
+  ],
+  "regles": [
+    {
+      "id": "R-01",
+      "nom": "Intérêt du client pour une nouvelle catégorie",
+      "condition": {
+        "types_de_signaux": ["meeting_report", "client_request"],
+        "mots_cles": ["nouvelle catégorie", "nouvelle gamme"],
+        "nombre_min_signaux": 1,
+        "secteurs_client": null,
+        "statut_du_projet_cite": null
+      },
+      "deja_engage_si_un_projet_actif_contient": ["{theme}"],
+      "opportunite": {
+        "categorie": "Nouvelle gamme",
+        "titre_type": "Nouvelle gamme de {theme}",
+        "themes": [
+          {"si_le_signal_contient": "boissons fonctionnelles", "dans_le_titre": "boissons fonctionnelles"}
+        ],
+        "theme_par_defaut": "produits"
+      },
+      "statut_initial": "to_qualify",
+      "pourquoi_ce_statut": "Le client a exprimé lui-même son intérêt (compte rendu ou demande) : le besoin est à qualifier avec lui.",
+      "justification_type": "Le client a exprimé un intérêt pour une nouvelle catégorie de produits : possibilité d'accompagner le lancement d'une nouvelle gamme."
+    },
+    {
+      "id": "R-02",
+      "nom": "Travail en cours sur une gamme existante",
+      "condition": {
+        "types_de_signaux": ["project_history"],
+        "mots_cles": ["gamme existante"],
+        "nombre_min_signaux": 1,
+        "secteurs_client": null,
+        "statut_du_projet_cite": "active"
+      },
+      "deja_engage_si_un_projet_actif_contient": ["extension de gamme", "extension de la gamme"],
+      "opportunite": {
+        "categorie": "Extension de gamme",
+        "titre_type": "Extension d'une gamme aromatique",
+        "themes": [],
+        "theme_par_defaut": null
+      },
+      "statut_initial": "detected",
+      "pourquoi_ce_statut": "Le client n'a rien demandé : l'opportunité est déduite d'un projet en cours.",
+      "justification_type": "Un projet en cours porte sur une gamme existante du client : il peut ouvrir sur de nouvelles saveurs pour cette gamme."
+    },
+    {
+      "id": "R-03",
+      "nom": "Demande du client pour une nouvelle formulation",
+      "condition": {
+        "types_de_signaux": ["meeting_report", "client_request"],
+        "mots_cles": ["végétal", "nouvelle formulation"],
+        "nombre_min_signaux": 1,
+        "secteurs_client": null,
+        "statut_du_projet_cite": null
+      },
+      "deja_engage_si_un_projet_actif_contient": ["{theme}"],
+      "opportunite": {
+        "categorie": "Nouvelle formulation",
+        "titre_type": "Développement d'une formulation {theme}",
+        "themes": [
+          {"si_le_signal_contient": "végétal", "dans_le_titre": "végétale"}
+        ],
+        "theme_par_defaut": "dédiée"
+      },
+      "statut_initial": "to_qualify",
+      "pourquoi_ce_statut": "Le client a formulé la demande lui-même : elle est à qualifier avec lui.",
+      "justification_type": "Le client a demandé un nouveau type de formulation : possibilité de développer une formulation dédiée."
+    },
+    {
+      "id": "R-04",
+      "nom": "Retour technique sur un projet terminé",
+      "condition": {
+        "types_de_signaux": ["project_history"],
+        "mots_cles": ["retour technique"],
+        "nombre_min_signaux": 1,
+        "secteurs_client": null,
+        "statut_du_projet_cite": "completed"
+      },
+      "deja_engage_si_un_projet_actif_contient": ["{theme}"],
+      "opportunite": {
+        "categorie": "Amélioration produit",
+        "titre_type": "Amélioration de {theme} d'un produit",
+        "themes": [
+          {"si_le_signal_contient": "texture", "dans_le_titre": "la texture"}
+        ],
+        "theme_par_defaut": "la qualité"
+      },
+      "statut_initial": "detected",
+      "pourquoi_ce_statut": "Le retour porte sur un projet livré ; le client n'a pas demandé d'amélioration.",
+      "justification_type": "Un retour technique sur un projet terminé peut justifier une proposition d'amélioration."
+    },
+    {
+      "id": "R-05",
+      "nom": "Contrainte budgétaire communiquée",
+      "condition": {
+        "types_de_signaux": ["meeting_report", "client_request"],
+        "mots_cles": ["contrainte budgétaire", "budget", "coût"],
+        "nombre_min_signaux": 1,
+        "secteurs_client": null,
+        "statut_du_projet_cite": null
+      },
+      "deja_engage_si_un_projet_actif_contient": ["optimisation", "réduction de coût", "réduction des coûts"],
+      "opportunite": {
+        "categorie": "Optimisation",
+        "titre_type": "Optimisation d'une formulation existante",
+        "themes": [],
+        "theme_par_defaut": null
+      },
+      "statut_initial": "detected",
+      "pourquoi_ce_statut": "Le client a parlé de son budget, pas d'une optimisation : l'opportunité est une déduction, pas un besoin qu'il a exprimé.",
+      "justification_type": "Le client a communiqué une contrainte budgétaire : possibilité d'optimiser le coût d'une formulation existante."
+    },
+    {
+      "id": "R-06",
+      "nom": "Projet de marque de distributeur",
+      "condition": {
+        "types_de_signaux": ["project_history"],
+        "mots_cles": ["marque de distributeur"],
+        "nombre_min_signaux": 1,
+        "secteurs_client": ["Distribution alimentaire"],
+        "statut_du_projet_cite": null
+      },
+      "deja_engage_si_un_projet_actif_contient": ["nouvelle référence"],
+      "opportunite": {
+        "categorie": "Nouvelle référence",
+        "titre_type": "Nouvelle référence aromatique pour une marque de distributeur",
+        "themes": [],
+        "theme_par_defaut": null
+      },
+      "statut_initial": "detected",
+      "pourquoi_ce_statut": "Le client n'a pas demandé de nouvelle référence : l'opportunité est déduite de son projet et de son secteur.",
+      "justification_type": "Un distributeur qui travaille déjà sa marque propre peut avoir besoin de nouvelles références aromatiques."
+    }
+  ]
+}

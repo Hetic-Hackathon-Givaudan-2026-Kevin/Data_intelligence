@@ -70,6 +70,14 @@ distinguer d'une opportunité, besoin pas encore engagé).
 
 Fichier `opportunities.json`. Un besoin potentiel, pas encore engagé.
 
+Une opportunité n'est jamais écrite à la main : elle est **détectée** à partir
+des signaux et des projets du client par les règles de
+`regles_detection.json` (voir « Détection des opportunités »). La détection
+fixe `id`, `client_id`, `title`, `category` et `status` ; `description`,
+`estimated_potential`, `feasibility`, `complexity` et `next_action` sont
+l'appréciation commerciale, saisie dans le générateur par client et
+catégorie ; `priority` est calculée.
+
 | Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
 | --- | --- | --- | --- | --- | --- |
 | `id` | string | oui | `O-\d{2}`, unique | Identifiant | `O-01` |
@@ -89,10 +97,25 @@ Fichier `opportunities.json`. Un besoin potentiel, pas encore engagé.
 Fichier `signals.json`. Une information qui justifie une opportunité
 (section 5.1).
 
+Deux sortes de signaux :
+
+- **signal client** : propre à un client (`client_id` renseigné, `category`
+  à `null`) — compte rendu, demande, historique de projet. Seuls ces signaux
+  déclenchent une règle de détection ;
+- **signal de marché** : réel et propre à aucun client (Open Food Facts,
+  INSEE, rapport Givaudan, règlement UE) — `client_id` à `null`, `category`
+  renseignée. Il ne crée jamais d'opportunité : il se rattache, par sa
+  catégorie, à l'opportunité détectée de cette catégorie.
+
+Le signal brut ne porte pas d'`opportunity_id` : ce champ est **rempli par la
+détection**, jamais à la main.
+
 | Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
 | --- | --- | --- | --- | --- | --- |
 | `id` | string | oui | `S-\d{2}`, unique | Identifiant | `S-01` |
-| `opportunity_id` | string | oui | `id` d'une Opportunity | Opportunité justifiée | `O-01` |
+| `opportunity_id` | string | oui | `id` d'une Opportunity ; rempli par la détection, jamais à la main | Opportunité justifiée | `O-01` |
+| `client_id` | string | oui | `id` d'un Client pour un signal client ; `null` pour un signal de marché | Client dont parle le signal | `C-01` |
+| `category` | string | oui | `category` d'une Opportunity pour un signal de marché ; `null` pour un signal client | Catégorie à laquelle se rattache un signal de marché (extension) | `Nouvelle gamme` |
 | `description` | string | oui | texte | Ce que dit le signal | `Compte rendu de l'échange commercial du 05/11/2026 : …` |
 | `source_type` | enum | oui | `meeting_report`, `project_history`, `client_request`, `market_trend`, `commodity_price`, `company_report`, `regulation` | Type de source | `meeting_report` |
 | `source_date` | date | oui | AAAA-MM-JJ ; pour une tendance, fin de la période observée | Date de l'information | `2026-11-05` |
@@ -184,7 +207,8 @@ et 1 à qualifier ; Nordic Food Industries 2, 3 et 1 ; Alimenta Distribution 1,
 | --- | --- | --- |
 | Client → Project | un client a 0..n projets ; un projet a 1 client | `Project.client_id` |
 | Client → Opportunity | un client a 0..n opportunités ; une opportunité a 1 client | `Opportunity.client_id` |
-| Opportunity → Signal | une opportunité a **1..n** signaux ; un signal a 1 opportunité | `Signal.opportunity_id` |
+| Opportunity → Signal | une opportunité a **1..n** signaux ; un signal a 1 opportunité, fixée par la détection | `Signal.opportunity_id` |
+| Client → Signal | un client a 0..n signaux ; un signal client a 1 client, un signal de marché aucun | `Signal.client_id` |
 | Client → Meeting | un client a 0..n rendez-vous ; un rendez-vous a 1 client | `Meeting.client_id` |
 | Opportunity → Meeting | une opportunité a 0..n rendez-vous ; un rendez-vous a 1 opportunité | `Meeting.opportunity_id` |
 | Meeting → MeetingReport | un rendez-vous a 0..1 compte rendu (inclus) | `Meeting.summary` |
@@ -195,6 +219,7 @@ erDiagram
     CLIENT ||--o{ PROJECT : "a"
     CLIENT ||--o{ OPPORTUNITY : "a"
     OPPORTUNITY ||--|{ SIGNAL : "est justifiée par"
+    CLIENT |o--o{ SIGNAL : "émet (signal client)"
     CLIENT ||--o{ MEETING : "est rencontré dans"
     OPPORTUNITY ||--o{ MEETING : "est préparée dans"
     MEETING ||--o| MEETING_REPORT : "summary"
@@ -234,7 +259,9 @@ erDiagram
     }
     SIGNAL {
         string id PK "S-01"
-        string opportunity_id FK
+        string opportunity_id FK "rempli par la détection"
+        string client_id FK "null si signal de marché"
+        string category "signal de marché"
         string description
         enum source_type
         date source_date
@@ -275,6 +302,8 @@ erDiagram
 1. **Identifiants uniques** dans chaque fichier, au format ci-dessus ; chaque
    clé étrangère (`client_id`, `opportunity_id`) pointe un objet existant, et
    `Meeting.client_id` est celui de l'opportunité du rendez-vous.
+   `Signal.client_id` vaut `null` pour un signal de marché ; sinon c'est le
+   `client_id` de l'opportunité du signal.
 2. **Dates ISO** AAAA-MM-JJ, fixes (elles ne se décalent pas avec le temps) ;
    la date de référence du jeu est le 2026-11-12.
 3. **Pas de montant en euros** : `estimated_potential` est un niveau
@@ -289,3 +318,24 @@ erDiagram
 7. **Aucun compteur stocké** : voir « Champs calculés, jamais stockés ».
 8. **Aucune donnée personnelle** : pas de nom de personne ; clients fictifs,
    sans lien avec de vrais clients de Givaudan.
+9. **Opportunités détectées** : opportunités et `Signal.opportunity_id`
+   viennent des règles de détection, jamais d'une saisie à la main.
+
+## Détection des opportunités
+
+Fichiers `regles_detection.json` (règles, lisibles sans coder) et
+`detection.py` (application), ticket DATA-US07. Une règle par type
+d'opportunité. Règles communes :
+
+- seuls les signaux client déclenchent une règle (type de signal, mot-clé
+  dans la description, nombre minimal de signaux, secteur du client et statut
+  du projet cité si la règle le demande) ;
+- une hypothèse seule (`evidence_type` = `hypothesis`) ne suffit pas ;
+- anti-doublon : une règle produit au plus une opportunité par client, qui
+  porte tous les signaux qui l'ont déclenchée ;
+- un travail déjà engagé (projet actif du client qui fait déjà ce que
+  propose l'opportunité) ne devient pas une opportunité ;
+- un signal de marché se rattache à l'opportunité détectée de sa
+  `category` (et qui mentionne son thème, quand l'opportunité en a un) ;
+- statut initial : `to_qualify` si le client a exprimé lui-même le besoin,
+  sinon `detected` (fixé par règle).
