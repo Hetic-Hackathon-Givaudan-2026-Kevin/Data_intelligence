@@ -1,0 +1,372 @@
+[
+  {
+    "client_id": "1",
+    "summary": {
+      "situation": "Client stratégique avec trois projets actifs et un échange récent sur une nouvelle gamme.",
+      "important_projects": [
+        "Boisson pétillante aux agrumes",
+        "Gamme de thés glacés",
+        "Sirop premium"
+      ],
+      "expressed_needs": [
+        "Explorer une nouvelle catégorie de boissons",
+        "Profils aromatiques naturels"
+      ],
+      "recent_signals": [
+        "Intérêt exprimé pour une nouvelle catégorie lors du dernier échange"
+      ],
+      "attention_points": [
+        "Objectifs et contraintes de formulation à confirmer",
+        "Opportunité sur la nouvelle gamme à qualifier"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-11-05",
+        "event": "Échange commercial sur une nouvelle gamme"
+      },
+      {
+        "date": "2026-10-20",
+        "event": "Envoi d'un échantillon"
+      },
+      {
+        "date": "2026-10-10",
+        "event": "Projet de formulation lancé"
+      },
+      {
+        "date": "2026-09-18",
+        "event": "Rendez-vous de cadrage sur l'évolution du portefeuille"
+      }
+    ]
+  },
+  {
+    "client_id": "2",
+    "summary": {
+      "situation": "Client actif avec deux projets en cours et plusieurs pistes d'amélioration identifiées.",
+      "important_projects": ["Sauce crémeuse", "Plat cuisiné"],
+      "expressed_needs": [
+        "Alternatives végétales",
+        "Meilleure texture sur un produit existant"
+      ],
+      "recent_signals": [
+        "Demande récente sur les alternatives végétales",
+        "Retour technique sur un projet précédent"
+      ],
+      "attention_points": [
+        "Contrainte budgétaire déjà communiquée",
+        "Faisabilité de la formulation végétale à confirmer"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-11-04",
+        "event": "Demande d'alternatives végétales reçue"
+      },
+      {
+        "date": "2026-10-22",
+        "event": "Retour technique sur la texture d'un produit"
+      },
+      {
+        "date": "2026-10-09",
+        "event": "Contrainte budgétaire communiquée en rendez-vous"
+      },
+      {
+        "date": "2026-08-20",
+        "event": "Lancement du projet d'optimisation de recette"
+      }
+    ]
+  },
+  {
+    "client_id": "3",
+    "summary": {
+      "situation": "Distributeur avec un projet actif et une première piste liée à une tendance de consommation.",
+      "important_projects": ["Biscuits aromatisés marque distributeur"],
+      "expressed_needs": [
+        "Nouvelles références pour sa marque de distributeur"
+      ],
+      "recent_signals": [
+        "Tendance de consommation relevée par la veille marché"
+      ],
+      "attention_points": [
+        "Signal à confirmer : il repose sur une veille et non sur une demande du client"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-11-02",
+        "event": "Tendance de consommation relevée par la veille marché"
+      },
+      {
+        "date": "2026-10-15",
+        "event": "Point de suivi sur le projet de gamme"
+      },
+      {
+        "date": "2026-09-14",
+        "event": "Lancement du projet de marque distributeur"
+      }
+    ]
+  },
+  {
+    "client_id": "4",
+    "summary": {
+      "situation": "Client stratégique avec quatre projets actifs, centrés sur la réduction du sucre et du sel.",
+      "important_projects": [
+        "Boisson zéro sucre",
+        "Gamme de chips à teneur réduite en sel",
+        "Boisson énergisante"
+      ],
+      "expressed_needs": [
+        "Réduire le sucre sans dégrader le goût",
+        "Réduire le sel sur les snacks"
+      ],
+      "recent_signals": [
+        "Objectif de réduction du sucre évoqué récemment",
+        "Demande d'étude sur la réduction du sel"
+      ],
+      "attention_points": [
+        "Objectifs de réduction à confirmer avec le client",
+        "Deux opportunités à qualifier"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-11-01",
+        "event": "Échange sur la réduction du sucre d'une gamme de boissons"
+      },
+      {
+        "date": "2026-10-14",
+        "event": "Demande d'étude sur la réduction du sel"
+      },
+      {
+        "date": "2026-09-07",
+        "event": "Lancement du projet de chips à teneur réduite en sel"
+      },
+      {
+        "date": "2026-07-13",
+        "event": "Début du projet de boisson zéro sucre"
+      }
+    ]
+  },
+  {
+    "client_id": "5",
+    "summary": {
+      "situation": "Client actif avec deux projets en cours et une question récente sur le végétal.",
+      "important_projects": ["Dessert lacté", "Yaourt à boire"],
+      "expressed_needs": [
+        "Profils aromatiques adaptés aux produits laitiers",
+        "Premières réflexions sur le végétal"
+      ],
+      "recent_signals": ["Question récente sur les alternatives végétales"],
+      "attention_points": ["Besoin végétal à qualifier avant toute proposition"]
+    },
+    "history": [
+      {
+        "date": "2026-10-30",
+        "event": "Question du client sur les alternatives végétales"
+      },
+      {
+        "date": "2026-10-08",
+        "event": "Retour sur l'échantillon d'arôme fruits rouges"
+      },
+      {
+        "date": "2026-09-21",
+        "event": "Lancement du projet de yaourt à boire"
+      }
+    ]
+  },
+  {
+    "client_id": "6",
+    "summary": {
+      "situation": "Client actif avec trois projets dans le domaine de la nutrition.",
+      "important_projects": [
+        "Boisson nutritionnelle",
+        "Barre protéinée",
+        "Céréales infantiles"
+      ],
+      "expressed_needs": [
+        "Masquer l'amertume des protéines",
+        "Profils de goût adaptés à la nutrition"
+      ],
+      "recent_signals": [
+        "Retour technique récent sur l'amertume d'une boisson"
+      ],
+      "attention_points": [
+        "Contraintes techniques de la formulation à confirmer"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-10-28",
+        "event": "Retour technique sur l'amertume de la boisson nutritionnelle"
+      },
+      {
+        "date": "2026-10-12",
+        "event": "Point de suivi du projet de barre protéinée"
+      },
+      {
+        "date": "2026-09-02",
+        "event": "Lancement du projet de céréales infantiles"
+      }
+    ]
+  },
+  {
+    "client_id": "7",
+    "summary": {
+      "situation": "Client actif avec deux projets en cours et aucune nouvelle opportunité identifiée.",
+      "important_projects": ["Soin capillaire", "Gel douche"],
+      "expressed_needs": [
+        "Parfums frais pour des produits d'hygiène et de soin"
+      ],
+      "recent_signals": ["Aucun signal récent d'évolution du besoin"],
+      "attention_points": [
+        "Aucune opportunité détectée : prévoir un échange pour explorer de nouveaux besoins"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-10-25",
+        "event": "Point de suivi sur le projet de gel douche"
+      },
+      {
+        "date": "2026-08-17",
+        "event": "Lancement du projet de gel douche"
+      },
+      {
+        "date": "2026-05-04",
+        "event": "Lancement du projet de soin capillaire"
+      }
+    ]
+  },
+  {
+    "client_id": "8",
+    "summary": {
+      "situation": "Client actif avec trois projets de parfumerie fonctionnelle.",
+      "important_projects": ["Déodorant", "Shampooing", "Savon liquide"],
+      "expressed_needs": [
+        "Parfums frais et durables",
+        "Intérêt pour des ingrédients naturels"
+      ],
+      "recent_signals": [
+        "Demande de performance accrue du parfum sur un projet"
+      ],
+      "attention_points": ["Objectif de durée de parfum à confirmer"]
+    },
+    "history": [
+      {
+        "date": "2026-10-24",
+        "event": "Demande de parfum longue durée sur un projet en cours"
+      },
+      {
+        "date": "2026-09-28",
+        "event": "Lancement du projet de savon liquide"
+      },
+      {
+        "date": "2026-07-06",
+        "event": "Lancement du projet de shampooing"
+      }
+    ]
+  },
+  {
+    "client_id": "9",
+    "summary": {
+      "situation": "Client actif avec deux projets de boissons.",
+      "important_projects": ["Boisson gazeuse", "Boisson sans sucre"],
+      "expressed_needs": ["Profil de goût pour une boisson sans sucre"],
+      "recent_signals": [
+        "Intérêt pour des saveurs inédites, mentionné en passant"
+      ],
+      "attention_points": [
+        "Signal faible : à confirmer lors du prochain échange"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-10-22",
+        "event": "Échange sur le profil de goût de la boisson sans sucre"
+      },
+      {
+        "date": "2026-08-03",
+        "event": "Lancement du projet de boisson sans sucre"
+      },
+      {
+        "date": "2026-02-16",
+        "event": "Lancement du projet de boisson gazeuse"
+      }
+    ]
+  },
+  {
+    "client_id": "10",
+    "summary": {
+      "situation": "Client actif avec un projet en cours et aucune nouvelle opportunité identifiée.",
+      "important_projects": ["Biscuit fourré"],
+      "expressed_needs": ["Arôme chocolat pour un biscuit fourré"],
+      "recent_signals": ["Aucun signal récent d'évolution du besoin"],
+      "attention_points": [
+        "Aucune opportunité détectée : prévoir un échange pour explorer de nouveaux besoins"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-10-20",
+        "event": "Point de suivi sur le biscuit fourré"
+      },
+      {
+        "date": "2026-06-22",
+        "event": "Lancement du projet de biscuit fourré"
+      }
+    ]
+  },
+  {
+    "client_id": "11",
+    "summary": {
+      "situation": "Client en négociation avec deux projets en cours et deux pistes de développement.",
+      "important_projects": ["Eau de toilette", "Crème pour les mains"],
+      "expressed_needs": [
+        "Nouvelle fragrance pour une ligne de parfums",
+        "Déclinaison possible en produits de soin"
+      ],
+      "recent_signals": ["Négociation en cours sur une nouvelle fragrance"],
+      "attention_points": [
+        "Calendrier et budget à clarifier pendant la négociation"
+      ]
+    },
+    "history": [
+      {
+        "date": "2026-10-18",
+        "event": "Point de négociation sur la nouvelle fragrance"
+      },
+      {
+        "date": "2026-09-30",
+        "event": "Lancement du projet de crème pour les mains"
+      },
+      {
+        "date": "2026-08-24",
+        "event": "Lancement du projet d'eau de toilette"
+      }
+    ]
+  },
+  {
+    "client_id": "12",
+    "summary": {
+      "situation": "Client actif avec deux projets en cours, positionné sur le végétal.",
+      "important_projects": ["Soin visage", "Gel douche végétal"],
+      "expressed_needs": ["Parfums d'origine naturelle"],
+      "recent_signals": ["Positionnement végétal de la marque"],
+      "attention_points": ["Exigences de certification naturelle à vérifier"]
+    },
+    "history": [
+      {
+        "date": "2026-10-15",
+        "event": "Point de suivi sur le gel douche végétal"
+      },
+      {
+        "date": "2026-08-10",
+        "event": "Lancement du projet de gel douche végétal"
+      },
+      {
+        "date": "2026-05-25",
+        "event": "Lancement du projet de soin visage"
+      }
+    ]
+  }
+]

@@ -1,0 +1,164 @@
+[
+  {
+    "id": "sig-1a",
+    "opportunity_id": "opp-1a",
+    "description": "Intérêt exprimé pour une nouvelle catégorie.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-11-05",
+    "confidence": "moyenne",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-1b",
+    "opportunity_id": "opp-1b",
+    "description": "Projet existant et évolution du portefeuille.",
+    "source_type": "historique",
+    "source_date": "2026-10-10",
+    "confidence": "moyenne",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-2a",
+    "opportunity_id": "opp-2a",
+    "description": "Demande concernant des alternatives végétales.",
+    "source_type": "demande_client",
+    "source_date": "2026-11-04",
+    "confidence": "haute",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-2b",
+    "opportunity_id": "opp-2b",
+    "description": "Retour technique sur un projet précédent.",
+    "source_type": "historique",
+    "source_date": "2026-10-22",
+    "confidence": "moyenne",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-2c",
+    "opportunity_id": "opp-2c",
+    "description": "Contrainte budgétaire communiquée.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-10-09",
+    "confidence": "haute",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-3a",
+    "opportunity_id": "opp-3a",
+    "description": "Tendance de consommation et demande potentielle.",
+    "source_type": "veille_marche",
+    "source_date": "2026-11-02",
+    "confidence": "faible",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-4a",
+    "opportunity_id": "opp-4a",
+    "description": "Objectif de réduction du sucre évoqué lors du dernier échange.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-11-01",
+    "confidence": "haute",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-4b",
+    "opportunity_id": "opp-4b",
+    "description": "Demande d'étude sur la réduction du sel.",
+    "source_type": "demande_client",
+    "source_date": "2026-10-14",
+    "confidence": "moyenne",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-4c",
+    "opportunity_id": "opp-4c",
+    "description": "Tendance aux saveurs saisonnières observée sur le marché.",
+    "source_type": "veille_marche",
+    "source_date": "2026-10-05",
+    "confidence": "faible",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-5a",
+    "opportunity_id": "opp-5a",
+    "description": "Question posée sur les alternatives végétales.",
+    "source_type": "demande_client",
+    "source_date": "2026-10-30",
+    "confidence": "moyenne",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-6a",
+    "opportunity_id": "opp-6a",
+    "description": "Retour technique sur l'amertume d'une boisson.",
+    "source_type": "projet",
+    "source_date": "2026-10-28",
+    "confidence": "haute",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-6b",
+    "opportunity_id": "opp-6b",
+    "description": "Intérêt pour de nouveaux goûts exprimé en suivi de projet.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-10-12",
+    "confidence": "moyenne",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-8a",
+    "opportunity_id": "opp-8a",
+    "description": "Demande de performance accrue du parfum sur un projet.",
+    "source_type": "demande_client",
+    "source_date": "2026-10-24",
+    "confidence": "moyenne",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-8b",
+    "opportunity_id": "opp-8b",
+    "description": "Intérêt général du marché pour les ingrédients naturels.",
+    "source_type": "veille_marche",
+    "source_date": "2026-10-02",
+    "confidence": "faible",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-9a",
+    "opportunity_id": "opp-9a",
+    "description": "Intérêt pour des saveurs inédites mentionné en passant.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-10-22",
+    "confidence": "faible",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-11a",
+    "opportunity_id": "opp-11a",
+    "description": "Négociation en cours sur une nouvelle fragrance.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-10-18",
+    "confidence": "haute",
+    "evidence_type": "fait"
+  },
+  {
+    "id": "sig-11b",
+    "opportunity_id": "opp-11b",
+    "description": "Intérêt évoqué pour décliner un parfum en soin.",
+    "source_type": "compte_rendu",
+    "source_date": "2026-10-03",
+    "confidence": "moyenne",
+    "evidence_type": "hypothese"
+  },
+  {
+    "id": "sig-12a",
+    "opportunity_id": "opp-12a",
+    "description": "Positionnement végétal de la marque et projets en cours.",
+    "source_type": "historique",
+    "source_date": "2026-10-15",
+    "confidence": "moyenne",
+    "evidence_type": "hypothese"
+  }
+]

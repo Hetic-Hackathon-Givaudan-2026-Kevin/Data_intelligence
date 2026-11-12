@@ -1,0 +1,109 @@
+{
+  "opp-1a": [
+    {
+      "question": "Pour cette nouvelle gamme de boissons fonctionnelles, quel bénéfice voulez-vous mettre en avant en priorité (énergie, détente, immunité…) ?",
+      "objectif": "Le dernier échange confirme l'intérêt, mais pas le bénéfice visé : c'est la base du brief pour les équipes de création.",
+      "information_recherchee": "Besoin réel"
+    },
+    {
+      "question": "Quel budget prévisionnel avez-vous prévu pour ce lancement ?",
+      "objectif": "Le budget n'a pas été évoqué lors du rendez-vous du 05/11 ; sans lui, impossible de choisir entre une solution existante et un développement spécifique.",
+      "information_recherchee": "Contraintes budgétaires"
+    }
+  ],
+  "opp-1b": [
+    {
+      "question": "Souhaitez-vous que vos prochains produits reprennent les profils naturels de vos thés glacés, ou partir sur une nouvelle signature aromatique ?",
+      "objectif": "L'extension de gamme est une hypothèse tirée de l'historique : la question vérifie l'intérêt sans l'affirmer.",
+      "information_recherchee": "Objectifs du client"
+    }
+  ],
+  "opp-2a": [
+    {
+      "question": "Pour la formulation végétale, quels critères de goût et de texture sont non négociables pour vous ?",
+      "objectif": "Le besoin végétal est confirmé sur deux produits, mais la faisabilité dépend de ces critères.",
+      "information_recherchee": "Contraintes techniques"
+    }
+  ],
+  "opp-2b": [
+    {
+      "question": "Sur la sauce crémeuse, qu'est-ce qui ne vous a pas convenu dans la texture lors du dernier essai ?",
+      "objectif": "Le retour technique du 22/10 existe, mais son contenu précis n'est pas documenté.",
+      "information_recherchee": "Besoin réel"
+    }
+  ],
+  "opp-2c": [
+    {
+      "question": "Quel coût cible devons-nous respecter pour la revue de votre formulation existante ?",
+      "objectif": "Une contrainte budgétaire a été communiquée le 09/10, sans montant : il faut un chiffre pour proposer une solution compatible.",
+      "information_recherchee": "Contraintes budgétaires"
+    }
+  ],
+  "opp-3a": [
+    {
+      "question": "Quelles nouvelles saveurs vos clients en magasin vous demandent-ils le plus en ce moment ?",
+      "objectif": "L'opportunité repose sur une veille de marché, pas sur une demande du client : la question vérifie si le besoin existe vraiment.",
+      "information_recherchee": "Besoin réel"
+    },
+    {
+      "question": "Quel prix de vente visez-vous pour une nouvelle référence de votre marque distributeur ?",
+      "objectif": "Le prix cible a été demandé le 02/11, sans réponse : il conditionne le choix de l'arôme.",
+      "information_recherchee": "Contraintes budgétaires"
+    },
+    {
+      "question": "Qui décide du lancement d'une nouvelle référence chez vous, et selon quels critères ?",
+      "objectif": "Aucune information sur le processus de décision du distributeur.",
+      "information_recherchee": "Critères de décision"
+    }
+  ],
+  "opp-4a": [
+    {
+      "question": "Quel taux de réduction du sucre visez-vous, et sur quelles boissons en priorité ?",
+      "objectif": "L'intention est confirmée depuis le 01/11, mais l'objectif chiffré reste à obtenir.",
+      "information_recherchee": "Objectifs du client"
+    },
+    {
+      "question": "Comment allez-vous valider que le goût reste acceptable après la réduction (tests consommateurs, panel interne) ?",
+      "objectif": "Le critère de réussite conditionne le niveau de complexité technique du projet.",
+      "information_recherchee": "Critères de décision"
+    }
+  ],
+  "opp-4b": [
+    {
+      "question": "Pour vos snacks, quel niveau de réduction du sel attendez-vous, et pour quelle échéance ?",
+      "objectif": "La demande d'étude du 14/10 ne précise ni l'objectif ni le calendrier.",
+      "information_recherchee": "Calendrier"
+    }
+  ],
+  "opp-5a": [
+    {
+      "question": "Si vous lanciez une première référence végétale, sur quel produit de votre gamme commenceriez-vous ?",
+      "objectif": "L'intérêt est exploratoire et aucun projet n'est défini : il faut un point de départ concret.",
+      "information_recherchee": "Besoin réel"
+    },
+    {
+      "question": "Qu'est-ce qui vous retient aujourd'hui de lancer un projet végétal (goût, texture, coût, demande des consommateurs) ?",
+      "objectif": "Identifier le frein principal permet de savoir où Givaudan peut aider.",
+      "information_recherchee": "Contraintes techniques"
+    }
+  ],
+  "opp-6a": [
+    {
+      "question": "Quelles contraintes d'étiquetage devons-nous respecter pour masquer l'amertume de la boisson protéinée (arômes naturels uniquement, allergènes) ?",
+      "objectif": "Le besoin est confirmé sur une protéine de pois ; il manque les contraintes réglementaires de la formulation.",
+      "information_recherchee": "Contraintes techniques"
+    },
+    {
+      "question": "À quelle date souhaitez-vous disposer de la version reformulée de la boisson ?",
+      "objectif": "Aucun calendrier n'est connu pour cette opportunité à priorité haute.",
+      "information_recherchee": "Calendrier"
+    }
+  ],
+  "opp-6b": [
+    {
+      "question": "Quels nouveaux profils de goût envisagez-vous pour élargir votre gamme de barres protéinées ?",
+      "objectif": "L'intérêt pour de nouveaux goûts est une hypothèse issue d'un suivi de projet : la question le vérifie.",
+      "information_recherchee": "Objectifs du client"
+    }
+  ]
+}
