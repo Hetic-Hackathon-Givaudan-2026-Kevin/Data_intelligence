@@ -1,6 +1,6 @@
 # Fiche de travail – API RAG « nom du client → 3 questions »
 
-Équipe G03 · Data · Amir Meraka · mise à jour le 12/11/2026 à 21 h 45.
+Équipe G03 · Data · Amir Meraka · mise à jour le 12/11/2026 à 23 h 35.
 Cette fiche sert à **suivre, reproduire et expliquer** le travail. Toutes les données sont fictives.
 
 ## 1. La demande et son état
@@ -12,7 +12,7 @@ Cette fiche sert à **suivre, reproduire et expliquer** le travail. Toutes les d
 | 3 | Partager le nouveau dépôt | ✅ Fait | `Amir239278/Gr03-Marvels-MD4`, branche `Amir` |
 | 4 | Mettre temporairement en ligne avec ngrok | ✅ Fait | `https://vowel-paramount-lisp.ngrok-free.dev` (tant que le PC est allumé) |
 | 5 | Envoyer le lien ngrok et le dépôt à Tech | ✅ Fait | Message à Kevin (section 6) |
-| 6 | Livrable du jour avant 23 h 59 | 🟡 Rédigé, avec les résultats de l'évaluation | `LIVRABLE_DATA_G03.md`, `docs/evaluation.md` ; reste à le déposer dans le dépôt de l'équipe |
+| 6 | Livrable du jour avant 23 h 59 | ✅ Fait | `LIVRABLE_DATA_G03.md`, `docs/evaluation.md`, fusionnés dans `main` du dépôt de l'équipe (PR n° 2) |
 
 ## 2. Comment ça marche, en 5 phrases
 
