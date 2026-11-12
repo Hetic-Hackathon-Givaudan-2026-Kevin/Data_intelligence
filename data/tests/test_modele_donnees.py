@@ -69,10 +69,13 @@ def test_meeting_suit_la_section_8(modele):
     assert section_8 | {"date", "status", "collected_points"} == set(modele["Meeting"])
 
 
-def test_meeting_report_sans_prochaines_actions(modele):
+def test_meeting_report_separe_les_rubriques(modele):
+    """DATA-US11 : résumé, besoins, contraintes techniques et budgétaires, calendrier, informations
+    manquantes, prochaines actions, équipes ; Meeting.next_actions (section 8) en garde le texte."""
     rapport = set(modele["MeetingReport"])
-    assert {"generated_by", "validated", "missing_information", "internal_teams"} <= rapport
-    assert not any("action" in champ for champ in rapport)  # elles restent dans Meeting.next_actions
+    assert {"summary", "needs", "technical_constraints", "budget_constraints", "timeline", "missing_information",
+            "next_actions", "internal_teams", "generated_by", "engine", "validated"} <= rapport
+    assert "next_actions" in modele["Meeting"]
 
 
 def test_valeurs_fermees_du_compte_rendu():

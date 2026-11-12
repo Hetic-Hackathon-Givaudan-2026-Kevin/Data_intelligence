@@ -156,8 +156,9 @@ détection**, jamais à la main.
 
 ### Meeting
 
-Fichier `meetings.json` (pas encore créé). Un rendez-vous commercial préparé
-avec le Meeting Copilot (section 4.4).
+Fichier `meetings.json` : 2 exemples statiques pour TECH (DATA-US11), un RDV sur
+O-01 et un sur O-03, notes fictives et compte rendu produit par `rules_v1`. Un
+rendez-vous commercial préparé avec le Meeting Copilot (section 4.4).
 
 | Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
 | --- | --- | --- | --- | --- | --- |
@@ -172,7 +173,7 @@ avec le Meeting Copilot (section 4.4).
 | `collected_points` | liste d'enum | oui | parmi `client_objectives`, `real_need`, `technical_constraints`, `budget_constraints`, `timeline`, `decision_criteria` ; liste vide si `planned` | Points cochés de la checklist (extension) | `["client_objectives", "timeline"]` |
 | `notes` | string | oui | texte libre ; chaîne vide si `planned` | Notes du rendez-vous | `Lancement visé au printemps.` |
 | `summary` | objet MeetingReport | oui | objet MeetingReport, ou `null` tant que le compte rendu n'est pas généré | Compte rendu | voir MeetingReport |
-| `next_actions` | liste de string | oui | liste vide si `planned` | Prochaines actions recommandées (seul endroit où elles sont stockées) | `["Obtenir le budget visé."]` |
+| `next_actions` | liste de string | oui | liste vide si `planned` ; sinon les textes de `summary.next_actions` | Prochaines actions recommandées (champ de la section 8, copie texte de `summary.next_actions`) | `["Obtenir le budget visé."]` |
 
 Objet `questions[]` :
 
@@ -195,21 +196,49 @@ dans `summary.missing_information`.
 
 ### MeetingReport
 
-Contenu de `Meeting.summary` : le compte rendu du rendez-vous (section 4.4 F).
-Les prochaines actions n'y sont pas répétées : elles restent dans
-`Meeting.next_actions`.
+Contenu de `Meeting.summary` : le compte rendu du rendez-vous (section 4.4 F,
+DATA-US11). Les rubriques sont séparées et chaque élément porte un statut :
+`confirmed` (dit explicitement dans les notes) ou `to_verify` (déduit,
+hésitant, contradictoire ou seulement coché). Rien n'est inventé : un élément
+extrait porte l'`excerpt` exact des notes (ou d'une réponse) dont il vient ;
+les rubriques déduites (informations manquantes, prochaines actions, équipes)
+sont toujours `to_verify`. Moteurs et règles : `data/demo_v2/compte_rendu.py`.
 
 | Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
 | --- | --- | --- | --- | --- | --- |
-| `summary` | string | oui | texte | Résumé du rendez-vous | `Rendez-vous avec Maison Nova Drinks au sujet de …` |
-| `identified_needs` | liste de string | oui | liste, éventuellement vide | Besoins identifiés | `["Objectifs du client : …"]` |
-| `communicated_constraints` | liste de string | oui | liste, éventuellement vide | Contraintes communiquées | `["Contraintes techniques : …"]` |
-| `missing_information` | liste de string | oui | libellés des points de la checklist non recueillis | Informations encore manquantes | `["Calendrier"]` |
-| `opportunity_decision` | enum | oui | `confirmed`, `to_qualify`, `discarded` (mêmes noms que `Opportunity.status` ; `discarded` = « écartée », prévu par la doc pour plus tard) | Statut proposé pour l'opportunité après le rendez-vous | `to_qualify` |
-| `decision_reason` | string | oui | texte | Raison de la décision | `Le besoin réel n'a pas été recueilli.` |
-| `internal_teams` | liste d'enum | oui | parmi `application`, `creation`, `marketing`, `regulatory` (équipes de la section 2.4 ; libellés français dans l'app) ; liste éventuellement vide | Équipes internes potentiellement concernées | `["application"]` |
-| `generated_by` | enum | oui | `rules_v1` (modèle de texte), `llm_v2` | Mode de génération | `rules_v1` |
+| `summary` | string | oui | texte construit à partir des données (client, opportunité, nombre d'éléments) | Résumé du rendez-vous | `Rendez-vous avec Maison Nova Drinks au sujet de …` |
+| `needs` | liste d'éléments | oui | éléments des points `client_objectives`, `real_need`, `decision_criteria` ; liste éventuellement vide | Besoins (objectifs, besoin réel, critères de décision) | voir élément |
+| `technical_constraints` | liste d'éléments | oui | éléments du point `technical_constraints` | Contraintes techniques | voir élément |
+| `budget_constraints` | liste d'éléments | oui | éléments du point `budget_constraints` | Contraintes budgétaires | voir élément |
+| `timeline` | liste d'éléments | oui | éléments du point `timeline` ; tous `to_verify` si les notes citent deux dates différentes | Calendrier | voir élément |
+| `missing_information` | liste d'éléments | oui | un élément `to_verify` sans extrait par point de la checklist absent des notes (« connu avant le rendez-vous … À reconfirmer » si le point était connu) | Informations encore manquantes | `[{"point": "timeline", "text": "Calendrier", "status": "to_verify", "excerpt": null}]` |
+| `next_actions` | liste d'éléments | oui | éléments `to_verify` : vérifier chaque élément `to_verify`, obtenir chaque information manquante, intégrer le budget, transmettre aux équipes | Prochaines actions | `[{"text": "Obtenir l'information manquante : calendrier.", …}]` |
+| `internal_teams` | liste d'éléments | oui | éléments `to_verify` avec `team` parmi `application`, `creation`, `marketing`, `regulatory` (équipes de la section 2.4 ; libellés français dans l'app) ; liste éventuellement vide | Équipes à mobiliser, avec la raison | `[{"team": "application", "text": "Application : une contrainte technique est notée.", …}]` |
+| `opportunity_decision` | enum | oui | `confirmed`, `to_qualify`, `discarded` (mêmes noms que `Opportunity.status` ; `discarded` = « écartée », prévu par la doc pour plus tard) | Statut proposé : `confirmed` si objectifs et besoin réel sont `confirmed` | `to_qualify` |
+| `decision_reason` | string | oui | texte | Raison de la décision | `Pas encore confirmé dans les notes : besoin réel.` |
+| `generated_by` | enum | oui | `rules_v1` (règles), `llm_v2` (qwen2.5:3b local) ; le moteur réellement utilisé | Mode de génération | `rules_v1` |
+| `engine` | objet | oui | objet engine (voir ci-dessous) | Moteur demandé, moteur utilisé, retour éventuel à rules_v1 (extension) | `{"requested": "llm_v2", "used": "rules_v1", …}` |
 | `validated` | bool | oui | `true`, `false` | Validé par le commercial | `false` |
+
+Objet élément (rubriques de `MeetingReport`) :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `point` | enum | un des 6 points de la checklist, ou `null` (action ou équipe sans point) | Point de la checklist |
+| `text` | string | texte ; pour un élément extrait : libellé du point + extrait | L'élément |
+| `status` | enum | `confirmed`, `to_verify` | Dit explicitement dans les notes, ou déduit / incertain |
+| `excerpt` | string | passage copié mot pour mot des notes ou d'une réponse ; `null` pour un élément déduit sans passage (point manquant, point coché sans détail) ; jamais `null` si `confirmed` | Où le retrouver dans les notes |
+| `team` | enum | `application`, `creation`, `marketing`, `regulatory` ; seulement dans `internal_teams` | Équipe |
+
+Objet `engine` :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `requested` | enum | `rules_v1`, `llm_v2` | Mode demandé (`mode` de `POST /v2/meetings/report`) |
+| `used` | enum | `rules_v1`, `llm_v2` | Mode réellement utilisé (= `generated_by`) |
+| `model` | string | `qwen2.5:3b` ou `null` | Modèle local utilisé |
+| `fallback_reason` | string | texte ou `null` | Pourquoi `llm_v2` est retombé sur `rules_v1` (Ollama injoignable, délai dépassé, JSON invalide) |
+| `guard` | objet | `{kept, downgraded, dropped}` ou `null` | Garde-fou llm_v2 : éléments gardés, passés en `to_verify` (retrouvés en partie), écartés (introuvables) |
 
 ## Contexte de rendez-vous (`meeting_context.json`)
 
@@ -255,7 +284,7 @@ contredire :
 | `followed_clients` | Tableau de bord | nombre de clients |
 | `detected_opportunities` | Tableau de bord | nombre total d'opportunités |
 | `to_qualify` | Tableau de bord | nombre total d'opportunités `to_qualify` |
-| `meetings_to_prepare` | Tableau de bord | nombre de rendez-vous `planned` (0 sans `meetings.json`) |
+| `meetings_to_prepare` | Tableau de bord | nombre de rendez-vous `planned` (0 dans la démo : les 2 de `meetings.json` sont `completed`) |
 
 Dans la démo : Maison Nova Drinks a 3 projets actifs, 2 opportunités détectées
 et 1 à qualifier ; Nordic Food Industries 2, 3 et 1 ; Alimenta Distribution 1,
@@ -350,13 +379,17 @@ erDiagram
     }
     MEETING_REPORT {
         string summary
-        list identified_needs
-        list communicated_constraints
+        list needs "éléments : point, text, status, excerpt"
+        list technical_constraints
+        list budget_constraints
+        list timeline
         list missing_information
+        list next_actions
+        list internal_teams "application, creation, marketing, regulatory"
         enum opportunity_decision "confirmed, to_qualify, discarded"
         string decision_reason
-        list internal_teams "application, creation, marketing, regulatory"
         enum generated_by "rules_v1, llm_v2"
+        object engine "requested, used, fallback_reason"
         bool validated
     }
 ```

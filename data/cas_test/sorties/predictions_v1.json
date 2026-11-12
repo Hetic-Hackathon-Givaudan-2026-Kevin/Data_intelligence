@@ -1,0 +1,393 @@
+[
+  {
+    "interaction_id": "T-01-I10",
+    "points_detectes": [
+      "real_need",
+      "budget_constraints"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-02-I08",
+    "points_detectes": [
+      "real_need",
+      "technical_constraints",
+      "timeline"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "june 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-03-I10",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "timeline"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "july 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-04-I08",
+    "points_detectes": [],
+    "hors_sujet": true,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-05-I05",
+    "points_detectes": [
+      "client_objectives",
+      "budget_constraints",
+      "timeline"
+    ],
+    "hors_sujet": false,
+    "contradiction": true,
+    "dates_vues": [
+      "octobre 2027",
+      "septembre 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-06-I06",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "novembre 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-07-I09",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "fevrier 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-08-I08",
+    "points_detectes": [
+      "client_objectives",
+      "technical_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "october 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-09-I07",
+    "points_detectes": [
+      "technical_constraints",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-10-I08",
+    "points_detectes": [
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-11-I07",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "april 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-12-I07",
+    "points_detectes": [],
+    "hors_sujet": true,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-13-I08",
+    "points_detectes": [],
+    "hors_sujet": true,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-14-I06",
+    "points_detectes": [
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": true,
+    "dates_vues": [
+      "avril 2027",
+      "novembre 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-15-I10",
+    "points_detectes": [
+      "real_need",
+      "timeline"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "may 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-16-I08",
+    "points_detectes": [],
+    "hors_sujet": true,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-17-I07",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "may 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-18-I05",
+    "points_detectes": [
+      "client_objectives",
+      "budget_constraints",
+      "timeline"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "novembre 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-19-I08",
+    "points_detectes": [
+      "client_objectives",
+      "real_need"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-20-I10",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "november 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-21-I10",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-22-I08",
+    "points_detectes": [],
+    "hors_sujet": true,
+    "contradiction": false,
+    "dates_vues": []
+  },
+  {
+    "interaction_id": "T-23-I09",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "january 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-24-I06",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline"
+    ],
+    "hors_sujet": false,
+    "contradiction": true,
+    "dates_vues": [
+      "february 2028",
+      "september 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-25-I10",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "juin 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-26-I08",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "mai 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-27-I07",
+    "points_detectes": [
+      "client_objectives",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": true,
+    "dates_vues": [
+      "fevrier 2028",
+      "septembre 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-28-I10",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "juin 2028"
+    ]
+  },
+  {
+    "interaction_id": "T-29-I06",
+    "points_detectes": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": false,
+    "dates_vues": [
+      "june 2027"
+    ]
+  },
+  {
+    "interaction_id": "T-30-I08",
+    "points_detectes": [
+      "client_objectives",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "hors_sujet": false,
+    "contradiction": true,
+    "dates_vues": [
+      "april 2028",
+      "august 2028"
+    ]
+  }
+]

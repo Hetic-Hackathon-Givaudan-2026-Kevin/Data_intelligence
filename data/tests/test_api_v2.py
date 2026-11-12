@@ -100,16 +100,23 @@ def champs_du_modele():
     return module.lire_modele()
 
 
+def equipes(rapport):
+    return [e["team"] for e in rapport["internal_teams"]]
+
+
 def test_compte_rendu_suit_le_modele_de_donnees(client):
-    """Réponse = Meeting (12 champs), summary = MeetingReport (9 champs), prochaines actions hors summary."""
+    """Réponse = Meeting, summary = MeetingReport (DATA-US11) ; Meeting.next_actions = textes de summary.next_actions."""
     modele = champs_du_modele()
     corps = client.post("/v2/meetings/report", json={"opportunity_id": "O-01"}).json()
     assert set(corps) == set(modele["Meeting"])
     assert set(corps["summary"]) == set(modele["MeetingReport"])
-    assert corps["id"] == "M-01" and corps["status"] == "completed" and corps["client_id"] == "C-01"
-    assert corps["summary"]["generated_by"] == "rules_v1" and corps["summary"]["validated"] is False
+    assert corps["id"] == "M-03" and corps["status"] == "completed" and corps["client_id"] == "C-01"  # M-01, M-02 : meetings.json
+    r = corps["summary"]
+    assert r["generated_by"] == "rules_v1" and r["validated"] is False
+    assert r["engine"] == {"requested": "rules_v1", "used": "rules_v1", "model": None, "fallback_reason": None,
+                           "guard": None}
     assert all(set(q) == {"question", "why", "information_sought"} for q in corps["questions"])
-    assert not any("action" in k for k in corps["summary"])
+    assert corps["next_actions"] == [a["text"] for a in r["next_actions"]]
 
 
 def test_compte_rendu_points_reponses_et_equipes(client):
@@ -118,14 +125,18 @@ def test_compte_rendu_points_reponses_et_equipes(client):
         "answers": [{"information_sought": "technical_constraints", "answer": "Garder la même texture."}],
         "notes": "Le client veut garder la même allégation sur l'étiquette.",
     }).json()
-    assert corps["collected_points"] == ["technical_constraints", "budget_constraints"]  # coché + répondu
+    assert corps["collected_points"] == ["client_objectives", "technical_constraints", "budget_constraints"]
     assert corps["answers"] == [{"information_sought": "technical_constraints", "answer": "Garder la même texture."}]
     r = corps["summary"]
-    assert r["missing_information"] == ["Objectifs du client", "Besoin réel", "Calendrier", "Critères de décision"]
-    assert "Contraintes techniques : Garder la même texture." in r["communicated_constraints"]
-    assert r["internal_teams"] == ["application", "regulatory"]
+    assert [m["point"] for m in r["missing_information"]] == ["real_need", "timeline", "decision_criteria"]
+    assert r["technical_constraints"] == [{"point": "technical_constraints", "status": "confirmed",
+                                           "text": "Contraintes techniques : Garder la même texture.",
+                                           "excerpt": "Garder la même texture."}]  # réponse = confirmée
+    assert [(e["status"], e["excerpt"]) for e in r["budget_constraints"]] == [("to_verify", None)]  # cochée sans détail
+    assert r["needs"][0]["excerpt"] == "Le client veut garder la même allégation sur l'étiquette."
+    assert equipes(r) == ["application", "regulatory"]
+    assert r["internal_teams"][1]["excerpt"] == "Le client veut garder la même allégation sur l'étiquette."
     assert r["opportunity_decision"] == "to_qualify"
-    assert "allégation" in r["summary"]
     assert "Obtenir l'information manquante : calendrier." in corps["next_actions"]
 
 
@@ -133,23 +144,36 @@ def test_compte_rendu_sans_rien_coche(client):
     corps = client.post("/v2/meetings/report", json={"opportunity_id": "O-04"}).json()
     r = corps["summary"]
     assert len(r["missing_information"]) == 6 and corps["collected_points"] == []
-    assert "Contraintes techniques (connu avant le rendez-vous, à reconfirmer)" in r["missing_information"]
+    assert all(m["status"] == "to_verify" and m["excerpt"] is None for m in r["missing_information"])
+    technique = next(m for m in r["missing_information"] if m["point"] == "technical_constraints")
+    assert "connu avant le rendez-vous" in technique["text"] and "À reconfirmer" in technique["text"]
     assert r["internal_teams"] == [] and r["opportunity_decision"] == "to_qualify"
+    assert "Aucune note saisie." in r["summary"]
 
 
-def test_compte_rendu_objectifs_et_besoin_recueillis(client):
+def test_compte_rendu_objectifs_et_besoin_confirmes_dans_les_notes(client):
     corps = client.post("/v2/meetings/report", json={
-        "opportunity_id": "O-01", "collected_points": ["client_objectives", "real_need"], "date": "2026-11-18"}).json()
+        "opportunity_id": "O-01", "date": "2026-11-18",
+        "notes": "Le client veut lancer une boisson fonctionnelle. Leur besoin : un arôme agrumes."}).json()
     assert corps["date"] == "2026-11-18"
     assert corps["summary"]["opportunity_decision"] == "confirmed"
-    assert corps["summary"]["internal_teams"] == ["creation", "marketing"]  # nouvelle gamme + signal de marché
+    assert equipes(corps["summary"]) == ["creation", "marketing"]  # nouvelle gamme + signal de marché
+
+
+def test_compte_rendu_points_coches_sans_detail_restent_a_verifier(client):
+    """Cocher objectifs et besoin sans rien noter ne suffit pas à confirmer (rien dans les notes)."""
+    corps = client.post("/v2/meetings/report", json={
+        "opportunity_id": "O-01", "collected_points": ["client_objectives", "real_need"]}).json()
+    r = corps["summary"]
+    assert all(e["status"] == "to_verify" and e["excerpt"] is None for e in r["needs"])
+    assert r["opportunity_decision"] == "to_qualify"
 
 
 def test_compte_rendu_jamais_ecarte_automatiquement(client):
     for opp in OPPORTUNITES:
         r = client.post("/v2/meetings/report", json={"opportunity_id": opp}).json()["summary"]
         assert r["opportunity_decision"] != "discarded"
-        assert set(r["internal_teams"]) <= {"application", "creation", "marketing", "regulatory"}
+        assert set(equipes(r)) <= {"application", "creation", "marketing", "regulatory"}
 
 
 @pytest.mark.parametrize("methode, url, corps, attendu", [

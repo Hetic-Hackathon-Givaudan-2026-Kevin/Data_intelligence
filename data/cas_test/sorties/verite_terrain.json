@@ -1,0 +1,531 @@
+{
+  "date_reference": "2026-11-12",
+  "graine": 42,
+  "cas": [
+    {
+      "client_id": "T-01",
+      "interaction_id": "T-01-I10",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "budget_constraints"
+      ],
+      "points_manquants": [
+        "client_objectives",
+        "technical_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-02",
+      "interaction_id": "T-02-I08",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "technical_constraints",
+        "timeline"
+      ],
+      "points_manquants": [
+        "client_objectives",
+        "budget_constraints",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-03",
+      "interaction_id": "T-03-I10",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "timeline"
+      ],
+      "points_manquants": [
+        "budget_constraints",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-04",
+      "interaction_id": "T-04-I08",
+      "scenario": "hors_sujet",
+      "langue": "en",
+      "points_presents": [],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": true
+    },
+    {
+      "client_id": "T-05",
+      "interaction_id": "T-05-I05",
+      "scenario": "contradiction",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "budget_constraints",
+        "timeline"
+      ],
+      "points_manquants": [
+        "real_need",
+        "technical_constraints",
+        "decision_criteria"
+      ],
+      "contradiction": true,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-06",
+      "interaction_id": "T-06-I06",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-07",
+      "interaction_id": "T-07-I09",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-08",
+      "interaction_id": "T-08-I08",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "technical_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "real_need",
+        "budget_constraints"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-09",
+      "interaction_id": "T-09-I07",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "technical_constraints",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "budget_constraints",
+        "timeline"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-10",
+      "interaction_id": "T-10-I08",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "client_objectives",
+        "timeline"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-11",
+      "interaction_id": "T-11-I07",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-12",
+      "interaction_id": "T-12-I07",
+      "scenario": "hors_sujet",
+      "langue": "en",
+      "points_presents": [],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": true
+    },
+    {
+      "client_id": "T-13",
+      "interaction_id": "T-13-I08",
+      "scenario": "hors_sujet",
+      "langue": "fr",
+      "points_presents": [],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": true
+    },
+    {
+      "client_id": "T-14",
+      "interaction_id": "T-14-I06",
+      "scenario": "contradiction",
+      "langue": "fr",
+      "points_presents": [
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints"
+      ],
+      "contradiction": true,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-15",
+      "interaction_id": "T-15-I10",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "timeline"
+      ],
+      "points_manquants": [
+        "client_objectives",
+        "technical_constraints",
+        "budget_constraints",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-16",
+      "interaction_id": "T-16-I08",
+      "scenario": "hors_sujet",
+      "langue": "fr",
+      "points_presents": [],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": true
+    },
+    {
+      "client_id": "T-17",
+      "interaction_id": "T-17-I07",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-18",
+      "interaction_id": "T-18-I05",
+      "scenario": "partiel",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "budget_constraints",
+        "timeline"
+      ],
+      "points_manquants": [
+        "real_need",
+        "technical_constraints",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-19",
+      "interaction_id": "T-19-I08",
+      "scenario": "partiel",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need"
+      ],
+      "points_manquants": [
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-20",
+      "interaction_id": "T-20-I10",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-21",
+      "interaction_id": "T-21-I10",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "budget_constraints",
+        "timeline"
+      ],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-22",
+      "interaction_id": "T-22-I08",
+      "scenario": "hors_sujet",
+      "langue": "en",
+      "points_presents": [],
+      "points_manquants": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "contradiction": false,
+      "hors_sujet": true
+    },
+    {
+      "client_id": "T-23",
+      "interaction_id": "T-23-I09",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-24",
+      "interaction_id": "T-24-I06",
+      "scenario": "contradiction",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline"
+      ],
+      "points_manquants": [
+        "decision_criteria"
+      ],
+      "contradiction": true,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-25",
+      "interaction_id": "T-25-I10",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-26",
+      "interaction_id": "T-26-I08",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-27",
+      "interaction_id": "T-27-I07",
+      "scenario": "contradiction",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "real_need"
+      ],
+      "contradiction": true,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-28",
+      "interaction_id": "T-28-I10",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-29",
+      "interaction_id": "T-29-I06",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [],
+      "contradiction": false,
+      "hors_sujet": false
+    },
+    {
+      "client_id": "T-30",
+      "interaction_id": "T-30-I08",
+      "scenario": "contradiction",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "points_manquants": [
+        "real_need"
+      ],
+      "contradiction": true,
+      "hors_sujet": false
+    }
+  ]
+}

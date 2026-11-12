@@ -16,9 +16,9 @@ import unicodedata
 import warnings
 from datetime import date
 from pathlib import Path
-from typing import Optional
+from typing import Literal, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -200,7 +200,6 @@ DATE_REFERENCE = date.fromisoformat(regles_v2.DATE_REFERENCE)
 JOURS_SIGNAL_RECENT = 90
 ECHELLE = (sum(min(n["points"] for n in c["niveaux"]) for c in regles_v2.CRITERES.values()),
            sum(max(n["points"] for n in c["niveaux"]) for c in regles_v2.CRITERES.values()))  # score mini, maxi
-MOTS_REGLEMENTAIRES = ("réglement", "reglement", "allégation", "allegation", "étiquet", "etiquet", "additif")
 
 app.openapi_tags += [
     {"name": "V2 – Portefeuille", "description": "Doc v2 : tableau de bord, portefeuille et fiche client."},
@@ -421,45 +420,30 @@ class DemandeCompteRendu(BaseModel):
     }]}}
 
 
-# Équipes internes (section 2.4), codes du modèle de données ; libellés français pour le texte.
-LIBELLES_EQUIPES = {"application": "Application", "creation": "Création", "marketing": "Marketing",
-                    "regulatory": "Réglementation"}
-CATEGORIES_CREATION = {"Nouvelle gamme", "Extension de gamme", "Nouvelle formulation", "Nouvelle référence"}
-SOURCES_MARCHE = {"market_trend", "company_report"}
-POINTS_BESOIN = ["client_objectives", "real_need"]
-POINTS_CONTRAINTE = ["technical_constraints", "budget_constraints", "timeline"]
+# Compte rendu (DATA-US11) : extraction des notes par rules_v1 ou llm_v2 (Ollama local), dans
+# data/demo_v2/compte_rendu.py, partagé avec le générateur de meetings.json et le banc d'essai.
+compte_rendu = regles_v2.compte_rendu
 
 
-def _equipes(opp, collectes, texte):
-    """application : contraintes techniques recueillies ; creation : nouvel arôme à créer (catégorie)
-    et objectifs ou besoin recueillis ; marketing : objectifs recueillis et signal de marché ;
-    regulatory : mot-clé réglementaire dans les notes ou réponses, ou signal réglementaire."""
-    types = {s["source_type"] for s in _signaux(opp["id"])}
-    equipes = []
-    if "technical_constraints" in collectes:
-        equipes.append("application")
-    if opp["category"] in CATEGORIES_CREATION and collectes & set(POINTS_BESOIN):
-        equipes.append("creation")
-    if "client_objectives" in collectes and types & SOURCES_MARCHE:
-        equipes.append("marketing")
-    if any(m in texte.lower() for m in MOTS_REGLEMENTAIRES) or "regulation" in types:
-        equipes.append("regulatory")
-    return equipes
-
-
-@app.post("/v2/meetings/report", tags=["V2 – Meeting Copilot"], summary="Générer le compte rendu (V1)")
-def compte_rendu_v2(demande: DemandeCompteRendu):
+@app.post("/v2/meetings/report", tags=["V2 – Meeting Copilot"], summary="Générer le compte rendu (rules_v1 ou llm_v2)")
+def compte_rendu_v2(demande: DemandeCompteRendu,
+                    mode: Literal["rules_v1", "llm_v2"] = Query(
+                        "rules_v1", description="rules_v1 : règles, sans LLM. llm_v2 : qwen2.5:3b en local via Ollama "
+                                                "(variable OLLAMA_URL), retour automatique à rules_v1 en cas d'échec.")):
     """Renvoie un **Meeting** complet (voir `data/demo_v2/MODELE_DONNEES.md`), non enregistré, dont
-    `summary` est le **MeetingReport** produit par un modèle de texte (`generated_by: rules_v1`,
-    `validated: false`). Les prochaines actions sont seulement dans `next_actions`.
+    `summary` est le **MeetingReport** : résumé, besoins, contraintes techniques, contraintes
+    budgétaires, calendrier, informations manquantes, prochaines actions et équipes à mobiliser.
 
-    - `collected_points` = points cochés + points qui ont une réponse dans `answers`.
-    - Points non recueillis → `missing_information` (ceux connus avant le RDV : « à reconfirmer »).
-    - `opportunity_decision` : `confirmed` si objectifs et besoin réel sont recueillis, sinon
-      `to_qualify` ; jamais `discarded` automatiquement (c'est au commercial d'écarter).
-    - `internal_teams` : application, creation, marketing, regulatory (règles dans `_equipes`).
+    - Chaque élément porte `status` : `confirmed` (dit explicitement dans les notes) ou `to_verify`
+      (déduit, hésitant ou contradictoire) et, quand il vient des notes, l'`excerpt` exact.
+    - `mode=llm_v2` : sortie du modèle validée contre un schéma, puis garde-fou (élément introuvable
+      dans les notes : `to_verify` ou écarté). Si Ollama ne répond pas ou si le JSON est invalide :
+      retour à rules_v1, signalé dans `summary.engine` (`used`, `fallback_reason`).
+    - Les réponses (`answers`) sont des éléments confirmés ; un point coché sans détail est `to_verify`.
+    - `opportunity_decision` : `confirmed` si objectifs et besoin réel sont confirmés, sinon
+      `to_qualify` ; jamais `discarded` automatiquement.
 
-    404 si l'opportunité est inconnue, 422 si un point de checklist ou la date est invalide.
+    404 si l'opportunité est inconnue, 422 si un point de checklist, la date ou le mode est invalide.
     """
     opp = OPPORTUNITES_V2.get(demande.opportunity_id) or _introuvable("Opportunité inconnue", demande.opportunity_id)
     inconnus = [p for p in demande.collected_points + [r.information_sought for r in demande.answers]
@@ -470,66 +454,7 @@ def compte_rendu_v2(demande: DemandeCompteRendu):
         jour = date.fromisoformat(demande.date) if demande.date else DATE_REFERENCE
     except ValueError:
         raise HTTPException(status_code=422, detail=f"Date invalide (AAAA-MM-JJ attendu) : {demande.date}")
-
-    contexte, client = CONTEXTES_RDV[opp["id"]], CLIENTS_V2[opp["client_id"]]
-    reponses = {r.information_sought: r.answer.strip() for r in demande.answers}
-    collectes = set(demande.collected_points) | set(reponses)
-    ordonnes = [p for p in CHECKLIST if p in collectes]
-    manquants = [p for p in CHECKLIST if p not in collectes]
-    connus = {k["point"]: k["information"] for k in contexte["known"]}
-    notes = demande.notes.strip()
-
-    def recueilli(points):
-        return [f"{CHECKLIST[p]} : {reponses[p]}" if reponses.get(p)
-                else f"{CHECKLIST[p]} : information recueillie pendant le rendez-vous (voir notes)."
-                for p in points if p in collectes]
-
-    besoins = recueilli(POINTS_BESOIN)
-    besoins += [s["description"] for s in _signaux(opp["id"]) if s["source_type"] in regles_v2.SOURCES_CLIENT]
-    contraintes = recueilli(POINTS_CONTRAINTE)
-    contraintes += [f"{CHECKLIST[p]} (connu avant le rendez-vous) : {i}" for p, i in connus.items()
-                    if p in POINTS_CONTRAINTE and p not in collectes]
-
-    besoin_manquant = [CHECKLIST[p].lower() for p in POINTS_BESOIN if p not in collectes]
-    if not besoin_manquant:
-        decision, raison = "confirmed", ("Objectifs du client et besoin réel recueillis : statut proposé "
-                                         "« confirmed », à valider par le commercial.")
-    elif not collectes:
-        decision, raison = "to_qualify", "Aucune information de la checklist n'a été recueillie."
-    else:
-        decision, raison = "to_qualify", (f"Il manque encore : {', '.join(besoin_manquant)}. À écarter seulement "
-                                          "si le client confirme ne pas avoir ce besoin.")
-
-    equipes = _equipes(opp, collectes, " ".join([notes, *reponses.values()]))
-    actions = [f"Obtenir l'information manquante : {CHECKLIST[p].lower()}." for p in manquants]
-    actions += [f"Transmettre les éléments recueillis à l'équipe {LIBELLES_EQUIPES[e]}." for e in equipes]
-    if "budget_constraints" in collectes:
-        actions.append("Intégrer la contrainte budgétaire à la proposition commerciale.")
-
-    return {
-        "id": f"M-{len(RDV_V2) + 1:02d}",
-        "client_id": client["id"],
-        "opportunity_id": opp["id"],
-        "date": jour.isoformat(),
-        "status": "completed",
-        "objective": contexte["objective"],
-        "questions": [{k: q[k] for k in ("question", "why", "information_sought")} for q in contexte["questions"]],
-        "answers": [{"information_sought": p, "answer": reponses[p]} for p in CHECKLIST if p in reponses],
-        "collected_points": ordonnes,
-        "notes": notes,
-        "summary": {
-            "summary": (f"Rendez-vous avec {client['name']} au sujet de « {opp['title']} ». "
-                        f"Objectif : {contexte['objective']} "
-                        + (f"Notes du commercial : {notes}" if notes else "Aucune note saisie.")),
-            "identified_needs": besoins,
-            "communicated_constraints": contraintes,
-            "missing_information": [CHECKLIST[p] + (" (connu avant le rendez-vous, à reconfirmer)"
-                                                    if p in connus else "") for p in manquants],
-            "opportunity_decision": decision,
-            "decision_reason": raison,
-            "internal_teams": equipes,
-            "generated_by": "rules_v1",
-            "validated": False,
-        },
-        "next_actions": actions,
-    }
+    return compte_rendu.construire_meeting(
+        f"M-{len(RDV_V2) + 1:02d}", opp, CLIENTS_V2[opp["client_id"]], CONTEXTES_RDV[opp["id"]], _signaux(opp["id"]),
+        jour.isoformat(), notes=demande.notes, reponses={r.information_sought: r.answer for r in demande.answers},
+        coches=demande.collected_points, mode=mode)

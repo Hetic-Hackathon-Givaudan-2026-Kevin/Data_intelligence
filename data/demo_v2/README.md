@@ -148,6 +148,17 @@ O-05 (contraintes techniques) ; potentiel (objectifs du client), faisabilité et
 complexité (contraintes techniques) pour O-06. Aucune question ne porte sur un
 point déjà connu.
 
+## `meetings.json` (comptes rendus de démo)
+
+Deux rendez-vous `completed`, exemples statiques pour TECH (DATA-US11) : M-01
+sur O-01 (Maison Nova Drinks) et M-02 sur O-03 (Nordic Food Industries). Les
+notes sont **fictives**, écrites comme un commercial les saisirait ; le compte
+rendu (`summary`) est produit par `compte_rendu.py` en `rules_v1` à partir de
+ces seules notes, à chaque génération. Les deux exemples montrent les deux
+statuts : M-01 a un calendrier « envisagé… à confirmer » (`to_verify`), M-02 un
+budget « peut-être en baisse » et un calendrier « pas encore fixé »
+(`to_verify`). Le mode `llm_v2` n'est jamais appelé à la génération.
+
 ## `signals.json`
 
 Au moins un signal par opportunité. Clés de la section 8 (`id`,
@@ -243,7 +254,7 @@ Ne pas modifier les JSON à la main. Depuis la racine du repo :
 
 ```bash
 python data/demo_v2/generer_demo_v2.py
-pytest data/tests/test_clients_v2.py data/tests/test_projects_v2.py data/tests/test_opportunities_signals_v2.py data/tests/test_detection.py data/tests/test_grille_qualification.py data/tests/test_justification.py
+pytest data/tests/test_clients_v2.py data/tests/test_projects_v2.py data/tests/test_opportunities_signals_v2.py data/tests/test_detection.py data/tests/test_grille_qualification.py data/tests/test_justification.py data/tests/test_meeting_context_v2.py data/tests/test_compte_rendu.py
 ```
 
 ## Attribution

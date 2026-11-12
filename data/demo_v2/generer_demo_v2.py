@@ -29,6 +29,7 @@ def _charger(nom):
 
 detection = _charger("detection")  # DATA-US07
 justification = _charger("justification")  # DATA-US08
+compte_rendu = _charger("compte_rendu")  # DATA-US11
 
 CLIENTS = [
     {
@@ -381,14 +382,7 @@ def construire_signaux(signaux_off):
 
 
 # Meeting Copilot (doc v2, section 4.4) : checklist de rendez-vous, dans l'ordre de la doc.
-CHECKLIST = {
-    "client_objectives": "Objectifs du client",
-    "real_need": "Besoin réel",
-    "technical_constraints": "Contraintes techniques",
-    "budget_constraints": "Contraintes budgétaires",
-    "timeline": "Calendrier",
-    "decision_criteria": "Critères de décision",
-}
+CHECKLIST = compte_rendu.CHECKLIST  # les 6 points, définis une seule fois
 FICHIER_BANQUE = DOSSIER.parent / "questions" / "questions.json"
 
 # Par opportunité : objectif du RDV, points déjà connus (avec le signal qui les apporte) et
@@ -584,6 +578,35 @@ def ajouter_justifications(opportunites, signaux, contextes):
     return resultat
 
 
+# Rendez-vous de démo (DATA-US11) : 2 exemples statiques pour TECH. Notes fictives, écrites comme un
+# commercial les saisirait ; le compte rendu est produit par rules_v1 à partir de ces seules notes.
+RENDEZ_VOUS = [
+    {"id": "M-01", "opportunity_id": "O-01", "date": "2026-11-10",
+     "notes": ("Le client veut lancer deux boissons fonctionnelles sous sa propre marque. "
+               "Leur besoin : un arôme agrumes qui masque l'amertume des extraits de plantes. "
+               "Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation. "
+               "Lancement envisagé pour septembre 2027, à confirmer avec leur marketing. "
+               "Ils choisiront selon le goût lors du test consommateur.")},
+    {"id": "M-02", "opportunity_id": "O-03", "date": "2026-11-09",
+     "notes": ("Le client souhaite une alternative végétale à sa sauce au fromage. "
+               "Il leur faut un arôme fromage sans lait. "
+               "Côté technique, la sauce doit rester fluide après réchauffage. "
+               "Le budget reste serré, peut-être en baisse par rapport au projet précédent. "
+               "Calendrier : pas encore fixé.")},
+]
+
+
+def construire_rendez_vous(contextes, opportunites, signaux):
+    """meetings.json : Meeting complets, compte rendu rules_v1 (aucun appel au LLM à la génération)."""
+    clients = {c["id"]: c for c in CLIENTS}
+    opps = {o["id"]: o for o in opportunites}
+    par_opp = {c["opportunity_id"]: c for c in contextes}
+    return [compte_rendu.construire_meeting(
+        r["id"], opps[r["opportunity_id"]], clients[opps[r["opportunity_id"]]["client_id"]], par_opp[r["opportunity_id"]],
+        [s for s in signaux if s["opportunity_id"] == r["opportunity_id"]], r["date"], notes=r["notes"])
+        for r in RENDEZ_VOUS]
+
+
 def texte_json(objets):
     return json.dumps(objets, ensure_ascii=False, indent=2) + "\n"
 
@@ -608,6 +631,7 @@ def generer_fichiers(signaux_off=None, banque=None):
         "opportunities.json": texte_json(opportunites),
         "signals.json": texte_json(signaux),
         "meeting_context.json": texte_json(ajouter_liens(contextes, opportunites)),
+        "meetings.json": texte_json(construire_rendez_vous(contextes, opportunites, signaux)),
     }
 
 
