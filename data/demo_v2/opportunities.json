@@ -6,7 +6,12 @@
     "description": "Le client s'intéresse à une nouvelle catégorie, les boissons fonctionnelles : possibilité d'accompagner le lancement d'une nouvelle gamme.",
     "category": "Nouvelle gamme",
     "status": "to_qualify",
-    "priority": "high",
+    "priority": "medium",
+    "priority_max": "high",
+    "priority_status": "provisional",
+    "missing_criteria": [
+      "feasibility"
+    ],
     "estimated_potential": "high",
     "feasibility": "to_confirm",
     "complexity": "high",
@@ -20,6 +25,9 @@
     "category": "Extension de gamme",
     "status": "detected",
     "priority": "medium",
+    "priority_max": "medium",
+    "priority_status": "stable",
+    "missing_criteria": [],
     "estimated_potential": "medium",
     "feasibility": "high",
     "complexity": "low",
@@ -33,9 +41,12 @@
     "category": "Nouvelle formulation",
     "status": "to_qualify",
     "priority": "high",
+    "priority_max": "high",
+    "priority_status": "stable",
+    "missing_criteria": [],
     "estimated_potential": "medium",
     "feasibility": "medium",
-    "complexity": "high",
+    "complexity": "medium",
     "next_action": "Qualifier la demande : produit visé, marché suédois, calendrier et budget."
   },
   {
@@ -46,6 +57,9 @@
     "category": "Amélioration produit",
     "status": "detected",
     "priority": "medium",
+    "priority_max": "medium",
+    "priority_status": "stable",
+    "missing_criteria": [],
     "estimated_potential": "low",
     "feasibility": "medium",
     "complexity": "medium",
@@ -59,8 +73,13 @@
     "category": "Optimisation",
     "status": "detected",
     "priority": "medium",
+    "priority_max": "high",
+    "priority_status": "provisional",
+    "missing_criteria": [
+      "feasibility"
+    ],
     "estimated_potential": "low",
-    "feasibility": "medium",
+    "feasibility": "to_confirm",
     "complexity": "medium",
     "next_action": "Confirmer le budget communiqué et identifier la formulation à optimiser."
   },
@@ -72,9 +91,16 @@
     "category": "Nouvelle référence",
     "status": "detected",
     "priority": "low",
+    "priority_max": "high",
+    "priority_status": "provisional",
+    "missing_criteria": [
+      "estimated_potential",
+      "feasibility",
+      "complexity"
+    ],
     "estimated_potential": null,
     "feasibility": "to_confirm",
-    "complexity": "low",
+    "complexity": "to_confirm",
     "next_action": "Présenter des pistes d'arômes naturels pour la marque de distributeur et confirmer l'intérêt du client."
   }
 ]

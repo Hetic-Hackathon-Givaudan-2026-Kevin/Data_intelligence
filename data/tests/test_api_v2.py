@@ -75,7 +75,7 @@ def test_opportunite_signaux_et_justification(client):
                                       key=lambda s: s["source_date"], reverse=True)
     j = corps["justification"]
     assert set(j) == {"information_used", "provenance", "reasoning", "to_verify"}
-    assert "score 5/7" in j["reasoning"] and "Priorité high" in j["reasoning"]
+    assert "score 5 sur une échelle de -1 à 7" in j["reasoning"] and "Priorité high (stable)" in j["reasoning"]
     assert any(t.startswith("Hypothèse") for t in j["to_verify"])  # S-05 est une hypothèse
     assert all(p["source"] for p in j["provenance"])
 

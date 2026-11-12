@@ -13,8 +13,8 @@ from pathlib import Path
 import pytest
 
 DOSSIER = Path(__file__).resolve().parents[1] / "demo_v2"
-CLES_OPP = ["id", "client_id", "title", "description", "category", "status", "priority",
-            "estimated_potential", "feasibility", "complexity", "next_action"]
+CLES_OPP = ["id", "client_id", "title", "description", "category", "status", "priority", "priority_max",
+            "priority_status", "missing_criteria", "estimated_potential", "feasibility", "complexity", "next_action"]
 CLES_SIGNAL = {"id", "opportunity_id", "client_id", "category", "description", "source_type", "source_date", "confidence",
                "evidence_type", "is_real_source", "source_ref"}
 STATUTS = {"detected", "to_qualify", "confirmed"}
@@ -56,10 +56,11 @@ def test_champs_et_valeurs_des_opportunites(opportunites):
         assert list(o) == CLES_OPP, o["id"]
         assert o["client_id"] in clients
         assert o["status"] in STATUTS
-        assert o["priority"] in NIVEAUX
+        assert o["priority"] in NIVEAUX and o["priority_max"] in NIVEAUX
+        assert o["priority_status"] in {"stable", "provisional"}
         assert o["estimated_potential"] in NIVEAUX | {None}
         assert o["feasibility"] in NIVEAUX | {"to_confirm"}
-        assert o["complexity"] in NIVEAUX
+        assert o["complexity"] in NIVEAUX | {"to_confirm"}
         assert all(o[k].strip() for k in ("title", "description", "category", "next_action"))
 
 
@@ -124,16 +125,25 @@ def test_aucun_montant_en_euros(opportunites, signaux):
 
 
 def test_priorite_suit_la_regle(opportunites, signaux):
-    """Confiance du meilleur signal + potentiel + faisabilité + urgence ; high >= 5, medium >= 3."""
-    points = {"high": 2, "medium": 1, "low": 0, "to_confirm": 0, None: 0}
+    """Grille DATA-US09 : confiance du meilleur signal + potentiel + faisabilité + complexité + urgence,
+    de -1 à 7 ; high >= 5, medium >= 3. Critère inconnu : score avec le niveau le plus bas et le plus haut."""
+    points = {"high": 2, "medium": 1, "low": 0}
+    complexite = {"low": 0, "medium": 0, "high": -1}
+
+    def bornes(table, valeur, inconnu):
+        return (min(table.values()), max(table.values())) if valeur == inconnu else (table[valeur],) * 2
+
+    niveau = lambda score: "high" if score >= 5 else "medium" if score >= 3 else "low"  # noqa: E731
     for o in opportunites:
         propres = [s for s in signaux if s["opportunity_id"] == o["id"]]
         urgence = any(s["source_type"] in {"meeting_report", "client_request"}
                       and (DATE_JEU - date.fromisoformat(s["source_date"])).days <= 30 for s in propres)
-        score = (max(points[s["confidence"]] for s in propres) + points[o["estimated_potential"]]
-                 + points[o["feasibility"]] + urgence)
-        attendu = "high" if score >= 5 else "medium" if score >= 3 else "low"
-        assert o["priority"] == attendu, (o["id"], score)
+        parties = [(max(points[s["confidence"]] for s in propres),) * 2, bornes(points, o["estimated_potential"], None),
+                   bornes(points, o["feasibility"], "to_confirm"), bornes(complexite, o["complexity"], "to_confirm"),
+                   (int(urgence),) * 2]
+        mini, maxi = sum(p[0] for p in parties), sum(p[1] for p in parties)
+        assert (o["priority"], o["priority_max"]) == (niveau(mini), niveau(maxi)), (o["id"], mini, maxi)
+        assert o["priority_status"] == ("stable" if niveau(mini) == niveau(maxi) else "provisional"), o["id"]
 
 
 def test_fichiers_a_jour_avec_le_generateur():

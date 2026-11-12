@@ -16,8 +16,8 @@ CATEGORIES = {"Nouvelle gamme", "Extension de gamme", "Nouvelle formulation", "A
               "Optimisation", "Nouvelle référence"}
 SOURCE_TYPES = {"meeting_report", "project_history", "client_request", "market_trend",
                 "commodity_price", "company_report", "regulation"}
-ATTENDU = {  # les 6 opportunités de la doc v2, telles qu'avant la détection
-    "O-01": ("C-01", "Nouvelle gamme de boissons fonctionnelles", "Nouvelle gamme", "to_qualify", "high"),
+ATTENDU = {  # les 6 opportunités de la doc v2 ; priorité (prudente) de la grille DATA-US09
+    "O-01": ("C-01", "Nouvelle gamme de boissons fonctionnelles", "Nouvelle gamme", "to_qualify", "medium"),
     "O-02": ("C-01", "Extension d'une gamme aromatique", "Extension de gamme", "detected", "medium"),
     "O-03": ("C-02", "Développement d'une formulation végétale", "Nouvelle formulation", "to_qualify", "high"),
     "O-04": ("C-02", "Amélioration de la texture d'un produit", "Amélioration produit", "detected", "medium"),

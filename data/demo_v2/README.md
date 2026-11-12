@@ -88,20 +88,35 @@ fiche client :
 Maison Nova Drinks : 2 détectées et 1 à qualifier, comme dans la doc. Nordic
 Food Industries : 3 et 1. Alimenta Distribution : 1 et 0.
 
-### Règle de priorité (section 5.3)
+### Règle de priorité (section 5.3) : grille de qualification
 
 La doc demande de tenir compte de la pertinence du signal, du potentiel, de la
 faisabilité, de l'urgence et de la confiance ; une classification par règles
-suffit pour le prototype. Score de 0 à 7 :
+suffit pour le prototype. Les critères, leurs niveaux, leurs définitions et
+leurs points sont dans `grille_qualification.json` (DATA-US09), que le
+générateur lit pour calculer la priorité. Score de -1 à 7 :
 
-| Critère | Points |
-| --- | --- |
-| Confiance du meilleur signal de l'opportunité | high 2, medium 1, low 0 |
-| `estimated_potential` | high 2, medium 1, low ou `null` 0 |
-| `feasibility` | high 2, medium 1, low ou `to_confirm` 0 |
-| Urgence : le client s'est exprimé lui-même (`meeting_report` ou `client_request`) dans les 30 jours avant le 2026-11-12, date fixe du jeu | 1 |
+| Critère | Points | Inconnu possible |
+| --- | --- | --- |
+| Confiance du meilleur signal de l'opportunité | high 2, medium 1, low 0 | non |
+| `estimated_potential` | high 2, medium 1, low 0 | oui (`null`) |
+| `feasibility` | high 2, medium 1, low 0 | oui (`to_confirm`) |
+| `complexity` | low 0, medium 0, high −1 : une complexité élevée fait baisser la priorité, d'un point seulement car la nouveauté compte déjà dans le potentiel (ne pas la compter deux fois) | oui (`to_confirm`) |
+| Urgence : le client s'est exprimé lui-même (`meeting_report` ou `client_request`) dans les 30 jours avant le 2026-11-12, date fixe du jeu | 1 | non |
 
-`high` si le score vaut 5 ou plus, `medium` de 3 à 4, `low` en dessous.
+`high` si le score vaut 5 ou plus, `medium` de 3 à 4, `low` en dessous : les
+seuils d'avant la grille sont gardés.
+
+**Inconnu n'est pas faible.** Pour chaque critère inconnu, le score est
+calculé avec son niveau le plus bas puis avec le plus haut. Si les deux
+donnent le même niveau, la priorité est `stable` ; sinon elle est
+`provisional`. `priority` garde le niveau prudent (valeurs les plus basses),
+`priority_max` le niveau atteignable, et `missing_criteria` liste les
+critères à vérifier au prochain rendez-vous.
+
+Dans `generer_demo_v2.py`, chaque valeur de `QUALIFICATIONS` cite sa source
+(id de signal ou de projet) selon les définitions de la grille, ou vaut
+`INCONNU`.
 
 ## `signals.json`
 
@@ -188,7 +203,9 @@ action restent une appréciation commerciale (`QUALIFICATIONS` dans
 1. Les mots-clés des règles sont calés sur le vocabulaire de la démo. Un vrai
    déploiement demanderait des synonymes ou une classification par LLM (V2).
 2. Le potentiel, la faisabilité et la complexité restent saisis à la main dans
-   `QUALIFICATIONS` (`generer_demo_v2.py`). Ce sera traité par DATA-US09 (#19).
+   `QUALIFICATIONS` (`generer_demo_v2.py`) ; depuis DATA-US09 (#19), chaque
+   valeur y cite sa source ou vaut inconnu, et un critère inconnu rend la
+   priorité provisoire au lieu de compter comme faible.
 
 ## Régénérer
 
@@ -196,7 +213,7 @@ Ne pas modifier les JSON à la main. Depuis la racine du repo :
 
 ```bash
 python data/demo_v2/generer_demo_v2.py
-pytest data/tests/test_clients_v2.py data/tests/test_projects_v2.py data/tests/test_opportunities_signals_v2.py data/tests/test_detection.py
+pytest data/tests/test_clients_v2.py data/tests/test_projects_v2.py data/tests/test_opportunities_signals_v2.py data/tests/test_detection.py data/tests/test_grille_qualification.py
 ```
 
 ## Attribution

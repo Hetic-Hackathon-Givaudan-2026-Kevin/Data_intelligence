@@ -76,7 +76,9 @@ des signaux et des projets du client par les règles de
 fixe `id`, `client_id`, `title`, `category` et `status` ; `description`,
 `estimated_potential`, `feasibility`, `complexity` et `next_action` sont
 l'appréciation commerciale, saisie dans le générateur par client et
-catégorie ; `priority` est calculée.
+catégorie, chaque valeur citant sa source (id de signal ou de projet) ou
+valant « inconnu » ; `priority` et ses champs associés sont calculés avec la
+grille de qualification (`grille_qualification.json`, DATA-US09).
 
 | Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
 | --- | --- | --- | --- | --- | --- |
@@ -86,10 +88,13 @@ catégorie ; `priority` est calculée.
 | `description` | string | oui | texte | Explication brève | `Le client s'intéresse à …` |
 | `category` | string | oui | texte ; dans la démo : `Nouvelle gamme`, `Extension de gamme`, `Nouvelle formulation`, `Amélioration produit`, `Optimisation`, `Nouvelle référence` | Catégorie | `Nouvelle gamme` |
 | `status` | enum | oui | `detected`, `to_qualify`, `confirmed` | Détectée, à qualifier, confirmée (section 4.3) | `to_qualify` |
-| `priority` | enum | oui | `high`, `medium`, `low` | Priorité, calculée à la génération par la règle de `README.md` (section 5.3) puis stockée | `high` |
-| `estimated_potential` | enum | oui | `low`, `medium`, `high` ou `null` (non renseigné) | Potentiel indicatif, **jamais un montant** | `high` |
-| `feasibility` | enum | oui | `low`, `medium`, `high`, `to_confirm` | Faisabilité | `to_confirm` |
-| `complexity` | enum | oui | `low`, `medium`, `high` | Complexité technique | `high` |
+| `priority` | enum | oui | `high`, `medium`, `low` | Priorité, calculée à la génération par la grille de qualification (section 5.3) puis stockée ; si des critères sont inconnus, niveau obtenu avec leurs valeurs les plus basses | `medium` |
+| `priority_max` | enum | oui | `high`, `medium`, `low` | Priorité obtenue avec les valeurs les plus hautes des critères inconnus ; égale à `priority` si rien n'est inconnu (extension) | `high` |
+| `priority_status` | enum | oui | `stable`, `provisional` | `stable` si `priority` = `priority_max`, sinon `provisional` : la priorité peut changer quand les critères inconnus seront connus (extension) | `provisional` |
+| `missing_criteria` | liste d'enum | oui | parmi `estimated_potential`, `feasibility`, `complexity` ; liste vide si tout est connu | Critères inconnus, à vérifier au prochain rendez-vous (extension) | `["feasibility"]` |
+| `estimated_potential` | enum | oui | `low`, `medium`, `high` ou `null` (inconnu) | Potentiel indicatif, **jamais un montant** | `high` |
+| `feasibility` | enum | oui | `low`, `medium`, `high`, `to_confirm` (inconnue) | Faisabilité | `to_confirm` |
+| `complexity` | enum | oui | `low`, `medium`, `high`, `to_confirm` (inconnue, nouvelle valeur DATA-US09) | Complexité technique ; une complexité élevée fait baisser la priorité | `high` |
 | `next_action` | string | oui | texte actionnable | Recommandation | `Organiser un échange avec le client …` |
 
 ### Signal
@@ -252,9 +257,12 @@ erDiagram
         string category
         enum status "detected, to_qualify, confirmed"
         enum priority "high, medium, low"
+        enum priority_max "high, medium, low"
+        enum priority_status "stable, provisional"
+        list missing_criteria "critères inconnus"
         enum estimated_potential "low, medium, high, null"
         enum feasibility "low, medium, high, to_confirm"
-        enum complexity "low, medium, high"
+        enum complexity "low, medium, high, to_confirm"
         string next_action
     }
     SIGNAL {

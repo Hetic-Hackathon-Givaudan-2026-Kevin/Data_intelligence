@@ -198,6 +198,8 @@ RDV_V2 = _lire_v2("meetings.json") if (DOSSIER_V2 / "meetings.json").exists() el
 CHECKLIST = regles_v2.CHECKLIST
 DATE_REFERENCE = date.fromisoformat(regles_v2.DATE_REFERENCE)
 JOURS_SIGNAL_RECENT = 90
+ECHELLE = (sum(min(n["points"] for n in c["niveaux"]) for c in regles_v2.CRITERES.values()),
+           sum(max(n["points"] for n in c["niveaux"]) for c in regles_v2.CRITERES.values()))  # score mini, maxi
 MOTS_REGLEMENTAIRES = ("réglement", "reglement", "allégation", "allegation", "étiquet", "etiquet", "additif")
 
 app.openapi_tags += [
@@ -320,25 +322,38 @@ def lire_client_v2(client_id: str):
     }
 
 
-def _justification(opp, signaux):
-    """Section 5.2 : informations utilisées, provenance, raisonnement, éléments à vérifier."""
-    points = regles_v2.detail_priorite(opp, SIGNAUX_V2)
+def _raisonnement_score(opp, signaux):
+    """Explication du score, selon la grille de qualification (DATA-US09)."""
+    detail = regles_v2.detail_priorite(opp, SIGNAUX_V2)
+    evaluation = regles_v2.evaluer_priorite(opp, SIGNAUX_V2)
     client = CLIENTS_V2[opp["client_id"]]
     types = sorted({s["source_type"] for s in signaux})
-    raisonnement = (
+
+    def pts(c):
+        mini, maxi = detail[c]
+        return f"{mini}" if mini == maxi else f"{mini} à {maxi} (inconnu)"
+
+    score = (f"score {evaluation['score_min']}" if evaluation["score_min"] == evaluation["score_max"]
+             else f"score {evaluation['score_min']} à {evaluation['score_max']}")
+    statut = ("stable" if opp["priority_status"] == "stable"
+              else f"provisoire, jusqu'à {opp['priority_max']} selon les critères inconnus")
+    return (
         f"{len(signaux)} signal(s) relient {client['name']} à « {opp['title']} » ({', '.join(types)}). "
-        f"Priorité {opp['priority']} : score {sum(points.values())}/7 (confiance du meilleur signal "
-        f"{points['confidence']}, potentiel {points['potential']}, faisabilité {points['feasibility']}, "
-        f"urgence {points['urgency']})."
+        f"Priorité {opp['priority']} ({statut}) : {score} sur une échelle de {ECHELLE[0]} à {ECHELLE[1]} (confiance du meilleur "
+        f"signal {pts('confidence')}, potentiel {pts('estimated_potential')}, faisabilité {pts('feasibility')}, "
+        f"complexité {pts('complexity')}, urgence {pts('urgency')})."
     )
+
+
+def _justification(opp, signaux):
+    """Section 5.2 : informations utilisées, provenance, raisonnement, éléments à vérifier."""
+    raisonnement = _raisonnement_score(opp, signaux)
     a_verifier = []
     if opp["status"] != "confirmed":
         a_verifier.append(f"Le besoin n'est pas confirmé auprès du client (statut : {opp['status']}).")
     a_verifier += [f"Hypothèse : {s['description']}" for s in signaux if s["evidence_type"] != "fact"]
-    if opp["feasibility"] == "to_confirm":
-        a_verifier.append("Faisabilité à confirmer.")
-    if opp["estimated_potential"] is None:
-        a_verifier.append("Potentiel commercial non renseigné.")
+    a_verifier += [f"{regles_v2.CRITERES[c]['nom']} inconnu(e) : à vérifier au prochain rendez-vous."
+                   for c in opp["missing_criteria"]]
     a_verifier += [f"Information manquante : {CHECKLIST[p]}." for p in CONTEXTES_RDV[opp["id"]]["missing"]]
     return {
         "information_used": [f"{s['id']} : {s['description']}" for s in signaux],

@@ -148,112 +148,142 @@ PROJETS = [
 
 
 # Opportunités : id, client, titre, catégorie et statut sont détectés par detection.py
-# (regles_detection.json, DATA-US07). Reste ici l'appréciation commerciale, non déductible des signaux :
-# description, potentiel, faisabilité, complexité et prochaine action, par (client, catégorie).
+# (regles_detection.json, DATA-US07). Reste ici l'appréciation commerciale, par (client, catégorie).
+# Chaque valeur cite sa source, (valeur, id de signal ou de projet, …), selon les définitions de
+# grille_qualification.json (DATA-US09), ou vaut INCONNU : aucune valeur sans source.
+INCONNU = None
+
 QUALIFICATIONS = {
     ("C-01", "Nouvelle gamme"): {  # O-01
-        "description": (
-            "Le client s'intéresse à une nouvelle catégorie, les boissons fonctionnelles : "
-            "possibilité d'accompagner le lancement d'une nouvelle gamme."
-        ),
-        "estimated_potential": "high",
-        "feasibility": "to_confirm",
-        "complexity": "high",
-        "next_action": (
-            "Organiser un échange avec le client afin de confirmer son intérêt pour une nouvelle gamme de "
-            "boissons fonctionnelles et identifier ses contraintes de formulation."
-        ),
+        "description": ("Le client s'intéresse à une nouvelle catégorie, les boissons fonctionnelles : "
+                        "possibilité d'accompagner le lancement d'une nouvelle gamme.", "S-01"),
+        "estimated_potential": ("high", "S-01"),  # nouvelle catégorie
+        "feasibility": INCONNU,  # aucun projet du client sur les boissons fonctionnelles
+        "complexity": ("high", "S-01"),  # nouvelle catégorie pour le client
+        "next_action": ("Organiser un échange avec le client afin de confirmer son intérêt pour une nouvelle gamme de "
+                        "boissons fonctionnelles et identifier ses contraintes de formulation.", "S-01"),
     },
     ("C-01", "Extension de gamme"): {  # O-02
-        "description": (
-            "Le travail en cours sur la gamme existante (P-01) peut ouvrir sur de nouvelles saveurs "
-            "pour cette gamme."
-        ),
-        "estimated_potential": "medium",
-        "feasibility": "high",
-        "complexity": "low",
-        "next_action": (
-            "Faire le point sur le retour de l'échantillon envoyé le 20/10/2026 (P-01) avant de proposer "
-            "une extension de la gamme."
-        ),
+        "description": ("Le travail en cours sur la gamme existante (P-01) peut ouvrir sur de nouvelles saveurs "
+                        "pour cette gamme.", "P-01", "S-03"),
+        "estimated_potential": ("medium", "P-01"),  # extension d'une gamme existante
+        "feasibility": ("high", "P-01", "S-03"),  # projet en cours sur la même gamme, échantillon envoyé
+        "complexity": ("low", "P-01"),  # arôme de la gamme déjà travaillé
+        "next_action": ("Faire le point sur le retour de l'échantillon envoyé le 20/10/2026 (P-01) avant de proposer "
+                        "une extension de la gamme.", "P-01", "S-03"),
     },
     ("C-02", "Nouvelle formulation"): {  # O-03
-        "description": "Le client a demandé des alternatives végétales : possibilité de développer une formulation dédiée.",
-        "estimated_potential": "medium",
-        "feasibility": "medium",
-        "complexity": "high",
-        "next_action": "Qualifier la demande : produit visé, marché suédois, calendrier et budget.",
+        "description": ("Le client a demandé des alternatives végétales : possibilité de développer une formulation "
+                        "dédiée.", "S-04"),
+        "estimated_potential": ("medium", "S-04"),  # nouvelle formulation
+        "feasibility": ("medium", "P-06", "S-06"),  # dessert végétal livré, avec un retour sur la texture
+        "complexity": ("medium", "P-06", "S-06"),  # base végétale déjà travaillée, problème de texture connu
+        "next_action": ("Qualifier la demande : produit visé, marché suédois, calendrier et budget.", "S-04", "S-07"),
     },
     ("C-02", "Amélioration produit"): {  # O-04
-        "description": (
-            "Le retour technique sur la texture du projet terminé P-06 peut justifier une proposition "
-            "d'amélioration."
-        ),
-        "estimated_potential": "low",
-        "feasibility": "medium",
-        "complexity": "medium",
-        "next_action": "Revoir avec les équipes techniques le retour sur la texture de P-06 avant de recontacter le client.",
+        "description": ("Le retour technique sur la texture du projet terminé P-06 peut justifier une proposition "
+                        "d'amélioration.", "P-06", "S-06"),
+        "estimated_potential": ("low", "S-06"),  # modification d'un produit existant
+        "feasibility": ("medium", "P-06", "S-06"),  # produit livré, retour technique à traiter
+        "complexity": ("medium", "S-06"),  # produit existant, problème de texture identifié
+        "next_action": ("Revoir avec les équipes techniques le retour sur la texture de P-06 avant de recontacter le "
+                        "client.", "P-06", "S-06"),
     },
     ("C-02", "Optimisation"): {  # O-05
-        "description": (
-            "Le client a communiqué une contrainte budgétaire : possibilité d'optimiser le coût d'une "
-            "formulation existante."
-        ),
-        "estimated_potential": "low",
-        "feasibility": "medium",
-        "complexity": "medium",
-        "next_action": "Confirmer le budget communiqué et identifier la formulation à optimiser.",
+        "description": ("Le client a communiqué une contrainte budgétaire : possibilité d'optimiser le coût d'une "
+                        "formulation existante.", "S-07"),
+        "estimated_potential": ("low", "S-07"),  # optimisation d'un produit existant
+        "feasibility": INCONNU,  # la formulation à optimiser n'est pas identifiée
+        "complexity": ("medium", "S-07"),  # optimisation d'un produit existant
+        "next_action": ("Confirmer le budget communiqué et identifier la formulation à optimiser.", "S-07"),
     },
     ("C-03", "Nouvelle référence"): {  # O-06
-        "description": (
-            "La demande de produits plus naturels et à l'étiquette plus claire peut ouvrir une nouvelle "
-            "référence aromatique pour la marque de distributeur du client."
-        ),
-        "estimated_potential": None,
-        "feasibility": "to_confirm",
-        "complexity": "low",
-        "next_action": (
-            "Présenter des pistes d'arômes naturels pour la marque de distributeur et confirmer l'intérêt "
-            "du client."
-        ),
+        "description": ("La demande de produits plus naturels et à l'étiquette plus claire peut ouvrir une nouvelle "
+                        "référence aromatique pour la marque de distributeur du client.", "S-09", "S-10"),
+        "estimated_potential": INCONNU,  # aucun signal ne dit l'ampleur du besoin
+        "feasibility": INCONNU,  # aucun projet sur la future référence
+        "complexity": INCONNU,  # le produit visé n'est pas connu
+        "next_action": ("Présenter des pistes d'arômes naturels pour la marque de distributeur et confirmer l'intérêt "
+                        "du client.", "S-09", "S-10"),
     },
 }
 
-# Règle de priorité (doc v2, section 5.3 : « une classification par règles métier suffit »).
+# Règle de priorité (doc v2, section 5.3), définie par grille_qualification.json (DATA-US09).
 DATE_REFERENCE = "2026-11-12"  # date du jeu de démo, fixe
 JOURS_URGENCE = 30
 SOURCES_CLIENT = {"meeting_report", "client_request"}  # le client s'est exprimé lui-même
-POINTS_CONFIANCE = {"high": 2, "medium": 1, "low": 0}
-POINTS_POTENTIEL = {"high": 2, "medium": 1, "low": 0, None: 0}
-POINTS_FAISABILITE = {"high": 2, "medium": 1, "low": 0, "to_confirm": 0}
-SEUIL_HIGH, SEUIL_MEDIUM = 5, 3
+FICHIER_GRILLE = DOSSIER / "grille_qualification.json"
+GRILLE = json.loads(FICHIER_GRILLE.read_text(encoding="utf-8"))
+CRITERES = {c["id"]: c for c in GRILLE["criteres"]}
+CRITERES_QUALIFIES = ["estimated_potential", "feasibility", "complexity"]  # saisis dans QUALIFICATIONS
+SEUIL_HIGH, SEUIL_MEDIUM = GRILLE["seuils"]["high"], GRILLE["seuils"]["medium"]
 
 FICHIER_OFF = DOSSIER.parent / "signaux" / "signaux_marche.json"
 GIVAUDAN = "Rapport intégré Givaudan 2025 (giv-2025-integrated-report.pdf)"
 
 
-def detail_priorite(opportunite, signaux):
-    """Points de chaque critère : confiance (meilleur signal), potentiel, faisabilité, urgence."""
+def valeur_qualifiee(q, champ):
+    """Valeur d'un champ de QUALIFICATIONS ; INCONNU devient la valeur inconnue du modèle
+    (null pour le potentiel, to_confirm pour la faisabilité et la complexité)."""
+    if q[champ] is INCONNU:
+        return CRITERES[champ]["valeur_inconnue"]
+    return q[champ][0]
+
+
+def sources_qualifiees(q, champ):
+    return [] if q[champ] is INCONNU else list(q[champ][1:])
+
+
+def points(critere, valeur):
+    """(points mini, points maxi) d'un critère : égaux si la valeur est connue ; si elle est
+    inconnue, le niveau qui rapporte le moins puis celui qui rapporte le plus."""
+    c = CRITERES[critere]
+    if c["peut_etre_inconnu"] and valeur == c["valeur_inconnue"]:
+        tous = [n["points"] for n in c["niveaux"]]
+        return min(tous), max(tous)
+    p = next(n["points"] for n in c["niveaux"] if n["valeur"] == valeur)
+    return p, p
+
+
+def valeurs_criteres(opportunite, signaux):
+    """Valeur de chaque critère de la grille pour l'opportunité (confiance et urgence : signaux)."""
     propres = [s for s in signaux if s["opportunity_id"] == opportunite["id"]]
     reference = date.fromisoformat(DATE_REFERENCE)
+    rang = {n["valeur"]: n["points"] for n in CRITERES["confidence"]["niveaux"]}
     return {
-        "confidence": max(POINTS_CONFIANCE[s["confidence"]] for s in propres),
-        "potential": POINTS_POTENTIEL[opportunite["estimated_potential"]],
-        "feasibility": POINTS_FAISABILITE[opportunite["feasibility"]],
-        "urgency": int(any(s["source_type"] in SOURCES_CLIENT
-                           and (reference - date.fromisoformat(s["source_date"])).days <= JOURS_URGENCE
-                           for s in propres)),
+        "confidence": max((s["confidence"] for s in propres), key=rang.get),
+        "estimated_potential": opportunite["estimated_potential"],
+        "feasibility": opportunite["feasibility"],
+        "complexity": opportunite["complexity"],
+        "urgency": any(s["source_type"] in SOURCES_CLIENT
+                       and (reference - date.fromisoformat(s["source_date"])).days <= JOURS_URGENCE for s in propres),
     }
 
 
-def score_priorite(opportunite, signaux):
-    """Confiance (meilleur signal) + potentiel + faisabilité + urgence, de 0 à 7."""
-    return sum(detail_priorite(opportunite, signaux).values())
+def detail_priorite(opportunite, signaux):
+    """{critère: (points mini, points maxi)} pour chaque critère de la grille."""
+    return {c: points(c, v) for c, v in valeurs_criteres(opportunite, signaux).items()}
+
+
+def niveau(score):
+    return "high" if score >= SEUIL_HIGH else "medium" if score >= SEUIL_MEDIUM else "low"
+
+
+def criteres_inconnus(opportunite):
+    return [c for c in CRITERES_QUALIFIES if opportunite[c] == CRITERES[c]["valeur_inconnue"]]
+
+
+def evaluer_priorite(opportunite, signaux):
+    """Score mini et maxi, priorité (prudente), priorité maxi, stable ou provisoire, critères inconnus."""
+    detail = detail_priorite(opportunite, signaux)
+    mini, maxi = sum(p[0] for p in detail.values()), sum(p[1] for p in detail.values())
+    return {"score_min": mini, "score_max": maxi, "priority": niveau(mini), "priority_max": niveau(maxi),
+            "priority_status": "stable" if niveau(mini) == niveau(maxi) else "provisional",
+            "missing_criteria": criteres_inconnus(opportunite)}
 
 
 def priorite(opportunite, signaux):
-    score = score_priorite(opportunite, signaux)
-    return "high" if score >= SEUIL_HIGH else "medium" if score >= SEUIL_MEDIUM else "low"
+    return evaluer_priorite(opportunite, signaux)["priority"]
 
 
 def signal_off(signaux_off, opp_off):
@@ -471,20 +501,22 @@ def detecter_demo(signaux_bruts, regles=None):
 
 
 def construire_opportunites(detectees, signaux):
-    """Opportunité détectée + qualification commerciale ; priority, calculée par la règle, juste
-    après status (ordre des champs de la doc)."""
+    """Opportunité détectée + qualification commerciale ; la priorité et son statut (grille de
+    qualification) suivent status, dans l'ordre des champs du modèle."""
     resultat = []
     for d in detectees:
         cle = (d["client_id"], d["category"])
         if cle not in QUALIFICATIONS:
             raise KeyError(f"{d['id']} ({cle}) détectée par {d['rule_id']} mais sans qualification dans QUALIFICATIONS")
         q = QUALIFICATIONS[cle]
-        o = {"id": d["id"], "client_id": d["client_id"], "title": d["title"], "description": q["description"],
+        o = {"id": d["id"], "client_id": d["client_id"], "title": d["title"], "description": q["description"][0],
              "category": d["category"], "status": d["status"]}
-        o.update({k: q[k] for k in ("estimated_potential", "feasibility", "complexity", "next_action")})
-        champs = list(o.items())
-        i = [k for k, _ in champs].index("status") + 1
-        resultat.append(dict(champs[:i] + [("priority", priorite(o, signaux))] + champs[i:]))
+        criteres = {k: valeur_qualifiee(q, k) for k in CRITERES_QUALIFIES}
+        p = evaluer_priorite({**o, **criteres}, signaux)
+        o.update({k: p[k] for k in ("priority", "priority_max", "priority_status", "missing_criteria")})
+        o.update(criteres)
+        o["next_action"] = q["next_action"][0]
+        resultat.append(o)
     return resultat
 
 
