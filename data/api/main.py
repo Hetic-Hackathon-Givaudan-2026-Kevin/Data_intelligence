@@ -346,7 +346,10 @@ def _raisonnement_score(opp, signaux):
 
 
 def _justification(opp, signaux):
-    """Section 5.2 : informations utilisées, provenance, raisonnement, éléments à vérifier."""
+    """Justification commerciale stockée dans opportunities.json (DATA-US08 : besoin du client,
+    pourquoi maintenant, intérêt pour Givaudan, faits, hypothèses, à confirmer, risques), plus
+    l'explication du score (`reasoning`) et la provenance des signaux (section 5.2).
+    `information_used` et `to_verify` sont gardés pour compatibilité avec l'app."""
     raisonnement = _raisonnement_score(opp, signaux)
     a_verifier = []
     if opp["status"] != "confirmed":
@@ -356,6 +359,7 @@ def _justification(opp, signaux):
                    for c in opp["missing_criteria"]]
     a_verifier += [f"Information manquante : {CHECKLIST[p]}." for p in CONTEXTES_RDV[opp["id"]]["missing"]]
     return {
+        **opp["justification"],
         "information_used": [f"{s['id']} : {s['description']}" for s in signaux],
         "provenance": [{"signal_id": s["id"], "source_type": s["source_type"], "source_date": s["source_date"],
                         "source": s["source_ref"] if s["is_real_source"] else "source fictive (démo)",

@@ -96,6 +96,31 @@ grille de qualification (`grille_qualification.json`, DATA-US09).
 | `feasibility` | enum | oui | `low`, `medium`, `high`, `to_confirm` (inconnue) | Faisabilité | `to_confirm` |
 | `complexity` | enum | oui | `low`, `medium`, `high`, `to_confirm` (inconnue, nouvelle valeur DATA-US09) | Complexité technique ; une complexité élevée fait baisser la priorité | `high` |
 | `next_action` | string | oui | texte actionnable | Recommandation | `Organiser un échange avec le client …` |
+| `justification` | objet | oui | objet Justification (voir ci-dessous), généré par règles, sans LLM | Justification commerciale (DATA-US08, extension) | voir ci-dessous |
+
+Objet `justification` : chaque rubrique est une liste de phrases (sauf
+`internal_teams`). Chaque phrase vient d'un champ des données ; aucun montant,
+aucune affirmation sur les produits ou technologies de Givaudan absente des
+sources.
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `client_need` | liste de phrases | signaux client de l'opportunité | Besoin du client : ce qu'il a dit ou fait, avec l'id du signal |
+| `why_now` | liste de phrases | signal le plus récent, puis signaux de marché rattachés, hors règlements | Pourquoi maintenant : date et source du signal le plus récent, tendance de marché |
+| `value_for_givaudan` | liste de phrases | potentiel (niveau de la grille, jamais un montant), statut de la relation, cadre réglementaire (signaux `regulation` et piste en hypothèse), équipes | Intérêt pour Givaudan |
+| `internal_teams` | liste d'enum | parmi `application`, `creation`, `marketing`, `regulatory` | Équipes à mobiliser : selon la catégorie, plus marketing (signal de marché ou rapport) et regulatory (règlement) |
+| `facts` | liste de phrases | signaux `fact` | Faits |
+| `hypotheses` | liste de phrases | signaux `hypothesis`, et toutes les phrases marquées `hypothesis` des autres rubriques | Hypothèses |
+| `to_confirm` | liste de phrases | signaux `to_confirm`, statut non confirmé, critères inconnus de la grille, priorité provisoire | À confirmer |
+| `risks` | liste de phrases | complexité, faisabilité moyenne ou faible, contraintes connues (`meeting_context.json`) | Risques |
+
+Objet phrase :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `text` | string | texte en français | La phrase |
+| `evidence_type` | enum | `fact`, `hypothesis`, `to_confirm` | Nature de la phrase ; une estimation par la grille est une `hypothesis` |
+| `sources` | liste de string | ids de signal ou de projet (`S-01`, `P-01`), ou champ (`clients.json#C-01`, `opportunities.json#O-01`, `grille_qualification.json#feasibility`) ; jamais vide | D'où vient la phrase |
 
 ### Signal
 
@@ -264,6 +289,7 @@ erDiagram
         enum feasibility "low, medium, high, to_confirm"
         enum complexity "low, medium, high, to_confirm"
         string next_action
+        object justification "DATA-US08"
     }
     SIGNAL {
         string id PK "S-01"

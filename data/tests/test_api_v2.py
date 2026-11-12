@@ -74,7 +74,11 @@ def test_opportunite_signaux_et_justification(client):
     assert corps["signals"] == sorted([s for s in lire("signals.json") if s["opportunity_id"] == "O-03"],
                                       key=lambda s: s["source_date"], reverse=True)
     j = corps["justification"]
-    assert set(j) == {"information_used", "provenance", "reasoning", "to_verify"}
+    assert set(j) == {"information_used", "provenance", "reasoning", "to_verify",  # score et provenance
+                      "client_need", "why_now", "value_for_givaudan", "internal_teams", "facts", "hypotheses",
+                      "to_confirm", "risks"}  # justification commerciale (DATA-US08)
+    stockee = next(o for o in lire("opportunities.json") if o["id"] == "O-03")["justification"]
+    assert {k: j[k] for k in stockee} == stockee
     assert "score 5 sur une échelle de -1 à 7" in j["reasoning"] and "Priorité high (stable)" in j["reasoning"]
     assert any(t.startswith("Hypothèse") for t in j["to_verify"])  # S-05 est une hypothèse
     assert all(p["source"] for p in j["provenance"])

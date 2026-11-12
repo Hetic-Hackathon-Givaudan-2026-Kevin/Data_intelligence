@@ -14,7 +14,8 @@ import pytest
 
 DOSSIER = Path(__file__).resolve().parents[1] / "demo_v2"
 CLES_OPP = ["id", "client_id", "title", "description", "category", "status", "priority", "priority_max",
-            "priority_status", "missing_criteria", "estimated_potential", "feasibility", "complexity", "next_action"]
+            "priority_status", "missing_criteria", "estimated_potential", "feasibility", "complexity", "next_action",
+            "justification"]
 CLES_SIGNAL = {"id", "opportunity_id", "client_id", "category", "description", "source_type", "source_date", "confidence",
                "evidence_type", "is_real_source", "source_ref"}
 STATUTS = {"detected", "to_qualify", "confirmed"}

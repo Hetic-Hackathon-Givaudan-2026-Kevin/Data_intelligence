@@ -118,6 +118,25 @@ Dans `generer_demo_v2.py`, chaque valeur de `QUALIFICATIONS` cite sa source
 (id de signal ou de projet) selon les définitions de la grille, ou vaut
 `INCONNU`.
 
+### Justification commerciale (DATA-US08)
+
+Chaque opportunité porte une `justification`, générée par règles
+(`justification.py`, sans LLM) et renvoyée par `/v2/opportunities/{id}` :
+
+| Rubrique | Contenu | Vient de |
+| --- | --- | --- |
+| `client_need` | Ce que le client a dit ou fait | signaux client, avec leur id |
+| `why_now` | Signal le plus récent (date, source) et signaux de marché rattachés, hors règlements | `source_date`, `source_type`, signaux sans `client_id` |
+| `value_for_givaudan` | Potentiel (niveau, jamais un montant), relation client, cadre réglementaire (signaux `regulation`, avec la piste qu'ils ouvrent, en hypothèse), équipes à mobiliser | grille, `relationship_status`, signaux, catégorie |
+| `facts`, `hypotheses`, `to_confirm` | Séparés selon `evidence_type`. Hypothèses : signaux `hypothesis` et toutes les phrases marquées hypothèse (potentiel déduit, piste réglementaire, équipes, complexité). À confirmer : statut non confirmé, critères inconnus, priorité provisoire | signaux, phrases, `status`, `missing_criteria` |
+| `risks` | Complexité, faisabilité moyenne ou faible, contraintes connues | grille, `QUALIFICATIONS`, `meeting_context.json` |
+
+Chaque phrase porte son `evidence_type` et ses `sources` (ids de signal ou de
+projet, ou champ). Équipes : application pour toute opportunité ; création
+quand un nouvel arôme est à créer (nouvelle gamme, extension de gamme, nouvelle
+formulation, nouvelle référence) ; marketing si un signal de marché ou un
+rapport est rattaché ; réglementation si un règlement l'est.
+
 ## `signals.json`
 
 Au moins un signal par opportunité. Clés de la section 8 (`id`,
@@ -157,7 +176,7 @@ Signaux réels :
 | O-03 | Open Food Facts, alternatives végétales 2020→2022 | low | Chiffre français, client en Suède : `hypothesis`. |
 | O-05 | INSEE, sucre importé en euros (idbank 010002028) | medium | +15 % sur un an, mais environ −39 % depuis octobre 2023 ; coût de matière première, pas le coût du client. |
 | O-06 | Rapport intégré Givaudan 2025, pp. 49-50 | medium | Tendance clean label et naturalité, mondiale. `source_date` = date du PDF (2026-01-29). |
-| O-06 | EU Food Flavourings, limonène (`POL-FFL-IMPORT-3388`) | high | Règlement d'exécution (UE) n° 872/2012. L'autorisation est un fait ; son lien avec la nouvelle référence (par exemple agrumes) est une piste. |
+| O-06 | EU Food Flavourings, limonène (`POL-FFL-IMPORT-3388`) | high | Règlement d'exécution (UE) n° 872/2012. Le signal ne garde que le fait (autorisation) ; son lien avec la nouvelle référence est une piste, écrite comme hypothèse dans la justification de O-06. |
 
 Le signal O-06 « veille marché fictive » de la doc est remplacé par ces deux
 signaux réels. Les chiffres Open Food Facts sont relus dans
@@ -213,7 +232,7 @@ Ne pas modifier les JSON à la main. Depuis la racine du repo :
 
 ```bash
 python data/demo_v2/generer_demo_v2.py
-pytest data/tests/test_clients_v2.py data/tests/test_projects_v2.py data/tests/test_opportunities_signals_v2.py data/tests/test_detection.py data/tests/test_grille_qualification.py
+pytest data/tests/test_clients_v2.py data/tests/test_projects_v2.py data/tests/test_opportunities_signals_v2.py data/tests/test_detection.py data/tests/test_grille_qualification.py data/tests/test_justification.py
 ```
 
 ## Attribution

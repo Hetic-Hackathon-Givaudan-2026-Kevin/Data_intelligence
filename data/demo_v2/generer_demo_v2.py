@@ -17,10 +17,18 @@ from pathlib import Path
 
 DOSSIER = Path(__file__).resolve().parent
 
-# detection.py, chargé par son chemin : le générateur est aussi importé par l'API et les tests.
-_spec = importlib.util.spec_from_file_location("detection", DOSSIER / "detection.py")
-detection = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(detection)
+
+
+def _charger(nom):
+    """Module voisin chargé par son chemin : le générateur est aussi importé par l'API et les tests."""
+    spec = importlib.util.spec_from_file_location(nom, DOSSIER / f"{nom}.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+detection = _charger("detection")  # DATA-US07
+justification = _charger("justification")  # DATA-US08
 
 CLIENTS = [
     {
@@ -363,8 +371,7 @@ def construire_signaux(signaux_off):
          "description": ("Fait réglementaire : le limonène (note d'agrumes) figure dans la liste de l'Union des "
                          "substances aromatisantes pour la catégorie « All categories of flavoured foods », "
                          "sans restriction indiquée (règlement d'exécution (UE) n° 872/2012, JO L 267 du "
-                         "02/10/2012). L'autorisation est un fait ; son lien avec la nouvelle référence "
-                         "(par exemple une référence agrumes) est une piste."),
+                         "02/10/2012)."),
          "source_type": "regulation", "source_date": "2012-10-02", "confidence": "high",
          "evidence_type": "fact", "is_real_source": True,
          "source_ref": ("https://ec.europa.eu/food/food-feed-portal/screen/food-flavourings/search/details/"
@@ -520,6 +527,20 @@ def construire_opportunites(detectees, signaux):
     return resultat
 
 
+def ajouter_justifications(opportunites, signaux, contextes):
+    """Ajoute la justification commerciale (DATA-US08) après next_action."""
+    clients = {c["id"]: c for c in CLIENTS}
+    par_opp = {c["opportunity_id"]: c for c in contextes}
+    resultat = []
+    for o in opportunites:
+        q = QUALIFICATIONS[(o["client_id"], o["category"])]
+        sources = {c: sources_qualifiees(q, c) for c in CRITERES_QUALIFIES}
+        propres = [s for s in signaux if s["opportunity_id"] == o["id"]]
+        resultat.append({**o, "justification": justification.justifier(
+            o, clients[o["client_id"]], propres, par_opp[o["id"]], CRITERES, sources, CHECKLIST)})
+    return resultat
+
+
 def texte_json(objets):
     return json.dumps(objets, ensure_ascii=False, indent=2) + "\n"
 
@@ -536,12 +557,14 @@ def generer_fichiers(signaux_off=None, banque=None):
     if banque is None:
         banque = json.loads(FICHIER_BANQUE.read_text(encoding="utf-8"))["questions"]
     detectees, signaux = detecter_demo(construire_signaux(signaux_off))
+    contextes = construire_contexte_rdv(banque)
     return {
         "clients.json": generer(),
         "projects.json": texte_json(PROJETS),
-        "opportunities.json": texte_json(construire_opportunites(detectees, signaux)),
+        "opportunities.json": texte_json(ajouter_justifications(construire_opportunites(detectees, signaux),
+                                                                signaux, contextes)),
         "signals.json": texte_json(signaux),
-        "meeting_context.json": texte_json(construire_contexte_rdv(banque)),
+        "meeting_context.json": texte_json(contextes),
     }
 
 
