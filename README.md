@@ -57,4 +57,8 @@ Swagger : http://localhost:8000/docs. Pour l'API RAG, voir le README du dépôt 
 
 ## Équipe Data
 
-Amir Meraka : branche `amir`, fusionnée dans `main`. D'autres travaux de l'équipe Data se trouvent sur la branche `data/ossama`.
+| Membre | Branche |
+|---|---|
+| Amir Meraka | `amir`, fusionnée dans `main` |
+| Ossama Farhaoui | `data/ossama` |
+| Evrad Marold Okoue Nfane | `data/evrad` |
