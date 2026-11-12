@@ -54,6 +54,21 @@ def test_18_questions_ouvertes_sur_un_point_manquant(contextes):
         assert not FERMEE.search(q["question"]), q["question"]
 
 
+def test_une_seule_idee_par_question(contextes):
+    for c in contextes:
+        for q in c["questions"]:
+            assert ", et" not in q["question"], q["id"]
+            assert q["question"].count("?") == 1, q["id"]
+
+
+def test_projet_en_contexte_pas_en_contrainte(contextes):
+    """O-02 : P-01 est un projet en cours (contexte), pas une information de la checklist."""
+    o02 = next(c for c in contextes if c["opportunity_id"] == "O-02")
+    assert o02["known"] == [] and len(o02["missing"]) == 6
+    assert "P-01" in o02["objective"]
+    assert not any("20/10" in q["question"] for q in o02["questions"])
+
+
 def test_questions_reprises_de_la_banque(contextes):
     banque = {q["id"]: q for q in charger(DATA / "questions" / "questions.json")["questions"]}
     par_opp = {c["opportunity_id"]: c["questions"] for c in contextes}

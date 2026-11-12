@@ -385,15 +385,16 @@ CONTEXTE_RDV = {
         "questions": [("Q-01", "client_objectives"), ("Q-02", "technical_constraints"), ("Q-03", "timeline")],
     },
     "O-02": {
-        "objective": "Recueillir le retour sur l'échantillon de P-01 et tester l'intérêt pour de nouvelles saveurs.",
-        "known": {"technical_constraints": ("La gamme existante et son arôme agrumes sont connus : projet P-01 "
-                                            "en cours, échantillon envoyé le 20/10/2026.", "S-03")},
+        # P-01 (projet en cours sur la gamme) est du contexte, pas une contrainte : aucun point connu.
+        "objective": ("Tester l'intérêt du client pour de nouvelles saveurs dans sa gamme aromatique existante "
+                      "(contexte : projet P-01 en cours sur cette gamme)."),
+        "known": {},
         "questions": [
-            ("Quelles saveurs aimeriez-vous voir rejoindre la gamme, et pour quels moments de consommation ?",
+            ("Quelles nouvelles saveurs aimeriez-vous voir rejoindre la gamme ?",
              "Fait émerger l'ambition du client pour sa gamme.", "client_objectives"),
             ("Qu'attendent vos clients de plus que ce que la gamme propose aujourd'hui ?",
              "Vérifie qu'il existe un vrai besoin d'extension.", "real_need"),
-            ("Comment allez-vous juger le retour sur l'échantillon envoyé le 20/10 ?",
+            ("Sur quels critères choisirez-vous les nouvelles saveurs de la gamme ?",
              "Montre sur quels critères le client décidera.", "decision_criteria"),
         ],
     },
@@ -424,7 +425,7 @@ CONTEXTE_RDV = {
         "known": {"budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
                                          "projets.", "S-07")},
         "questions": [
-            ("Quelle formulation existante souhaiteriez-vous optimiser en priorité, et pourquoi celle-là ?",
+            ("Quelle formulation existante souhaiteriez-vous optimiser en priorité ?",
              "Précise le besoin réel derrière la contrainte budgétaire.", "real_need"),
             ("Quelles caractéristiques du produit ne doivent pas changer pendant l'optimisation ?",
              "Fixe les contraintes techniques avant tout essai.", "technical_constraints"),

@@ -37,17 +37,12 @@
   },
   {
     "opportunity_id": "O-02",
-    "objective": "Recueillir le retour sur l'échantillon de P-01 et tester l'intérêt pour de nouvelles saveurs.",
-    "known": [
-      {
-        "point": "technical_constraints",
-        "information": "La gamme existante et son arôme agrumes sont connus : projet P-01 en cours, échantillon envoyé le 20/10/2026.",
-        "signal_id": "S-03"
-      }
-    ],
+    "objective": "Tester l'intérêt du client pour de nouvelles saveurs dans sa gamme aromatique existante (contexte : projet P-01 en cours sur cette gamme).",
+    "known": [],
     "missing": [
       "client_objectives",
       "real_need",
+      "technical_constraints",
       "budget_constraints",
       "timeline",
       "decision_criteria"
@@ -55,7 +50,7 @@
     "questions": [
       {
         "id": "O-02-Q1",
-        "question": "Quelles saveurs aimeriez-vous voir rejoindre la gamme, et pour quels moments de consommation ?",
+        "question": "Quelles nouvelles saveurs aimeriez-vous voir rejoindre la gamme ?",
         "why": "Fait émerger l'ambition du client pour sa gamme.",
         "information_sought": "client_objectives",
         "origin": "rédigée pour la démo"
@@ -69,7 +64,7 @@
       },
       {
         "id": "O-02-Q3",
-        "question": "Comment allez-vous juger le retour sur l'échantillon envoyé le 20/10 ?",
+        "question": "Sur quels critères choisirez-vous les nouvelles saveurs de la gamme ?",
         "why": "Montre sur quels critères le client décidera.",
         "information_sought": "decision_criteria",
         "origin": "rédigée pour la démo"
@@ -182,7 +177,7 @@
     "questions": [
       {
         "id": "O-05-Q1",
-        "question": "Quelle formulation existante souhaiteriez-vous optimiser en priorité, et pourquoi celle-là ?",
+        "question": "Quelle formulation existante souhaiteriez-vous optimiser en priorité ?",
         "why": "Précise le besoin réel derrière la contrainte budgétaire.",
         "information_sought": "real_need",
         "origin": "rédigée pour la démo"
