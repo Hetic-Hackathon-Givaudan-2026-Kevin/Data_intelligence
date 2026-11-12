@@ -19,6 +19,7 @@ BANQUE = DATA / "questions" / "questions.json"
 FICHIERS = ["clients.json", "opportunities.json", "questions.json",
             "best_practices.json", "users.json", "meetings.json"]
 PRIORITES = {"high", "medium", "watch"}
+OPPORTUNITES_AVEC_SIGNAL_REEL = {"OPP-01", "OPP-02", "OPP-03", "OPP-05", "OPP-06", "OPP-09", "OPP-10"}
 STATUTS_CLIENT = {"strategic", "active", "to_develop"}
 STATUTS_QUESTION = {"suggested", "validated"}
 
@@ -90,11 +91,47 @@ def test_trois_questions_par_opportunite(demo):
             assert questions[qid]["opportunityId"] == opp["id"]
 
 
-def test_priorite_selon_le_nombre_de_triggers(demo):
-    attendu = {1: "watch", 2: "medium"}
+def test_priorite_selon_les_triggers_qui_comptent(demo):
+    attendu = {0: "watch", 1: "watch", 2: "medium"}
     for opp in demo["opportunities"]:
         assert 1 <= len(opp["triggers"]) <= 3, opp["id"]
-        assert opp["priority"] == attendu.get(len(opp["triggers"]), "high"), opp["id"]
+        comptes = sum(t["counted"] for t in opp["triggers"])
+        assert opp["priority"] == attendu.get(comptes, "high"), opp["id"]
+
+
+def test_format_des_triggers(demo):
+    for opp in demo["opportunities"]:
+        for t in opp["triggers"]:
+            assert set(t) == {"text", "type", "counted", "source"}, opp["id"]
+            assert t["type"] in {"real", "fictional"} and isinstance(t["counted"], bool)
+            assert t["text"].strip()
+
+
+def test_chaque_trigger_real_a_une_source(demo):
+    reels = [t for o in demo["opportunities"] for t in o["triggers"] if t["type"] == "real"]
+    assert reels, "aucun trigger real"
+    for t in reels:
+        assert t["source"] and "Open Food Facts" in t["source"] and "ODbL" in t["source"], t["text"]
+    fictifs = [t for o in demo["opportunities"] for t in o["triggers"] if t["type"] == "fictional"]
+    assert all(t["source"] is None and t["counted"] for t in fictifs)
+
+
+def test_triggers_real_identiques_aux_signaux(demo):
+    with open(DATA / "signaux" / "signaux_marche.json", encoding="utf-8") as fichier:
+        signaux = {s["opportunite_id"]: s["signal"] for s in json.load(fichier)["signaux"]}
+    reels_par_opp = {o["id"]: [t for t in o["triggers"] if t["type"] == "real"] for o in demo["opportunities"]}
+    # Les 7 anciens triggers « croissance du marché » sont remplacés ; 04, 07 et 08 restent hors démo.
+    assert {o for o, r in reels_par_opp.items() if r} == OPPORTUNITES_AVEC_SIGNAL_REEL
+    for opp, reels in reels_par_opp.items():
+        for t in reels:
+            assert len(reels) == 1
+            assert t["text"] == signaux[opp]["trigger"]
+            assert t["counted"] == signaux[opp]["compte"]
+
+
+def test_plus_aucune_croissance_inventee(demo):
+    textes = [t["text"] for o in demo["opportunities"] for t in o["triggers"] if t["type"] == "fictional"]
+    assert not [t for t in textes if t.lower().startswith("croissance")]
 
 
 def test_textes_identiques_a_la_banque(demo, banque):

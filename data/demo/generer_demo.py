@@ -4,7 +4,8 @@ Usage : python data/demo/generer_demo.py
 
 Bibliothèque standard uniquement. Les questions viennent de
 data/questions/questions.json : aucune question n'est recopiée ici.
-Tous les noms, chiffres et signaux sont fictifs.
+Les signaux de marché viennent de data/signaux/signaux_marche.json (Open Food
+Facts, ODbL). Les noms, montants et signaux client sont fictifs.
 """
 
 import json
@@ -13,6 +14,10 @@ from pathlib import Path
 
 DOSSIER_DEMO = Path(__file__).resolve().parent
 BANQUE = DOSSIER_DEMO.parent / "questions" / "questions.json"
+SIGNAUX = DOSSIER_DEMO.parent / "signaux" / "signaux_marche.json"
+
+# Emplacement du signal de marché réel dans la liste des triggers d'une opportunité.
+SIGNAL_MARCHE = object()
 
 AUTEUR_SENIOR = "Commercial Senior (démo)"
 
@@ -29,13 +34,14 @@ CLIENTS = [
 ]
 
 # Données propres à chaque opportunité ; le titre et les questions viennent de la banque.
-# Le nombre de triggers fixe la priorité (règle 2 : 3+ -> high, 2 -> medium, 1 -> watch).
+# Triggers : texte = signal client fictif ; SIGNAL_MARCHE = signal réel Open Food Facts.
+# Le nombre de triggers qui comptent fixe la priorité (règle 2 : 3+ -> high, 2 -> medium, sinon watch).
 OPPORTUNITES = {
     "OPP-01": {
         "category": "Santé et bien-être",
         "estimatedRevenue": 1_800_000,
         "description": "Le client envisage une gamme de boissons à bénéfice fonctionnel.",
-        "triggers": ["Intérêt exprimé pour une nouvelle catégorie", "Croissance du marché : +8 %",
+        "triggers": ["Intérêt exprimé pour une nouvelle catégorie", SIGNAL_MARCHE,
                      "Lancement concurrent récent"],
     },
     "OPP-02": {
@@ -43,13 +49,13 @@ OPPORTUNITES = {
         "estimatedRevenue": 1_200_000,
         "description": "Le client veut rendre ses snacks plus responsables sans perdre en goût.",
         "triggers": ["Engagement environnemental annoncé", "Demande des distributeurs : recettes plus durables",
-                     "Croissance du marché : +5 %"],
+                     SIGNAL_MARCHE],
     },
     "OPP-03": {
         "category": "Premiumisation",
         "estimatedRevenue": 900_000,
         "description": "Le client étudie une montée en gamme sur une partie de son offre.",
-        "triggers": ["Montée en gamme évoquée en RDV", "Croissance du segment premium : +6 %"],
+        "triggers": ["Montée en gamme évoquée en RDV", SIGNAL_MARCHE],
     },
     "OPP-04": {
         "category": "Reformulation",
@@ -62,13 +68,13 @@ OPPORTUNITES = {
         "category": "Végétal",
         "estimatedRevenue": 650_000,
         "description": "Le client veut élargir sa gamme de produits à base de protéines végétales.",
-        "triggers": ["Croissance du marché végétal : +10 %", "Intérêt exprimé pour une gamme végétale"],
+        "triggers": [SIGNAL_MARCHE, "Intérêt exprimé pour une gamme végétale"],
     },
     "OPP-06": {
         "category": "Nouvelle catégorie",
         "estimatedRevenue": 750_000,
         "description": "Le client prépare une boisson sans alcool pour de nouvelles occasions de consommation.",
-        "triggers": ["Croissance du marché sans alcool : +12 %", "Projet de nouvelle boisson évoqué en RDV",
+        "triggers": [SIGNAL_MARCHE, "Projet de nouvelle boisson évoqué en RDV",
                      "Demande des distributeurs : alternatives sans alcool"],
     },
     "OPP-07": {
@@ -87,13 +93,13 @@ OPPORTUNITES = {
         "category": "Santé et bien-être",
         "estimatedRevenue": 350_000,
         "description": "Le client cherche à améliorer le goût de ses produits protéinés.",
-        "triggers": ["Croissance de la nutrition sportive : +7 %"],
+        "triggers": [SIGNAL_MARCHE],
     },
     "OPP-10": {
         "category": "Santé et bien-être",
         "estimatedRevenue": 800_000,
         "description": "Le client veut développer une gamme orientée bien-être digestif.",
-        "triggers": ["Intérêt exprimé pour des produits bien-être", "Croissance du marché : +4 %"],
+        "triggers": ["Intérêt exprimé pour des produits bien-être", SIGNAL_MARCHE],
     },
     "OPP-11": {
         "category": "Innovation goût",
@@ -129,13 +135,32 @@ UTILISATEURS = [
 ]
 
 
-def priorite(nb_triggers):
-    """Règle 2 de la doc : 3 triggers ou plus -> high, 2 -> medium, 1 -> watch."""
-    if nb_triggers >= 3:
+def priorite(nb_triggers_comptes):
+    """Règle 2 de la doc, sur les triggers qui comptent : 3 ou plus -> high, 2 -> medium, 0 ou 1 -> watch."""
+    if nb_triggers_comptes >= 3:
         return "high"
-    if nb_triggers == 2:
+    if nb_triggers_comptes == 2:
         return "medium"
     return "watch"
+
+
+def charger_signaux(chemin=SIGNAUX):
+    with open(chemin, encoding="utf-8") as fichier:
+        return json.load(fichier)
+
+
+def construire_triggers(triggers, signal, source):
+    """Triggers au format {text, type, counted, source} : real (Open Food Facts) ou fictional."""
+    resultat = []
+    for trigger in triggers:
+        if trigger is SIGNAL_MARCHE:
+            if signal is None:
+                raise ValueError("Signal de marché demandé mais absent de signaux_marche.json")
+            resultat.append({"text": signal["trigger"], "type": "real", "counted": signal["compte"],
+                             "source": source})
+        else:
+            resultat.append({"text": trigger, "type": "fictional", "counted": True, "source": None})
+    return resultat
 
 
 def titre(libelle):
@@ -148,9 +173,15 @@ def charger_banque(chemin=BANQUE):
         return json.load(fichier)["questions"]
 
 
-def construire(banque):
+def construire(banque, signaux):
     """Renvoie {nom de fichier: liste d'objets}."""
     client_de = {opp: cid for cid, _, _, _, opps in CLIENTS for opp in opps}
+    signal_de = {s["opportunite_id"]: s["signal"] for s in signaux["signaux"]}
+    source = (f"{signaux['source']['nom']} ({signaux['source']['licence'].split(' (')[0]}), "
+              f"données au {signaux['source']['dernier_produit_ajoute']}, "
+              f"extraites le {signaux['date_extraction']} — data/signaux/signaux_marche.json")
+    triggers_de = {opp: construire_triggers(d["triggers"], signal_de.get(opp), source)
+                   for opp, d in OPPORTUNITES.items()}
     questions_de = {}
     libelle_de = {}
     for q in banque:
@@ -169,10 +200,10 @@ def construire(banque):
             "clientId": client_de[opp],
             "title": titre(libelle_de[opp]),
             "category": d["category"],
-            "priority": priorite(len(d["triggers"])),
+            "priority": priorite(sum(t["counted"] for t in triggers_de[opp])),
             "estimatedRevenue": d["estimatedRevenue"],
             "description": d["description"],
-            "triggers": d["triggers"],
+            "triggers": triggers_de[opp],
             "recommendedQuestions": questions_de[opp],
         }
         for opp, d in OPPORTUNITES.items()
@@ -225,9 +256,10 @@ def construire(banque):
     }
 
 
-def generer_fichiers(banque=None):
+def generer_fichiers(banque=None, signaux=None):
     """Renvoie {nom de fichier: texte JSON exact}, sans rien écrire."""
-    objets = construire(charger_banque() if banque is None else banque)
+    objets = construire(charger_banque() if banque is None else banque,
+                        charger_signaux() if signaux is None else signaux)
     return {nom: json.dumps(liste, ensure_ascii=False, indent=2) + "\n" for nom, liste in objets.items()}
 
 

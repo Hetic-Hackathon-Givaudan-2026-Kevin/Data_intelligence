@@ -1,0 +1,404 @@
+{
+  "version": "1.0",
+  "source": {
+    "nom": "Open Food Facts",
+    "url": "https://world.openfoodfacts.org/data",
+    "fichier": "en.openfoodfacts.org.products.csv.gz",
+    "licence": "ODbL 1.0 (base de données) — https://opendatacommons.org/licenses/odbl/1-0/",
+    "dernier_produit_ajoute": "2026-11-11"
+  },
+  "date_extraction": "2026-11-12",
+  "pays": "en:france",
+  "periode": {
+    "debut": 2023,
+    "fin": 2025
+  },
+  "methode": "Part des produits portant au moins un des tags parmi les produits vendus en France ajoutés dans l'année et ayant au moins une catégorie (ou un label, selon les tags). Évolution relative de la part entre 2023 et 2025. Le signal compte s'il augmente et s'il y a au moins 50 produits chaque année. Nombre de produits référencés ≠ ventes.",
+  "licence_fichier": "ODbL 1.0 : base dérivée d'Open Food Facts.",
+  "signaux": [
+    {
+      "opportunite_id": "OPP-01",
+      "tags": {
+        "categories": [
+          "en:functional-drinks",
+          "en:energy-drinks",
+          "en:kombuchas",
+          "en:sports-drinks"
+        ],
+        "labels": []
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins une catégorie",
+        "annees": {
+          "2023": {
+            "produits": 163,
+            "base": 34895,
+            "part_pct": 0.467
+          },
+          "2024": {
+            "produits": 145,
+            "base": 27327,
+            "part_pct": 0.531
+          },
+          "2025": {
+            "produits": 101,
+            "base": 22459,
+            "part_pct": 0.45
+          }
+        },
+        "evolution_part_pct": -3.7,
+        "produits_min_par_an": 101,
+        "compte": false,
+        "trigger": "Part des nouveaux produits boissons fonctionnelles en France : -4 % (2023→2025, Open Food Facts) — signal contraire"
+      }
+    },
+    {
+      "opportunite_id": "OPP-02",
+      "tags": {
+        "categories": [
+          "en:snacks"
+        ],
+        "labels": [
+          "en:organic",
+          "en:fair-trade",
+          "en:rainforest-alliance"
+        ]
+      },
+      "signal": {
+        "regle": "catégories ET labels",
+        "denominateur": "au moins une catégorie et au moins un label",
+        "annees": {
+          "2023": {
+            "produits": 922,
+            "base": 18212,
+            "part_pct": 5.063
+          },
+          "2024": {
+            "produits": 757,
+            "base": 14854,
+            "part_pct": 5.096
+          },
+          "2025": {
+            "produits": 659,
+            "base": 14248,
+            "part_pct": 4.625
+          }
+        },
+        "evolution_part_pct": -8.6,
+        "produits_min_par_an": 659,
+        "compte": false,
+        "trigger": "Part des nouveaux produits snacks bio ou équitables en France : -9 % (2023→2025, Open Food Facts) — signal contraire"
+      }
+    },
+    {
+      "opportunite_id": "OPP-03",
+      "tags": {
+        "categories": [],
+        "labels": [
+          "en:pdo",
+          "fr:label-rouge",
+          "fr:aoc"
+        ]
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins un label",
+        "annees": {
+          "2023": {
+            "produits": 850,
+            "base": 29235,
+            "part_pct": 2.907
+          },
+          "2024": {
+            "produits": 674,
+            "base": 30418,
+            "part_pct": 2.216
+          },
+          "2025": {
+            "produits": 1038,
+            "base": 41160,
+            "part_pct": 2.522
+          }
+        },
+        "evolution_part_pct": -13.3,
+        "produits_min_par_an": 674,
+        "compte": false,
+        "trigger": "Part des nouveaux produits AOP, AOC ou Label Rouge en France : -13 % (2023→2025, Open Food Facts) — signal contraire"
+      }
+    },
+    {
+      "opportunite_id": "OPP-04",
+      "tags": {
+        "categories": [],
+        "labels": [
+          "en:no-added-sugar",
+          "en:low-or-no-sugar",
+          "en:reduced-sugar",
+          "en:low-sugar",
+          "en:no-sugar"
+        ]
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins un label",
+        "annees": {
+          "2023": {
+            "produits": 1016,
+            "base": 29235,
+            "part_pct": 3.475
+          },
+          "2024": {
+            "produits": 1034,
+            "base": 30418,
+            "part_pct": 3.399
+          },
+          "2025": {
+            "produits": 1259,
+            "base": 41160,
+            "part_pct": 3.059
+          }
+        },
+        "evolution_part_pct": -12.0,
+        "produits_min_par_an": 1016,
+        "compte": false,
+        "trigger": "Part des nouveaux produits sans sucres ajoutés ou allégés en sucre en France : -12 % (2023→2025, Open Food Facts) — signal contraire"
+      }
+    },
+    {
+      "opportunite_id": "OPP-05",
+      "tags": {
+        "categories": [
+          "en:meat-analogues",
+          "en:dairy-substitutes"
+        ],
+        "labels": []
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins une catégorie",
+        "annees": {
+          "2023": {
+            "produits": 346,
+            "base": 34895,
+            "part_pct": 0.992
+          },
+          "2024": {
+            "produits": 312,
+            "base": 27327,
+            "part_pct": 1.142
+          },
+          "2025": {
+            "produits": 323,
+            "base": 22459,
+            "part_pct": 1.438
+          }
+        },
+        "evolution_part_pct": 45.0,
+        "produits_min_par_an": 312,
+        "compte": true,
+        "trigger": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +45 % (2023→2025, Open Food Facts)"
+      }
+    },
+    {
+      "opportunite_id": "OPP-06",
+      "tags": {
+        "categories": [
+          "en:non-alcoholic-beers",
+          "en:non-alcoholic-wines",
+          "en:alcohol-free-cocktails"
+        ],
+        "labels": []
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins une catégorie",
+        "annees": {
+          "2023": {
+            "produits": 64,
+            "base": 34895,
+            "part_pct": 0.183
+          },
+          "2024": {
+            "produits": 44,
+            "base": 27327,
+            "part_pct": 0.161
+          },
+          "2025": {
+            "produits": 31,
+            "base": 22459,
+            "part_pct": 0.138
+          }
+        },
+        "evolution_part_pct": -24.7,
+        "produits_min_par_an": 31,
+        "compte": false,
+        "trigger": "Part des nouveaux produits bières, vins et cocktails sans alcool en France : -25 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année"
+      }
+    },
+    {
+      "opportunite_id": "OPP-07",
+      "tags": {
+        "categories": [],
+        "labels": [
+          "en:low-or-no-salt",
+          "en:no-added-salt",
+          "en:reduced-salt",
+          "en:low-salt"
+        ]
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins un label",
+        "annees": {
+          "2023": {
+            "produits": 88,
+            "base": 29235,
+            "part_pct": 0.301
+          },
+          "2024": {
+            "produits": 65,
+            "base": 30418,
+            "part_pct": 0.214
+          },
+          "2025": {
+            "produits": 11,
+            "base": 41160,
+            "part_pct": 0.027
+          }
+        },
+        "evolution_part_pct": -91.1,
+        "produits_min_par_an": 11,
+        "compte": false,
+        "trigger": "Part des nouveaux produits allégés en sel en France : -91 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année"
+      }
+    },
+    {
+      "opportunite_id": "OPP-08",
+      "tags": {
+        "categories": [],
+        "labels": [
+          "en:no-preservatives",
+          "en:no-additives",
+          "en:no-artificial-flavors",
+          "en:no-artificial-colors"
+        ]
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins un label",
+        "annees": {
+          "2023": {
+            "produits": 2734,
+            "base": 29235,
+            "part_pct": 9.352
+          },
+          "2024": {
+            "produits": 2610,
+            "base": 30418,
+            "part_pct": 8.58
+          },
+          "2025": {
+            "produits": 3378,
+            "base": 41160,
+            "part_pct": 8.207
+          }
+        },
+        "evolution_part_pct": -12.2,
+        "produits_min_par_an": 2610,
+        "compte": false,
+        "trigger": "Part des nouveaux produits sans additifs ni conservateurs en France : -12 % (2023→2025, Open Food Facts) — signal contraire"
+      }
+    },
+    {
+      "opportunite_id": "OPP-09",
+      "tags": {
+        "categories": [
+          "en:bodybuilding-supplements",
+          "en:protein-bars",
+          "en:protein-powders",
+          "en:dietary-drink-for-sport"
+        ],
+        "labels": []
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins une catégorie",
+        "annees": {
+          "2023": {
+            "produits": 382,
+            "base": 34895,
+            "part_pct": 1.095
+          },
+          "2024": {
+            "produits": 288,
+            "base": 27327,
+            "part_pct": 1.054
+          },
+          "2025": {
+            "produits": 155,
+            "base": 22459,
+            "part_pct": 0.69
+          }
+        },
+        "evolution_part_pct": -37.0,
+        "produits_min_par_an": 155,
+        "compte": false,
+        "trigger": "Part des nouveaux produits de nutrition sportive en France : -37 % (2023→2025, Open Food Facts) — signal contraire"
+      }
+    },
+    {
+      "opportunite_id": "OPP-10",
+      "tags": {
+        "categories": [
+          "en:kefir",
+          "en:bifidus-yogurts"
+        ],
+        "labels": []
+      },
+      "signal": {
+        "regle": "au moins un des tags",
+        "denominateur": "au moins une catégorie",
+        "annees": {
+          "2023": {
+            "produits": 39,
+            "base": 34895,
+            "part_pct": 0.112
+          },
+          "2024": {
+            "produits": 22,
+            "base": 27327,
+            "part_pct": 0.081
+          },
+          "2025": {
+            "produits": 28,
+            "base": 22459,
+            "part_pct": 0.125
+          }
+        },
+        "evolution_part_pct": 11.5,
+        "produits_min_par_an": 22,
+        "compte": false,
+        "trigger": "Part des nouveaux produits kéfirs et yaourts au bifidus en France : +12 % (2023→2025, Open Food Facts) — indicatif, moins de 50 produits sur une année"
+      }
+    },
+    {
+      "opportunite_id": "OPP-11",
+      "tags": {
+        "categories": [],
+        "labels": []
+      },
+      "signal": null,
+      "raison": "Pas de tag fiable : 10 produits par an au plus en France."
+    },
+    {
+      "opportunite_id": "OPP-12",
+      "tags": {
+        "categories": [],
+        "labels": []
+      },
+      "signal": null,
+      "raison": "Signal propre au client (baisse des ventes d'une gamme), pas une tendance de marché."
+    }
+  ]
+}
