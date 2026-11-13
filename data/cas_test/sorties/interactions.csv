@@ -1,0 +1,238 @@
+interaction_id,client_id,client_nom,segment,activite,date,etape,langue,compte_rendu,evalue
+T-01-I01,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-06-24,prospection,en,"First contact, Givaudan introduction.",false
+T-01-I02,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-07-06,prospection,en,"First contact, Givaudan introduction.",false
+T-01-I03,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-08-04,decouverte,en,Site visit and talk about the current range.,false
+T-01-I04,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-08-18,qualification,en,Meeting with the customer's R&D team.,false
+T-01-I05,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-08-25,proposition,en,Samples and product sheet sent.,false
+T-01-I06,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-09-06,proposition,en,Samples and product sheet sent.,false
+T-01-I07,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-09-14,negociation,en,Discussion of commercial terms.,false
+T-01-I08,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-10-01,negociation,en,Discussion of commercial terms.,false
+T-01-I09,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-10-14,negociation,en,Discussion of commercial terms.,false
+T-01-I10,T-01,Client test T-01,Savoury,Taste & Wellbeing,2026-11-02,closing,en,Budget is capped at 66 EUR per kg. The underlying need: a natural vanilla flavour.,true
+T-02-I01,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-07-04,prospection,en,"First contact, Givaudan introduction.",false
+T-02-I02,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-07-21,decouverte,en,Site visit and talk about the current range.,false
+T-02-I03,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-08-14,qualification,en,Meeting with the customer's R&D team.,false
+T-02-I04,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-09-02,qualification,en,Meeting with the customer's R&D team.,false
+T-02-I05,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-09-23,proposition,en,Samples and product sheet sent.,false
+T-02-I06,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-10-06,proposition,en,Samples and product sheet sent.,false
+T-02-I07,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-10-28,negociation,en,Discussion of commercial terms.,false
+T-02-I08,T-02,Client test T-02,Beverages,Taste & Wellbeing,2026-11-02,negociation,en,"On the technical side, it must stay stable at pH 3. What they really need is a clean-label smoky flavour. Target go-to-market: June 2028.",true
+T-03-I01,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-07-20,prospection,en,"First contact, Givaudan introduction.",false
+T-03-I02,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-08-14,prospection,en,"First contact, Givaudan introduction.",false
+T-03-I03,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-08-20,decouverte,en,Site visit and talk about the current range.,false
+T-03-I04,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-09-01,decouverte,en,Site visit and talk about the current range.,false
+T-03-I05,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-09-08,qualification,en,Meeting with the customer's R&D team.,false
+T-03-I06,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-09-14,proposition,en,Samples and product sheet sent.,false
+T-03-I07,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-09-29,negociation,en,Discussion of commercial terms.,false
+T-03-I08,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-10-06,negociation,en,Discussion of commercial terms.,false
+T-03-I09,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-10-27,negociation,en,Discussion of commercial terms.,false
+T-03-I10,T-03,Client test T-03,Sweet Goods,Taste & Wellbeing,2026-11-08,closing,en,Launch planned for July 2028. Technical constraint: it must stay stable at pH 3. The customer wants to cut sugar in its drinks by 30%. What they really need is a natural vanilla flavour.,true
+T-04-I01,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-06-28,decouverte,en,Site visit and talk about the current range.,false
+T-04-I02,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-07-17,decouverte,en,Site visit and talk about the current range.,false
+T-04-I03,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-08-14,decouverte,en,Site visit and talk about the current range.,false
+T-04-I04,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-08-20,qualification,en,Meeting with the customer's R&D team.,false
+T-04-I05,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-09-15,qualification,en,Meeting with the customer's R&D team.,false
+T-04-I06,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-10-10,qualification,en,Meeting with the customer's R&D team.,false
+T-04-I07,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-11-04,qualification,en,Meeting with the customer's R&D team.,false
+T-04-I08,T-04,Client test T-04,Dairy,Taste & Wellbeing,2026-11-12,closing,en,"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.",true
+T-05-I01,T-05,Client test T-05,Fine Fragrance,Fragrance & Beauty,2026-08-26,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-05-I02,T-05,Client test T-05,Fine Fragrance,Fragrance & Beauty,2026-09-01,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-05-I03,T-05,Client test T-05,Fine Fragrance,Fragrance & Beauty,2026-09-24,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-05-I04,T-05,Client test T-05,Fine Fragrance,Fragrance & Beauty,2026-10-14,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-05-I05,T-05,Client test T-05,Fine Fragrance,Fragrance & Beauty,2026-11-04,closing,fr,"Lancement prévu en octobre 2027. Plus tard dans la réunion, l'acheteur a parlé d'une sortie en septembre 2027. Le budget est plafonné à 82 € le kilo. Le client veut créer une ligne de bougies parfumées.",true
+T-06-I01,T-06,Client test T-06,Consumer Products,Fragrance & Beauty,2026-07-13,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-06-I02,T-06,Client test T-06,Consumer Products,Fragrance & Beauty,2026-08-10,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-06-I03,T-06,Client test T-06,Consumer Products,Fragrance & Beauty,2026-08-29,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-06-I04,T-06,Client test T-06,Consumer Products,Fragrance & Beauty,2026-09-20,closing,fr,Relecture du contrat avec les achats.,false
+T-06-I05,T-06,Client test T-06,Consumer Products,Fragrance & Beauty,2026-10-17,closing,fr,Relecture du contrat avec les achats.,false
+T-06-I06,T-06,Client test T-06,Consumer Products,Fragrance & Beauty,2026-11-04,closing,fr,Le budget est plafonné à 58 € le kilo. Il leur faut un parfum boisé ambré. Lancement prévu en novembre 2028. Contrainte technique : la formule doit rester stable en base alcool. Critères de choix : la qualité sensorielle lors du test consommateur. Leur objectif : lancer un parfum féminin premium.,true
+T-07-I01,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-06-07,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-07-I02,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-06-22,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-07-I03,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-07-18,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-07-I04,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-07-26,qualification,fr,Point avec l'équipe R&D du client.,false
+T-07-I05,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-08-23,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-07-I06,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-09-06,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-07-I07,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-09-27,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-07-I08,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-10-11,negociation,fr,Échange sur les conditions commerciales.,false
+T-07-I09,T-07,Client test T-07,Savoury,Taste & Wellbeing,2026-11-06,negociation,fr,"Mise sur le marché visée pour février 2027. Le vrai besoin, c'est un arôme fumé sans additif. Ils trancheront selon le prix et le délai de livraison. Leur objectif : lancer une crème glacée vegan. Enveloppe de 378 k€ pour le projet. Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.",true
+T-08-I01,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-06-16,decouverte,en,Site visit and talk about the current range.,false
+T-08-I02,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-07-10,decouverte,en,Site visit and talk about the current range.,false
+T-08-I03,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-08-07,qualification,en,Meeting with the customer's R&D team.,false
+T-08-I04,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-08-28,qualification,en,Meeting with the customer's R&D team.,false
+T-08-I05,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-09-15,qualification,en,Meeting with the customer's R&D team.,false
+T-08-I06,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-10-07,negociation,en,Discussion of commercial terms.,false
+T-08-I07,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-10-26,negociation,en,Discussion of commercial terms.,false
+T-08-I08,T-08,Client test T-08,Beverages,Taste & Wellbeing,2026-11-05,closing,en,The customer wants to launch a vegan ice cream. Launch planned for October 2028. Selection criteria: cost and performance. Technical constraint: natural labelling is mandatory.,true
+T-09-I01,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-06-15,decouverte,en,Site visit and talk about the current range.,false
+T-09-I02,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-07-14,qualification,en,Meeting with the customer's R&D team.,false
+T-09-I03,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-07-31,qualification,en,Meeting with the customer's R&D team.,false
+T-09-I04,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-08-18,qualification,en,Meeting with the customer's R&D team.,false
+T-09-I05,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-09-09,negociation,en,Discussion of commercial terms.,false
+T-09-I06,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-10-07,negociation,en,Discussion of commercial terms.,false
+T-09-I07,T-09,Client test T-09,Sweet Goods,Taste & Wellbeing,2026-11-04,closing,en,"On the technical side, it must stay stable at pH 3. They will decide based on sensory quality in the consumer test.",true
+T-10-I01,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-07-02,prospection,en,"First contact, Givaudan introduction.",false
+T-10-I02,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-07-29,decouverte,en,Site visit and talk about the current range.,false
+T-10-I03,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-08-09,proposition,en,Samples and product sheet sent.,false
+T-10-I04,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-08-16,proposition,en,Samples and product sheet sent.,false
+T-10-I05,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-09-08,negociation,en,Discussion of commercial terms.,false
+T-10-I06,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-10-05,negociation,en,Discussion of commercial terms.,false
+T-10-I07,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-10-30,negociation,en,Discussion of commercial terms.,false
+T-10-I08,T-10,Client test T-10,Dairy,Taste & Wellbeing,2026-11-11,negociation,en,The underlying need: a clean-label smoky flavour. Technical constraint: natural labelling is mandatory. They will decide based on sensory quality in the consumer test. Budget is capped at 39 EUR per kg.,true
+T-11-I01,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-08-13,prospection,en,"First contact, Givaudan introduction.",false
+T-11-I02,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-08-27,decouverte,en,Site visit and talk about the current range.,false
+T-11-I03,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-09-09,decouverte,en,Site visit and talk about the current range.,false
+T-11-I04,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-09-21,qualification,en,Meeting with the customer's R&D team.,false
+T-11-I05,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-09-29,proposition,en,Samples and product sheet sent.,false
+T-11-I06,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-10-27,negociation,en,Discussion of commercial terms.,false
+T-11-I07,T-11,Client test T-11,Fine Fragrance,Fragrance & Beauty,2026-11-07,negociation,en,"The customer wants to create a scented candle line. Selection criteria: price and lead time. The underlying need: a fresh note that lasts after washing. On the technical side, it must be compatible with a surfactant base. Target go-to-market: April 2027. Budget is capped at 55 EUR per kg.",true
+T-12-I01,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-08-12,prospection,en,"First contact, Givaudan introduction.",false
+T-12-I02,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-08-24,prospection,en,"First contact, Givaudan introduction.",false
+T-12-I03,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-09-09,prospection,en,"First contact, Givaudan introduction.",false
+T-12-I04,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-09-19,decouverte,en,Site visit and talk about the current range.,false
+T-12-I05,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-10-03,proposition,en,Samples and product sheet sent.,false
+T-12-I06,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-10-08,negociation,en,Discussion of commercial terms.,false
+T-12-I07,T-12,Client test T-12,Consumer Products,Fragrance & Beauty,2026-11-04,closing,en,"Delivery follow-up on order 2647: the carrier is two days late, parcel expected Thursday.",true
+T-13-I01,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-07-31,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-13-I02,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-08-20,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-13-I03,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-09-08,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-13-I04,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-09-23,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-13-I05,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-10-03,qualification,fr,Point avec l'équipe R&D du client.,false
+T-13-I06,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-10-09,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-13-I07,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-10-22,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-13-I08,T-13,Client test T-13,Savoury,Taste & Wellbeing,2026-11-11,negociation,fr,"Appel logistique : la palette de la commande 1200 est bloquée en douane, bon de livraison renvoyé.",true
+T-14-I01,T-14,Client test T-14,Beverages,Taste & Wellbeing,2026-08-02,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-14-I02,T-14,Client test T-14,Beverages,Taste & Wellbeing,2026-08-16,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-14-I03,T-14,Client test T-14,Beverages,Taste & Wellbeing,2026-09-12,negociation,fr,Échange sur les conditions commerciales.,false
+T-14-I04,T-14,Client test T-14,Beverages,Taste & Wellbeing,2026-09-26,negociation,fr,Échange sur les conditions commerciales.,false
+T-14-I05,T-14,Client test T-14,Beverages,Taste & Wellbeing,2026-10-23,closing,fr,Relecture du contrat avec les achats.,false
+T-14-I06,T-14,Client test T-14,Beverages,Taste & Wellbeing,2026-11-11,closing,fr,"Critères de choix : la qualité sensorielle lors du test consommateur. Le budget est plafonné à 59 € le kilo. Lancement prévu en novembre 2027. Plus tard dans la réunion, l'acheteur a parlé d'une sortie en avril 2027.",true
+T-15-I01,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-05-17,prospection,en,"First contact, Givaudan introduction.",false
+T-15-I02,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-06-09,decouverte,en,Site visit and talk about the current range.,false
+T-15-I03,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-07-02,decouverte,en,Site visit and talk about the current range.,false
+T-15-I04,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-07-07,qualification,en,Meeting with the customer's R&D team.,false
+T-15-I05,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-08-05,qualification,en,Meeting with the customer's R&D team.,false
+T-15-I06,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-08-31,qualification,en,Meeting with the customer's R&D team.,false
+T-15-I07,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-09-13,proposition,en,Samples and product sheet sent.,false
+T-15-I08,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-10-06,proposition,en,Samples and product sheet sent.,false
+T-15-I09,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-10-12,proposition,en,Samples and product sheet sent.,false
+T-15-I10,T-15,Client test T-15,Sweet Goods,Taste & Wellbeing,2026-11-10,closing,en,Launch planned for May 2028. The underlying need: a natural vanilla flavour.,true
+T-16-I01,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-06-10,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-16-I02,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-07-07,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-16-I03,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-07-27,qualification,fr,Point avec l'équipe R&D du client.,false
+T-16-I04,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-08-10,qualification,fr,Point avec l'équipe R&D du client.,false
+T-16-I05,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-09-05,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-16-I06,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-09-22,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-16-I07,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-10-21,closing,fr,Relecture du contrat avec les achats.,false
+T-16-I08,T-16,Client test T-16,Dairy,Taste & Wellbeing,2026-11-12,closing,fr,"Appel logistique : la palette de la commande 3634 est bloquée en douane, bon de livraison renvoyé.",true
+T-17-I01,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-06-16,prospection,en,"First contact, Givaudan introduction.",false
+T-17-I02,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-07-14,prospection,en,"First contact, Givaudan introduction.",false
+T-17-I03,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-08-03,decouverte,en,Site visit and talk about the current range.,false
+T-17-I04,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-08-30,proposition,en,Samples and product sheet sent.,false
+T-17-I05,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-09-29,negociation,en,Discussion of commercial terms.,false
+T-17-I06,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-10-16,closing,en,Contract review with procurement.,false
+T-17-I07,T-17,Client test T-17,Fine Fragrance,Fragrance & Beauty,2026-11-02,closing,en,"On the technical side, the formula must stay stable in an alcohol base. The customer wants to launch a premium women's fragrance. They will decide based on sensory quality in the consumer test. What they really need is a woody amber fragrance. Budget is capped at 44 EUR per kg. Target go-to-market: May 2027.",true
+T-18-I01,T-18,Client test T-18,Consumer Products,Fragrance & Beauty,2026-09-12,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-18-I02,T-18,Client test T-18,Consumer Products,Fragrance & Beauty,2026-09-18,qualification,fr,Point avec l'équipe R&D du client.,false
+T-18-I03,T-18,Client test T-18,Consumer Products,Fragrance & Beauty,2026-10-03,qualification,fr,Point avec l'équipe R&D du client.,false
+T-18-I04,T-18,Client test T-18,Consumer Products,Fragrance & Beauty,2026-11-02,qualification,fr,Point avec l'équipe R&D du client.,false
+T-18-I05,T-18,Client test T-18,Consumer Products,Fragrance & Beauty,2026-11-08,negociation,fr,Mise sur le marché visée pour novembre 2027. Le budget est plafonné à 82 € le kilo. Leur objectif : renouveler l'odeur de sa lessive phare.,true
+T-19-I01,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-07-18,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-19-I02,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-07-26,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-19-I03,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-08-07,qualification,fr,Point avec l'équipe R&D du client.,false
+T-19-I04,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-08-24,negociation,fr,Échange sur les conditions commerciales.,false
+T-19-I05,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-09-16,negociation,fr,Échange sur les conditions commerciales.,false
+T-19-I06,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-10-02,closing,fr,Relecture du contrat avec les achats.,false
+T-19-I07,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-10-25,closing,fr,Relecture du contrat avec les achats.,false
+T-19-I08,T-19,Client test T-19,Savoury,Taste & Wellbeing,2026-11-08,closing,fr,"Le client veut réduire le sucre de ses boissons de 30 %. Le vrai besoin, c'est un arôme fumé sans additif.",true
+T-20-I01,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-04-15,prospection,en,"First contact, Givaudan introduction.",false
+T-20-I02,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-05-13,prospection,en,"First contact, Givaudan introduction.",false
+T-20-I03,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-06-09,prospection,en,"First contact, Givaudan introduction.",false
+T-20-I04,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-07-01,qualification,en,Meeting with the customer's R&D team.,false
+T-20-I05,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-07-19,qualification,en,Meeting with the customer's R&D team.,false
+T-20-I06,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-08-11,qualification,en,Meeting with the customer's R&D team.,false
+T-20-I07,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-09-08,qualification,en,Meeting with the customer's R&D team.,false
+T-20-I08,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-10-06,closing,en,Contract review with procurement.,false
+T-20-I09,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-10-15,closing,en,Contract review with procurement.,false
+T-20-I10,T-20,Client test T-20,Beverages,Taste & Wellbeing,2026-11-02,closing,en,The customer wants to launch a vegan ice cream. Technical constraint: natural labelling is mandatory. They will decide based on cost and performance. They have set aside 113k EUR for the project. What they really need is a citrus flavour that masks bitterness. Launch planned for November 2028.,true
+T-21-I01,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-05-24,prospection,en,"First contact, Givaudan introduction.",false
+T-21-I02,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-06-23,prospection,en,"First contact, Givaudan introduction.",false
+T-21-I03,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-07-19,prospection,en,"First contact, Givaudan introduction.",false
+T-21-I04,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-08-09,decouverte,en,Site visit and talk about the current range.,false
+T-21-I05,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-08-23,qualification,en,Meeting with the customer's R&D team.,false
+T-21-I06,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-09-11,qualification,en,Meeting with the customer's R&D team.,false
+T-21-I07,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-10-06,proposition,en,Samples and product sheet sent.,false
+T-21-I08,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-10-11,proposition,en,Samples and product sheet sent.,false
+T-21-I09,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-10-17,negociation,en,Discussion of commercial terms.,false
+T-21-I10,T-21,Client test T-21,Sweet Goods,Taste & Wellbeing,2026-11-06,closing,en,Selection criteria: cost and performance. The customer wants to revamp its soup range. Technical constraint: the flavour must survive baking at 180 °C. The underlying need: a clean-label smoky flavour.,true
+T-22-I01,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-06-19,decouverte,en,Site visit and talk about the current range.,false
+T-22-I02,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-07-10,decouverte,en,Site visit and talk about the current range.,false
+T-22-I03,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-08-03,qualification,en,Meeting with the customer's R&D team.,false
+T-22-I04,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-08-21,qualification,en,Meeting with the customer's R&D team.,false
+T-22-I05,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-08-29,qualification,en,Meeting with the customer's R&D team.,false
+T-22-I06,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-09-28,proposition,en,Samples and product sheet sent.,false
+T-22-I07,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-10-25,negociation,en,Discussion of commercial terms.,false
+T-22-I08,T-22,Client test T-22,Dairy,Taste & Wellbeing,2026-11-02,negociation,en,"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.",true
+T-23-I01,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-07-10,prospection,en,"First contact, Givaudan introduction.",false
+T-23-I02,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-08-03,prospection,en,"First contact, Givaudan introduction.",false
+T-23-I03,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-08-10,decouverte,en,Site visit and talk about the current range.,false
+T-23-I04,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-08-16,qualification,en,Meeting with the customer's R&D team.,false
+T-23-I05,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-08-25,qualification,en,Meeting with the customer's R&D team.,false
+T-23-I06,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-09-04,qualification,en,Meeting with the customer's R&D team.,false
+T-23-I07,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-10-03,qualification,en,Meeting with the customer's R&D team.,false
+T-23-I08,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-10-27,proposition,en,Samples and product sheet sent.,false
+T-23-I09,T-23,Client test T-23,Fine Fragrance,Fragrance & Beauty,2026-11-02,proposition,en,"The customer wants to renew the scent of its flagship detergent. Selection criteria: sensory quality in the consumer test. Budget is capped at 48 EUR per kg. Target go-to-market: January 2028. On the technical side, the formula must stay stable in an alcohol base. The underlying need: a woody amber fragrance.",true
+T-24-I01,T-24,Client test T-24,Consumer Products,Fragrance & Beauty,2026-08-12,prospection,en,"First contact, Givaudan introduction.",false
+T-24-I02,T-24,Client test T-24,Consumer Products,Fragrance & Beauty,2026-08-27,qualification,en,Meeting with the customer's R&D team.,false
+T-24-I03,T-24,Client test T-24,Consumer Products,Fragrance & Beauty,2026-09-25,proposition,en,Samples and product sheet sent.,false
+T-24-I04,T-24,Client test T-24,Consumer Products,Fragrance & Beauty,2026-10-05,negociation,en,Discussion of commercial terms.,false
+T-24-I05,T-24,Client test T-24,Consumer Products,Fragrance & Beauty,2026-10-12,negociation,en,Discussion of commercial terms.,false
+T-24-I06,T-24,Client test T-24,Consumer Products,Fragrance & Beauty,2026-11-02,closing,en,"Their goal is to renew the scent of its flagship detergent. What they really need is a floral scent without declarable allergens. Launch planned for September 2028. Later in the meeting, the buyer mentioned a release in February 2028. Technical constraint: no IFRA allergens above thresholds. They have set aside 273k EUR for the project.",true
+T-25-I01,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-06-06,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-25-I02,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-07-02,qualification,fr,Point avec l'équipe R&D du client.,false
+T-25-I03,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-07-26,qualification,fr,Point avec l'équipe R&D du client.,false
+T-25-I04,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-08-04,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-25-I05,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-08-19,negociation,fr,Échange sur les conditions commerciales.,false
+T-25-I06,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-08-26,negociation,fr,Échange sur les conditions commerciales.,false
+T-25-I07,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-09-18,negociation,fr,Échange sur les conditions commerciales.,false
+T-25-I08,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-10-14,negociation,fr,Échange sur les conditions commerciales.,false
+T-25-I09,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-10-23,closing,fr,Relecture du contrat avec les achats.,false
+T-25-I10,T-25,Client test T-25,Savoury,Taste & Wellbeing,2026-11-08,closing,fr,"Lancement prévu en juin 2027. Ils trancheront selon le prix et le délai de livraison. Le vrai besoin, c'est un arôme vanille naturel. Enveloppe de 306 k€ pour le projet. Leur objectif : lancer une crème glacée vegan. Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.",true
+T-26-I01,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-08-03,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-26-I02,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-08-24,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-26-I03,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-09-09,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-26-I04,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-09-21,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-26-I05,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-10-08,qualification,fr,Point avec l'équipe R&D du client.,false
+T-26-I06,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-10-15,qualification,fr,Point avec l'équipe R&D du client.,false
+T-26-I07,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-10-31,negociation,fr,Échange sur les conditions commerciales.,false
+T-26-I08,T-26,Client test T-26,Beverages,Taste & Wellbeing,2026-11-12,closing,fr,"Mise sur le marché visée pour mai 2028. Ils trancheront selon la qualité sensorielle lors du test consommateur. Le vrai besoin, c'est un arôme agrumes masquant l'amertume. Le client veut lancer une crème glacée vegan. Contrainte technique : l'arôme doit tenir une cuisson à 180 °C. Enveloppe de 149 k€ pour le projet.",true
+T-27-I01,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-07-01,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-27-I02,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-07-23,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-27-I03,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-08-07,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-27-I04,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-09-01,qualification,fr,Point avec l'équipe R&D du client.,false
+T-27-I05,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-09-11,negociation,fr,Échange sur les conditions commerciales.,false
+T-27-I06,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-10-10,closing,fr,Relecture du contrat avec les achats.,false
+T-27-I07,T-27,Client test T-27,Sweet Goods,Taste & Wellbeing,2026-11-05,closing,fr,"Contrainte technique : stabilité à pH 3 exigée. Lancement prévu en février 2028. Plus tard dans la réunion, l'acheteur a parlé d'une sortie en septembre 2028. Ils trancheront selon le coût et la tenue. Le budget est plafonné à 50 € le kilo. Le client veut lancer une crème glacée vegan.",true
+T-28-I01,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-06-01,prospection,fr,"Premier contact, présentation de Givaudan.",false
+T-28-I02,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-06-20,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-28-I03,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-07-06,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-28-I04,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-07-22,decouverte,fr,Visite du site et échange sur la gamme actuelle.,false
+T-28-I05,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-08-10,qualification,fr,Point avec l'équipe R&D du client.,false
+T-28-I06,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-09-08,qualification,fr,Point avec l'équipe R&D du client.,false
+T-28-I07,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-09-15,qualification,fr,Point avec l'équipe R&D du client.,false
+T-28-I08,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-10-08,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-28-I09,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-10-17,proposition,fr,Envoi des échantillons et de la fiche produit.,false
+T-28-I10,T-28,Client test T-28,Dairy,Taste & Wellbeing,2026-11-07,negociation,fr,"Le vrai besoin, c'est un arôme fumé sans additif. Mise sur le marché visée pour juin 2028. Critères de choix : le coût et la tenue. Le client veut relancer sa gamme de bouillons. Le budget est plafonné à 77 € le kilo. Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.",true
+T-29-I01,T-29,Client test T-29,Fine Fragrance,Fragrance & Beauty,2026-08-06,prospection,en,"First contact, Givaudan introduction.",false
+T-29-I02,T-29,Client test T-29,Fine Fragrance,Fragrance & Beauty,2026-08-31,decouverte,en,Site visit and talk about the current range.,false
+T-29-I03,T-29,Client test T-29,Fine Fragrance,Fragrance & Beauty,2026-09-22,proposition,en,Samples and product sheet sent.,false
+T-29-I04,T-29,Client test T-29,Fine Fragrance,Fragrance & Beauty,2026-10-05,proposition,en,Samples and product sheet sent.,false
+T-29-I05,T-29,Client test T-29,Fine Fragrance,Fragrance & Beauty,2026-10-14,proposition,en,Samples and product sheet sent.,false
+T-29-I06,T-29,Client test T-29,Fine Fragrance,Fragrance & Beauty,2026-11-08,proposition,en,"Budget is capped at 81 EUR per kg. What they really need is a fresh note that lasts after washing. Their goal is to create a scented candle line. They will decide based on sensory quality in the consumer test. Launch planned for June 2027. On the technical side, no IFRA allergens above thresholds.",true
+T-30-I01,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-07-23,prospection,en,"First contact, Givaudan introduction.",false
+T-30-I02,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-08-13,decouverte,en,Site visit and talk about the current range.,false
+T-30-I03,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-09-01,qualification,en,Meeting with the customer's R&D team.,false
+T-30-I04,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-09-21,qualification,en,Meeting with the customer's R&D team.,false
+T-30-I05,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-10-05,proposition,en,Samples and product sheet sent.,false
+T-30-I06,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-10-25,proposition,en,Samples and product sheet sent.,false
+T-30-I07,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-10-30,closing,en,Contract review with procurement.,false
+T-30-I08,T-30,Client test T-30,Consumer Products,Fragrance & Beauty,2026-11-06,closing,en,"On the technical side, it must be compatible with a surfactant base. Launch planned for April 2028. Later in the meeting, the buyer mentioned a release in August 2028. Their goal is to create a scented candle line. They will decide based on sensory quality in the consumer test. Budget is capped at 64 EUR per kg.",true

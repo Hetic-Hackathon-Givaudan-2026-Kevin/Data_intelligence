@@ -4,7 +4,7 @@
 
 Dépôt de l'équipe Data/IA du produit **Opportunity Radar** : un outil qui aide un commercial Givaudan à voir son portefeuille, à comprendre pourquoi une opportunité lui est proposée et à préparer son rendez-vous.
 
-**Toutes les données de ce dépôt sont fictives.**
+**Toutes les informations de ce dépôt sont fictives.** Les fiches clients reprennent des noms de marques réelles (PepsiCo, Danone, Nestlé) du jeu de données de Tech, à titre d'illustration uniquement.
 
 ## Par où commencer
 
@@ -13,6 +13,7 @@ Dépôt de l'équipe Data/IA du produit **Opportunity Radar** : un outil qui aid
 | Le **livrable Data du 12/11** (données, pipeline, modèle, métriques, API) | [`LIVRABLE_DATA_G03.md`](LIVRABLE_DATA_G03.md) |
 | Comment **reproduire** le travail pas à pas | [`FICHE_DE_TRAVAIL.md`](FICHE_DE_TRAVAIL.md) |
 | Les **résultats de l'évaluation** sur 30 cas (29/30) | [`docs/evaluation.md`](docs/evaluation.md) |
+| La **comparaison V1 / V2** et les métriques, brique par brique (livrable du 13/11) | [`docs/COMPARAISON_V1_V2.md`](docs/COMPARAISON_V1_V2.md) |
 | La présentation de la partie Data et le lien avec les tickets | [`README_DATA.md`](README_DATA.md) |
 
 ## Contenu du dépôt
@@ -54,6 +55,29 @@ uvicorn main:app --env-file .env --port 8000
 ```
 
 Swagger : http://localhost:8000/docs. Pour l'API RAG, voir le README du dépôt Gr03-Marvels-MD4.
+
+## Reproduire la partie data/
+
+Le jeu de démo v2 et son API, depuis la racine du dépôt (Python 3.11, Ollama
+non nécessaire) :
+
+```bash
+pip install -r requirements.txt
+python data/demo_v2/generer_demo_v2.py        # 1. régénère les JSON de data/demo_v2 (graine et date fixes)
+python data/verifier_jeu.py                   # 2. contrôle d'ensemble : 7 contrôles OK attendus
+python -m pytest data/tests -q                # 3. toute la suite de tests
+uvicorn --app-dir data/api main:app --port 8001 --reload   # 4. API, Swagger : http://localhost:8001/docs
+```
+
+Les fiches clients se reconstruisent à partir de `ia/donnees/` :
+
+```bash
+cd fiches_clients && python build_fiches.py
+```
+
+Pour aller plus loin :
+- [`docs/INTEGRATION_TECH.md`](docs/INTEGRATION_TECH.md) : routes `/v2`, exemples de réponse et changements à reprendre côté Tech ;
+- [`data/cas_test/README.md`](data/cas_test/README.md) : banc d'essai du compte rendu V1 / V2.
 
 ## Équipe Data
 

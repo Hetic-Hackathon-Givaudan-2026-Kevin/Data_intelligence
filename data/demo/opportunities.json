@@ -1,0 +1,338 @@
+[
+  {
+    "id": "OPP-01",
+    "clientId": "C-01",
+    "title": "Boissons fonctionnelles",
+    "category": "Santé et bien-être",
+    "priority": "high",
+    "estimatedRevenue": 1800000,
+    "description": "Le client envisage une gamme de boissons à bénéfice fonctionnel.",
+    "triggers": [
+      {
+        "text": "Intérêt exprimé pour une nouvelle catégorie",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Part des nouveaux produits boissons fonctionnelles en France : +100 % (2020→2022, Open Food Facts)",
+        "type": "real",
+        "counted": true,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      },
+      {
+        "text": "Lancement concurrent récent",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-01",
+      "Q-02",
+      "Q-03"
+    ]
+  },
+  {
+    "id": "OPP-02",
+    "clientId": "C-01",
+    "title": "Snacks écoresponsables",
+    "category": "Durabilité",
+    "priority": "high",
+    "estimatedRevenue": 1200000,
+    "description": "Le client veut rendre ses snacks plus responsables sans perdre en goût.",
+    "triggers": [
+      {
+        "text": "Engagement environnemental annoncé",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Demande des distributeurs : recettes plus durables",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Part des nouveaux produits snacks bio ou équitables en France : +10 % (2020→2022, Open Food Facts)",
+        "type": "real",
+        "counted": true,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-04",
+      "Q-05",
+      "Q-06"
+    ]
+  },
+  {
+    "id": "OPP-03",
+    "clientId": "C-01",
+    "title": "Marché premium",
+    "category": "Premiumisation",
+    "priority": "watch",
+    "estimatedRevenue": 900000,
+    "description": "Le client étudie une montée en gamme sur une partie de son offre.",
+    "triggers": [
+      {
+        "text": "Montée en gamme évoquée en RDV",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Part des nouveaux produits AOP, AOC ou Label Rouge en France : -30 % (2020→2022, Open Food Facts) — signal contraire",
+        "type": "real",
+        "counted": false,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-07",
+      "Q-08",
+      "Q-09"
+    ]
+  },
+  {
+    "id": "OPP-04",
+    "clientId": "C-02",
+    "title": "Réduction du sucre",
+    "category": "Reformulation",
+    "priority": "high",
+    "estimatedRevenue": 1100000,
+    "description": "Le client doit réduire le sucre de ses recettes en gardant leur goût.",
+    "triggers": [
+      {
+        "text": "Objectif de réduction du sucre annoncé",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Évolution réglementaire attendue",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Retours consommateurs sur le goût trop sucré",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-10",
+      "Q-11",
+      "Q-12"
+    ]
+  },
+  {
+    "id": "OPP-05",
+    "clientId": "C-03",
+    "title": "Protéines végétales",
+    "category": "Végétal",
+    "priority": "medium",
+    "estimatedRevenue": 650000,
+    "description": "Le client veut élargir sa gamme de produits à base de protéines végétales.",
+    "triggers": [
+      {
+        "text": "Part des nouveaux produits alternatives végétales à la viande et aux laitiers en France : +30 % (2020→2022, Open Food Facts)",
+        "type": "real",
+        "counted": true,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      },
+      {
+        "text": "Intérêt exprimé pour une gamme végétale",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-13",
+      "Q-14",
+      "Q-15"
+    ]
+  },
+  {
+    "id": "OPP-06",
+    "clientId": "C-04",
+    "title": "Boissons sans alcool",
+    "category": "Nouvelle catégorie",
+    "priority": "high",
+    "estimatedRevenue": 750000,
+    "description": "Le client prépare une boisson sans alcool pour de nouvelles occasions de consommation.",
+    "triggers": [
+      {
+        "text": "Part des nouveaux produits bières, vins et cocktails sans alcool en France : +30 % (2020→2022, Open Food Facts)",
+        "type": "real",
+        "counted": true,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      },
+      {
+        "text": "Projet de nouvelle boisson évoqué en RDV",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Demande des distributeurs : alternatives sans alcool",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-16",
+      "Q-17",
+      "Q-18"
+    ]
+  },
+  {
+    "id": "OPP-07",
+    "clientId": "C-05",
+    "title": "Réduction du sel",
+    "category": "Reformulation",
+    "priority": "medium",
+    "estimatedRevenue": 500000,
+    "description": "Le client doit baisser le sel de ses plats sans les rendre fades.",
+    "triggers": [
+      {
+        "text": "Objectif de réduction du sel annoncé",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Évolution réglementaire attendue",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-19",
+      "Q-20",
+      "Q-21"
+    ]
+  },
+  {
+    "id": "OPP-08",
+    "clientId": "C-05",
+    "title": "Clean label",
+    "category": "Naturalité",
+    "priority": "watch",
+    "estimatedRevenue": 400000,
+    "description": "Le client souhaite des listes d'ingrédients plus courtes et plus lisibles.",
+    "triggers": [
+      {
+        "text": "Intérêt exprimé pour des étiquettes plus courtes",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-22",
+      "Q-23",
+      "Q-24"
+    ]
+  },
+  {
+    "id": "OPP-09",
+    "clientId": "C-06",
+    "title": "Nutrition sportive",
+    "category": "Santé et bien-être",
+    "priority": "watch",
+    "estimatedRevenue": 350000,
+    "description": "Le client cherche à améliorer le goût de ses produits protéinés.",
+    "triggers": [
+      {
+        "text": "Part des nouveaux produits de nutrition sportive en France : +30 % (2020→2022, Open Food Facts)",
+        "type": "real",
+        "counted": true,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-25",
+      "Q-26",
+      "Q-27"
+    ]
+  },
+  {
+    "id": "OPP-10",
+    "clientId": "C-02",
+    "title": "Bien-être digestif",
+    "category": "Santé et bien-être",
+    "priority": "medium",
+    "estimatedRevenue": 800000,
+    "description": "Le client veut développer une gamme orientée bien-être digestif.",
+    "triggers": [
+      {
+        "text": "Intérêt exprimé pour des produits bien-être",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      },
+      {
+        "text": "Part des nouveaux produits kéfirs et yaourts au bifidus en France : +10 % (2020→2022, Open Food Facts)",
+        "type": "real",
+        "counted": true,
+        "source": "Open Food Facts (ODbL 1.0), données au 2026-11-11, extraites le 2026-11-12 — data/signaux/signaux_marche.json"
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-28",
+      "Q-29",
+      "Q-30"
+    ]
+  },
+  {
+    "id": "OPP-11",
+    "clientId": "C-01",
+    "title": "Saveurs du monde pour les jeunes",
+    "category": "Innovation goût",
+    "priority": "watch",
+    "estimatedRevenue": 600000,
+    "description": "Le client veut attirer les jeunes consommateurs avec des saveurs du monde.",
+    "triggers": [
+      {
+        "text": "Succès des saveurs du monde chez les 18-25 ans",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-31",
+      "Q-32",
+      "Q-33"
+    ]
+  },
+  {
+    "id": "OPP-12",
+    "clientId": "C-07",
+    "title": "Relance d'une gamme vieillissante",
+    "category": "Relance de gamme",
+    "priority": "watch",
+    "estimatedRevenue": 300000,
+    "description": "Le client veut relancer une gamme dont les ventes baissent.",
+    "triggers": [
+      {
+        "text": "Baisse des ventes de la gamme : -6 %",
+        "type": "fictional",
+        "counted": true,
+        "source": null
+      }
+    ],
+    "recommendedQuestions": [
+      "Q-34",
+      "Q-35",
+      "Q-36"
+    ]
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "version_schema": "1.0",
+  "note_id": "EXEMPLE-001",
+  "type_note": "brief",
+  "rdv": {
+    "date": "2026-10-14",
+    "client": "Client fictif A",
+    "interlocuteurs": ["Responsable R&D (fictif)", "Chef de produit (fictif)"]
+  },
+  "alertes_prioritaires": [
+    {
+      "categorie": "budget",
+      "description": "Le budget matière n'a pas été chiffré pendant le RDV.",
+      "extrait_source": "On verra le budget plus tard, selon les premiers essais."
+    }
+  ],
+  "brief": {
+    "objectif": "Lancer une boisson pétillante sans alcool aux agrumes, moins sucrée que la gamme actuelle",
+    "marche": "France, grande distribution, adultes 25-45 ans",
+    "profil_gout": ["agrumes", "légère amertume", "peu sucré"],
+    "echeance_lancement": "non renseigné",
+    "budget_matiere_eur_par_litre": "non renseigné",
+    "contraintes": {
+      "regime": "non renseigné",
+      "allergenes_exclus": ["fruits à coque"],
+      "ingredients_interdits": ["colorants artificiels"]
+    }
+  },
+  "positions_contradictoires": [],
+  "actions": [
+    {
+      "action": "Envoyer deux pistes aromatiques agrumes",
+      "responsable": "Commercial (fictif)",
+      "echeance": "2026-10-28"
+    }
+  ],
+  "insights_concurrence": ["Les références concurrentes misent sur le pamplemousse rose"],
+  "donnees_personnelles_ecartees": true,
+  "incertitudes": {
+    "champs_manquants": [
+      "brief.echeance_lancement",
+      "brief.budget_matiere_eur_par_litre",
+      "brief.contraintes.regime"
+    ],
+    "contradictions_detectees": false,
+    "niveau_confiance": "moyen"
+  }
+}

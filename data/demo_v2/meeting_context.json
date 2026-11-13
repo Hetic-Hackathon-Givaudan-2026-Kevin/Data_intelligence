@@ -1,0 +1,273 @@
+[
+  {
+    "opportunity_id": "O-01",
+    "objective": "Comprendre les intentions du client concernant le développement d'une nouvelle gamme et déterminer les contraintes associées.",
+    "known": [],
+    "missing": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "questions": [
+      {
+        "id": "Q-01",
+        "opportunity_id": "O-01",
+        "question": "Quels nouveaux segments de boissons envisagez-vous de développer dans les prochains mois ?",
+        "why": "Comprendre les ambitions du client et repérer de nouveaux besoins.",
+        "information_sought": "client_objectives",
+        "opportunity_link": "Opportunité « Nouvelle gamme de boissons fonctionnelles » (O-01) : la question sert à remplir le point manquant « Objectifs du client ». Utile au commercial : comprendre les ambitions du client et repérer de nouveaux besoins.",
+        "origin": "banque de questions"
+      },
+      {
+        "id": "Q-02",
+        "opportunity_id": "O-01",
+        "question": "Qu'est-ce qui freine aujourd'hui le développement de votre gamme : le goût, le coût ou la réglementation ?",
+        "why": "Le frein cité montre où Givaudan peut aider.",
+        "information_sought": "technical_constraints",
+        "opportunity_link": "Opportunité « Nouvelle gamme de boissons fonctionnelles » (O-01) : la question sert à remplir le point manquant « Contraintes techniques ». Utile au commercial : elle renseigne un critère encore inconnu de la grille de qualification (faisabilité) ; tant qu'il reste inconnu, la priorité est provisoire (moyenne à haute).",
+        "origin": "banque de questions"
+      },
+      {
+        "id": "Q-03",
+        "opportunity_id": "O-01",
+        "question": "Si vous lanciez une boisson fonctionnelle, à quelle échéance pourriez-vous faire un premier test ?",
+        "why": "Teste l'intérêt réel et donne le délai du brief.",
+        "information_sought": "timeline",
+        "opportunity_link": "Opportunité « Nouvelle gamme de boissons fonctionnelles » (O-01) : la question sert à remplir le point manquant « Calendrier ». Utile au commercial : teste l'intérêt réel et donne le délai du brief.",
+        "origin": "banque de questions"
+      }
+    ]
+  },
+  {
+    "opportunity_id": "O-02",
+    "objective": "Tester l'intérêt du client pour de nouvelles saveurs dans sa gamme aromatique existante (contexte : projet P-01 en cours sur cette gamme).",
+    "known": [],
+    "missing": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "questions": [
+      {
+        "id": "O-02-Q1",
+        "opportunity_id": "O-02",
+        "question": "Quelles nouvelles saveurs aimeriez-vous voir rejoindre la gamme ?",
+        "why": "Fait émerger l'ambition du client pour sa gamme.",
+        "information_sought": "client_objectives",
+        "opportunity_link": "Opportunité « Extension d'une gamme aromatique » (O-02) : la question sert à remplir le point manquant « Objectifs du client ». Utile au commercial : fait émerger l'ambition du client pour sa gamme.",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-02-Q2",
+        "opportunity_id": "O-02",
+        "question": "Qu'attendent vos clients de plus que ce que la gamme propose aujourd'hui ?",
+        "why": "Vérifie qu'il existe un vrai besoin d'extension.",
+        "information_sought": "real_need",
+        "opportunity_link": "Opportunité « Extension d'une gamme aromatique » (O-02) : la question sert à remplir le point manquant « Besoin réel ». Utile au commercial : vérifie qu'il existe un vrai besoin d'extension.",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-02-Q3",
+        "opportunity_id": "O-02",
+        "question": "Sur quels critères choisirez-vous les nouvelles saveurs de la gamme ?",
+        "why": "Montre sur quels critères le client décidera.",
+        "information_sought": "decision_criteria",
+        "opportunity_link": "Opportunité « Extension d'une gamme aromatique » (O-02) : la question sert à remplir le point manquant « Critères de décision ». Utile au commercial : montre sur quels critères le client décidera.",
+        "origin": "rédigée pour la démo"
+      }
+    ]
+  },
+  {
+    "opportunity_id": "O-03",
+    "objective": "Qualifier la demande sur les alternatives végétales : produit visé, ambition et contraintes.",
+    "known": [
+      {
+        "point": "budget_constraints",
+        "information": "Le client a communiqué une contrainte budgétaire pour ses prochains projets.",
+        "signal_id": "S-07"
+      }
+    ],
+    "missing": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "questions": [
+      {
+        "id": "Q-13",
+        "opportunity_id": "O-03",
+        "question": "Quelle place voulez-vous donner aux protéines végétales dans votre gamme d'ici deux ans ?",
+        "why": "Mesure l'ambition du client et l'horizon du projet végétal.",
+        "information_sought": "client_objectives",
+        "opportunity_link": "Opportunité « Développement d'une formulation végétale » (O-03) : la question sert à remplir le point manquant « Objectifs du client ». Utile au commercial : mesure l'ambition du client et l'horizon du projet végétal.",
+        "origin": "banque de questions"
+      },
+      {
+        "id": "Q-14",
+        "opportunity_id": "O-03",
+        "question": "Qu'est-ce qui retient encore vos consommateurs face aux produits végétaux ?",
+        "why": "Si le goût est en cause, c'est là que Givaudan peut apporter quelque chose.",
+        "information_sought": "real_need",
+        "opportunity_link": "Opportunité « Développement d'une formulation végétale » (O-03) : la question sert à remplir le point manquant « Besoin réel ». Utile au commercial : si le goût est en cause, c'est là que Givaudan peut apporter quelque chose.",
+        "origin": "banque de questions"
+      },
+      {
+        "id": "Q-15",
+        "opportunity_id": "O-03",
+        "question": "Quels allergènes ou ingrédients devez-vous exclure d'une recette végétale ?",
+        "why": "Remplit les contraintes du brief avant tout essai.",
+        "information_sought": "technical_constraints",
+        "opportunity_link": "Opportunité « Développement d'une formulation végétale » (O-03) : la question sert à remplir le point manquant « Contraintes techniques ». Utile au commercial : remplit les contraintes du brief avant tout essai.",
+        "origin": "banque de questions"
+      }
+    ]
+  },
+  {
+    "opportunity_id": "O-04",
+    "objective": "Comprendre le problème de texture de P-06 et ce qu'il faudrait pour le résoudre.",
+    "known": [
+      {
+        "point": "technical_constraints",
+        "information": "Texture de P-06 jugée trop épaisse en bouche (retour technique).",
+        "signal_id": "S-06"
+      },
+      {
+        "point": "budget_constraints",
+        "information": "Le client a communiqué une contrainte budgétaire pour ses prochains projets.",
+        "signal_id": "S-07"
+      }
+    ],
+    "missing": [
+      "client_objectives",
+      "real_need",
+      "timeline",
+      "decision_criteria"
+    ],
+    "questions": [
+      {
+        "id": "O-04-Q1",
+        "opportunity_id": "O-04",
+        "question": "Sur quels produits ce problème de texture se pose-t-il encore aujourd'hui ?",
+        "why": "Vérifie que le besoin d'amélioration existe toujours.",
+        "information_sought": "real_need",
+        "opportunity_link": "Opportunité « Amélioration de la texture d'un produit » (O-04) : la question sert à remplir le point manquant « Besoin réel ». Utile au commercial : vérifie que le besoin d'amélioration existe toujours.",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-04-Q2",
+        "opportunity_id": "O-04",
+        "question": "Quels critères utiliserez-vous pour juger qu'une nouvelle texture vous convient ?",
+        "why": "Donne les critères de réussite d'un nouvel essai.",
+        "information_sought": "decision_criteria",
+        "opportunity_link": "Opportunité « Amélioration de la texture d'un produit » (O-04) : la question sert à remplir le point manquant « Critères de décision ». Utile au commercial : donne les critères de réussite d'un nouvel essai.",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-04-Q3",
+        "opportunity_id": "O-04",
+        "question": "Quel calendrier envisagez-vous pour tester une version améliorée ?",
+        "why": "Mesure l'urgence et planifie les essais.",
+        "information_sought": "timeline",
+        "opportunity_link": "Opportunité « Amélioration de la texture d'un produit » (O-04) : la question sert à remplir le point manquant « Calendrier ». Utile au commercial : mesure l'urgence et planifie les essais.",
+        "origin": "rédigée pour la démo"
+      }
+    ]
+  },
+  {
+    "opportunity_id": "O-05",
+    "objective": "Identifier la formulation à optimiser et ce qui ne doit pas changer, dans le budget communiqué.",
+    "known": [
+      {
+        "point": "budget_constraints",
+        "information": "Le client a communiqué une contrainte budgétaire pour ses prochains projets.",
+        "signal_id": "S-07"
+      }
+    ],
+    "missing": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "questions": [
+      {
+        "id": "O-05-Q1",
+        "opportunity_id": "O-05",
+        "question": "Quelle formulation existante souhaiteriez-vous optimiser en priorité ?",
+        "why": "Précise le besoin réel derrière la contrainte budgétaire.",
+        "information_sought": "real_need",
+        "opportunity_link": "Opportunité « Optimisation d'une formulation existante » (O-05) : la question sert à remplir le point manquant « Besoin réel ». Utile au commercial : précise le besoin réel derrière la contrainte budgétaire.",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-05-Q2",
+        "opportunity_id": "O-05",
+        "question": "Quelles caractéristiques du produit ne doivent pas changer pendant l'optimisation ?",
+        "why": "Fixe les contraintes techniques avant tout essai.",
+        "information_sought": "technical_constraints",
+        "opportunity_link": "Opportunité « Optimisation d'une formulation existante » (O-05) : la question sert à remplir le point manquant « Contraintes techniques ». Utile au commercial : elle renseigne un critère encore inconnu de la grille de qualification (faisabilité) ; tant qu'il reste inconnu, la priorité est provisoire (moyenne à haute).",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-05-Q3",
+        "opportunity_id": "O-05",
+        "question": "Comment arbitrerez-vous entre le coût et le goût ?",
+        "why": "Montre sur quels critères le client décidera.",
+        "information_sought": "decision_criteria",
+        "opportunity_link": "Opportunité « Optimisation d'une formulation existante » (O-05) : la question sert à remplir le point manquant « Critères de décision ». Utile au commercial : montre sur quels critères le client décidera.",
+        "origin": "rédigée pour la démo"
+      }
+    ]
+  },
+  {
+    "opportunity_id": "O-06",
+    "objective": "Découvrir les attentes du client pour sa marque de distributeur et tester l'intérêt pour des arômes naturels.",
+    "known": [],
+    "missing": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "questions": [
+      {
+        "id": "O-06-Q1",
+        "opportunity_id": "O-06",
+        "question": "Quelle place voulez-vous donner aux références naturelles dans votre marque de distributeur ?",
+        "why": "Fait émerger l'ambition du client pour sa marque.",
+        "information_sought": "client_objectives",
+        "opportunity_link": "Opportunité « Nouvelle référence aromatique pour une marque de distributeur » (O-06) : la question sert à remplir le point manquant « Objectifs du client ». Utile au commercial : elle renseigne un critère encore inconnu de la grille de qualification (potentiel commercial) ; tant qu'il reste inconnu, la priorité est provisoire (basse à haute).",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-06-Q2",
+        "opportunity_id": "O-06",
+        "question": "Quelles attentes de vos clients voulez-vous couvrir avec une nouvelle référence aromatique ?",
+        "why": "Vérifie qu'il existe un besoin réel.",
+        "information_sought": "real_need",
+        "opportunity_link": "Opportunité « Nouvelle référence aromatique pour une marque de distributeur » (O-06) : la question sert à remplir le point manquant « Besoin réel ». Utile au commercial : vérifie qu'il existe un besoin réel.",
+        "origin": "rédigée pour la démo"
+      },
+      {
+        "id": "O-06-Q3",
+        "opportunity_id": "O-06",
+        "question": "Quelles contraintes techniques ou d'étiquetage cette nouvelle référence devra-t-elle respecter ?",
+        "why": "Renseigne la faisabilité et la complexité de la nouvelle référence.",
+        "information_sought": "technical_constraints",
+        "opportunity_link": "Opportunité « Nouvelle référence aromatique pour une marque de distributeur » (O-06) : la question sert à remplir le point manquant « Contraintes techniques ». Utile au commercial : elle renseigne des critères encore inconnus de la grille de qualification (faisabilité et complexité technique) ; tant qu'ils restent inconnus, la priorité est provisoire (basse à haute).",
+        "origin": "rédigée pour la démo"
+      }
+    ]
+  }
+]

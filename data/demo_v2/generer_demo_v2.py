@@ -1,0 +1,646 @@
+"""Génère data/demo_v2 (doc fonctionnelle v2) : clients (DATA-US03), projets (DATA-US04),
+opportunités (DATA-US05) et signaux (DATA-US06). Les opportunités sont détectées à partir des
+signaux et des projets par detection.py et regles_detection.json (DATA-US07).
+
+Usage, depuis la racine du repo :
+    python data/demo_v2/generer_demo_v2.py
+
+Clients, projets et opportunités sont fictifs : aucun vrai client, aucun vrai nom de personne.
+Les signaux marqués is_real_source citent leur source exacte. Aucun compteur ni date du dernier
+signal n'est stocké : ils se calculent à partir des autres fichiers.
+"""
+
+import importlib.util
+import json
+from datetime import date
+from pathlib import Path
+
+DOSSIER = Path(__file__).resolve().parent
+
+
+
+def _charger(nom):
+    """Module voisin chargé par son chemin : le générateur est aussi importé par l'API et les tests."""
+    spec = importlib.util.spec_from_file_location(nom, DOSSIER / f"{nom}.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+detection = _charger("detection")  # DATA-US07
+justification = _charger("justification")  # DATA-US08
+compte_rendu = _charger("compte_rendu")  # DATA-US11
+
+CLIENTS = [
+    {
+        "id": "C-01",
+        "name": "Maison Nova Drinks",
+        "sector": "Boissons",
+        "country": "France",
+        "account_manager": "KAM senior Boissons (fictif)",
+        "relationship_status": "strategic",
+        "last_updated": "2026-11-05",
+        "commercial_situation": (
+            "Client établi en croissance, avec plusieurs projets actifs. "
+            "Un échange commercial le 05/11/2026 a porté sur une nouvelle gamme."
+        ),
+        "history_summary": (
+            "Partenaire de longue date sur les arômes de ses boissons. "
+            "Les projets récents ont été menés jusqu'au lancement. "
+            "Le client montre un intérêt récent pour une nouvelle catégorie : les boissons fonctionnelles."
+        ),
+    },
+    {
+        "id": "C-02",
+        "name": "Nordic Food Industries",
+        "sector": "Agroalimentaire",
+        "country": "Suède",
+        "account_manager": "KAM Europe du Nord (fictif)",
+        "relationship_status": "active",
+        "last_updated": "2026-10-28",
+        "commercial_situation": (
+            "Le client a formulé une demande sur des alternatives végétales. "
+            "Il a communiqué une contrainte budgétaire pour les prochains projets."
+        ),
+        "history_summary": (
+            "Relation suivie, avec des projets actifs en cours. "
+            "Un projet précédent a reçu un retour technique sur sa texture. "
+            "Ce retour est à prendre en compte dans les nouvelles propositions."
+        ),
+    },
+    {
+        "id": "C-03",
+        "name": "Alimenta Distribution",
+        "sector": "Distribution alimentaire",
+        "country": "France",
+        "account_manager": "Chargé de développement Distribution (fictif)",
+        "relationship_status": "to_develop",
+        "last_updated": "2026-10-15",
+        "commercial_situation": (
+            "Relation récente, avec un premier projet actif. "
+            "Potentiel identifié sur une nouvelle référence aromatique pour sa marque de distributeur."
+        ),
+        "history_summary": (
+            "Premiers échanges engagés cette année. "
+            "Le client cherche à enrichir l'offre de sa marque de distributeur."
+        ),
+    },
+]
+
+
+PROJETS = [
+    # C-01 Maison Nova Drinks : 3 projets actifs.
+    {
+        "id": "P-01",
+        "client_id": "C-01",
+        "name": "Reformulation de l'arôme agrumes de la gamme existante",
+        "description": (
+            "Travail en cours sur la gamme de boissons aromatisées existante : reformulation de son arôme "
+            "agrumes, sans nouvelle saveur. Projet lancé le 10/10/2026, échantillon envoyé le 20/10/2026."
+        ),
+        "status": "active",
+        "start_date": "2026-10-10",
+    },
+    {
+        "id": "P-02",
+        "client_id": "C-01",
+        "name": "Boisson gazeuse à teneur réduite en sucre",
+        "description": "Reformulation d'une boisson gazeuse pour réduire le sucre en gardant le profil aromatique.",
+        "status": "active",
+        "start_date": "2026-06-15",
+    },
+    {
+        "id": "P-03",
+        "client_id": "C-01",
+        "name": "Boisson pétillante en édition saisonnière",
+        "description": "Création d'un arôme pour une édition limitée d'hiver d'une boisson pétillante.",
+        "status": "active",
+        "start_date": "2026-09-01",
+    },
+    # C-02 Nordic Food Industries : 2 projets actifs et 1 terminé.
+    {
+        "id": "P-04",
+        "client_id": "C-02",
+        "name": "Arôme pour une gamme de soupes",
+        "description": "Développement d'un arôme d'herbes aromatiques pour une gamme de soupes du client.",
+        "status": "active",
+        "start_date": "2026-09-15",
+    },
+    {
+        "id": "P-05",
+        "client_id": "C-02",
+        "name": "Arôme pour une gamme de sauces",
+        "description": "Développement d'un arôme fumé pour une gamme de sauces barbecue du client.",
+        "status": "active",
+        "start_date": "2026-10-01",
+    },
+    {
+        "id": "P-06",
+        "client_id": "C-02",
+        "name": "Dessert végétal aromatisé",
+        "description": (
+            "Projet livré. Le client a fait un retour technique sur la texture, jugée trop épaisse en bouche."
+        ),
+        "status": "completed",
+        "start_date": "2026-03-02",
+    },
+    # C-03 Alimenta Distribution : 1 projet actif.
+    {
+        "id": "P-07",
+        "client_id": "C-03",
+        "name": "Yaourt à la vanille de marque de distributeur",
+        "description": "Premier projet avec le client : arôme vanille pour un yaourt de sa marque de distributeur.",
+        "status": "active",
+        "start_date": "2026-09-21",
+    },
+]
+
+
+# Opportunités : id, client, titre, catégorie et statut sont détectés par detection.py
+# (regles_detection.json, DATA-US07). Reste ici l'appréciation commerciale, par (client, catégorie).
+# Chaque valeur cite sa source, (valeur, id de signal ou de projet, …), selon les définitions de
+# grille_qualification.json (DATA-US09), ou vaut INCONNU : aucune valeur sans source.
+INCONNU = None
+
+QUALIFICATIONS = {
+    ("C-01", "Nouvelle gamme"): {  # O-01
+        "description": ("Le client s'intéresse à une nouvelle catégorie, les boissons fonctionnelles : "
+                        "possibilité d'accompagner le lancement d'une nouvelle gamme.", "S-01"),
+        "estimated_potential": ("high", "S-01"),  # nouvelle catégorie
+        "feasibility": INCONNU,  # aucun projet du client sur les boissons fonctionnelles
+        "complexity": ("high", "S-01"),  # nouvelle catégorie pour le client
+        "next_action": ("Organiser un échange avec le client afin de confirmer son intérêt pour une nouvelle gamme de "
+                        "boissons fonctionnelles et identifier ses contraintes de formulation.", "S-01"),
+    },
+    ("C-01", "Extension de gamme"): {  # O-02
+        "description": ("Le travail en cours sur la gamme existante (P-01) peut ouvrir sur de nouvelles saveurs "
+                        "pour cette gamme.", "P-01", "S-03"),
+        "estimated_potential": ("medium", "P-01"),  # extension d'une gamme existante
+        "feasibility": ("high", "P-01", "S-03"),  # projet en cours sur la même gamme, échantillon envoyé
+        "complexity": ("low", "P-01"),  # arôme de la gamme déjà travaillé
+        "next_action": ("Faire le point sur le retour de l'échantillon envoyé le 20/10/2026 (P-01) avant de proposer "
+                        "une extension de la gamme.", "P-01", "S-03"),
+    },
+    ("C-02", "Nouvelle formulation"): {  # O-03
+        "description": ("Le client a demandé des alternatives végétales : possibilité de développer une formulation "
+                        "dédiée.", "S-04"),
+        "estimated_potential": ("medium", "S-04"),  # nouvelle formulation
+        "feasibility": ("medium", "P-06", "S-06"),  # dessert végétal livré, avec un retour sur la texture
+        "complexity": ("medium", "P-06", "S-06"),  # base végétale déjà travaillée, problème de texture connu
+        "next_action": ("Qualifier la demande : produit visé, marché suédois, calendrier et budget.", "S-04", "S-07"),
+    },
+    ("C-02", "Amélioration produit"): {  # O-04
+        "description": ("Le retour technique sur la texture du projet terminé P-06 peut justifier une proposition "
+                        "d'amélioration.", "P-06", "S-06"),
+        "estimated_potential": ("low", "S-06"),  # modification d'un produit existant
+        "feasibility": ("medium", "P-06", "S-06"),  # produit livré, retour technique à traiter
+        "complexity": ("medium", "S-06"),  # produit existant, problème de texture identifié
+        "next_action": ("Revoir avec les équipes techniques le retour sur la texture de P-06 avant de recontacter le "
+                        "client.", "P-06", "S-06"),
+    },
+    ("C-02", "Optimisation"): {  # O-05
+        "description": ("Le client a communiqué une contrainte budgétaire : possibilité d'optimiser le coût d'une "
+                        "formulation existante.", "S-07"),
+        "estimated_potential": ("low", "S-07"),  # optimisation d'un produit existant
+        "feasibility": INCONNU,  # la formulation à optimiser n'est pas identifiée
+        "complexity": ("medium", "S-07"),  # optimisation d'un produit existant
+        "next_action": ("Confirmer le budget communiqué et identifier la formulation à optimiser.", "S-07"),
+    },
+    ("C-03", "Nouvelle référence"): {  # O-06
+        "description": ("La demande de produits plus naturels et à l'étiquette plus claire peut ouvrir une nouvelle "
+                        "référence aromatique pour la marque de distributeur du client.", "S-09", "S-10"),
+        "estimated_potential": INCONNU,  # aucun signal ne dit l'ampleur du besoin
+        "feasibility": INCONNU,  # aucun projet sur la future référence
+        "complexity": INCONNU,  # le produit visé n'est pas connu
+        "next_action": ("Présenter des pistes d'arômes naturels pour la marque de distributeur et confirmer l'intérêt "
+                        "du client.", "S-09", "S-10"),
+    },
+}
+
+# Règle de priorité (doc v2, section 5.3), définie par grille_qualification.json (DATA-US09).
+DATE_REFERENCE = "2026-11-12"  # date du jeu de démo, fixe
+JOURS_URGENCE = 30
+SOURCES_CLIENT = {"meeting_report", "client_request"}  # le client s'est exprimé lui-même
+FICHIER_GRILLE = DOSSIER / "grille_qualification.json"
+GRILLE = json.loads(FICHIER_GRILLE.read_text(encoding="utf-8"))
+CRITERES = {c["id"]: c for c in GRILLE["criteres"]}
+CRITERES_QUALIFIES = ["estimated_potential", "feasibility", "complexity"]  # saisis dans QUALIFICATIONS
+SEUIL_HIGH, SEUIL_MEDIUM = GRILLE["seuils"]["high"], GRILLE["seuils"]["medium"]
+
+FICHIER_OFF = DOSSIER.parent / "signaux" / "signaux_marche.json"
+GIVAUDAN = "Rapport intégré Givaudan 2025 (giv-2025-integrated-report.pdf)"
+
+
+def valeur_qualifiee(q, champ):
+    """Valeur d'un champ de QUALIFICATIONS ; INCONNU devient la valeur inconnue du modèle
+    (null pour le potentiel, to_confirm pour la faisabilité et la complexité)."""
+    if q[champ] is INCONNU:
+        return CRITERES[champ]["valeur_inconnue"]
+    return q[champ][0]
+
+
+def sources_qualifiees(q, champ):
+    return [] if q[champ] is INCONNU else list(q[champ][1:])
+
+
+def points(critere, valeur):
+    """(points mini, points maxi) d'un critère : égaux si la valeur est connue ; si elle est
+    inconnue, le niveau qui rapporte le moins puis celui qui rapporte le plus."""
+    c = CRITERES[critere]
+    if c["peut_etre_inconnu"] and valeur == c["valeur_inconnue"]:
+        tous = [n["points"] for n in c["niveaux"]]
+        return min(tous), max(tous)
+    p = next(n["points"] for n in c["niveaux"] if n["valeur"] == valeur)
+    return p, p
+
+
+def valeurs_criteres(opportunite, signaux):
+    """Valeur de chaque critère de la grille pour l'opportunité (confiance et urgence : signaux)."""
+    propres = [s for s in signaux if s["opportunity_id"] == opportunite["id"]]
+    reference = date.fromisoformat(DATE_REFERENCE)
+    rang = {n["valeur"]: n["points"] for n in CRITERES["confidence"]["niveaux"]}
+    return {
+        "confidence": max((s["confidence"] for s in propres), key=rang.get),
+        "estimated_potential": opportunite["estimated_potential"],
+        "feasibility": opportunite["feasibility"],
+        "complexity": opportunite["complexity"],
+        "urgency": any(s["source_type"] in SOURCES_CLIENT
+                       and (reference - date.fromisoformat(s["source_date"])).days <= JOURS_URGENCE for s in propres),
+    }
+
+
+def detail_priorite(opportunite, signaux):
+    """{critère: (points mini, points maxi)} pour chaque critère de la grille."""
+    return {c: points(c, v) for c, v in valeurs_criteres(opportunite, signaux).items()}
+
+
+def niveau(score):
+    return "high" if score >= SEUIL_HIGH else "medium" if score >= SEUIL_MEDIUM else "low"
+
+
+def criteres_inconnus(opportunite):
+    return [c for c in CRITERES_QUALIFIES if opportunite[c] == CRITERES[c]["valeur_inconnue"]]
+
+
+def evaluer_priorite(opportunite, signaux):
+    """Score mini et maxi, priorité (prudente), priorité maxi, stable ou provisoire, critères inconnus."""
+    detail = detail_priorite(opportunite, signaux)
+    mini, maxi = sum(p[0] for p in detail.values()), sum(p[1] for p in detail.values())
+    return {"score_min": mini, "score_max": maxi, "priority": niveau(mini), "priority_max": niveau(maxi),
+            "priority_status": "stable" if niveau(mini) == niveau(maxi) else "provisional",
+            "missing_criteria": criteres_inconnus(opportunite)}
+
+
+def priorite(opportunite, signaux):
+    return evaluer_priorite(opportunite, signaux)["priority"]
+
+
+def signal_off(signaux_off, opp_off):
+    """Chiffres Open Food Facts de la période affichée (2020→2022), relus dans signaux_marche.json.
+
+    source_date = fin de la période observée (et non la date d'extraction, qui va dans source_ref) :
+    sinon la « date du dernier signal » présenterait une tendance de 2022 comme récente.
+    """
+    g = next(s["signal"] for s in signaux_off["signaux"] if s["opportunite_id"] == opp_off)
+    periode = next(p for p in g["periodes"].values() if p["role"].startswith("principale"))
+    ref = (f"data/signaux/signaux_marche.json#{opp_off} (données Open Food Facts au "
+           f"{signaux_off['source']['dernier_produit_ajoute']}, extraites le {signaux_off['date_extraction']})")
+    return {"pct": f"{g['evolution_affichee_pct']:+d} %",
+            "n0": g["annees"][str(periode["debut"])]["produits"], "n1": g["annees"][str(periode["fin"])]["produits"],
+            "date": f"{periode['fin']}-12-31", "ref": ref}
+
+
+def construire_signaux(signaux_off):
+    """Signaux (DATA-US06) : fictifs de la doc, et réels avec leur source exacte."""
+    f01, f03 = signal_off(signaux_off, "OPP-01"), signal_off(signaux_off, "OPP-05")
+    return [
+        {"id": "S-01", "client_id": "C-01", "category": None,
+         "description": ("Compte rendu de l'échange commercial du 05/11/2026 : le client exprime un intérêt pour "
+                         "une nouvelle catégorie, les boissons fonctionnelles."),
+         "source_type": "meeting_report", "source_date": "2026-11-05", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": None},
+        {"id": "S-02", "client_id": None, "category": "Nouvelle gamme",
+         "description": (f"Part des nouveaux produits boissons fonctionnelles en France : {f01['pct']} entre "
+                         f"2020 et 2022 (Open Food Facts). Petit échantillon : {f01['n0']} produits en 2020, "
+                         f"{f01['n1']} en 2022. Produits référencés, pas des ventes."),
+         "source_type": "market_trend", "source_date": f01["date"], "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": True, "source_ref": f01["ref"]},
+        {"id": "S-03", "client_id": "C-01", "category": None,
+         "description": ("Projet existant P-01 : reformulation de l'arôme agrumes de la gamme existante, "
+                         "échantillon envoyé le 20/10/2026."),
+         "source_type": "project_history", "source_date": "2026-10-20", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": "data/demo_v2/projects.json#P-01"},
+        {"id": "S-04", "client_id": "C-02", "category": None,
+         "description": "Demande du client concernant des alternatives végétales.",
+         "source_type": "client_request", "source_date": "2026-10-22", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": None},
+        {"id": "S-05", "client_id": None, "category": "Nouvelle formulation",
+         "description": (f"Part des nouveaux produits alternatives végétales à la viande et aux laitiers en "
+                         f"France : {f03['pct']} entre 2020 et 2022 (Open Food Facts ; {f03['n0']} produits en "
+                         f"2020, {f03['n1']} en 2022). Chiffre français : le client est en Suède, la tendance "
+                         "n'y est pas mesurée."),
+         "source_type": "market_trend", "source_date": f03["date"], "confidence": "low",
+         "evidence_type": "hypothesis", "is_real_source": True, "source_ref": f03["ref"]},
+        {"id": "S-06", "client_id": "C-02", "category": None,
+         "description": "Retour technique du client sur le projet terminé P-06 : texture jugée trop épaisse en bouche.",
+         "source_type": "project_history", "source_date": "2026-06-30", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": "data/demo_v2/projects.json#P-06"},
+        {"id": "S-07", "client_id": "C-02", "category": None,
+         "description": "Compte rendu : le client a communiqué une contrainte budgétaire pour ses prochains projets.",
+         "source_type": "meeting_report", "source_date": "2026-10-28", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": None},
+        {"id": "S-08", "client_id": None, "category": "Optimisation",
+         "description": ("Coût de matière première : indice INSEE du sucre importé, en euros, +15 % sur un an "
+                         "(09/2025 → 09/2026), mais environ −39 % depuis octobre 2023. Prix mondial à "
+                         "l'import, pas le coût réel du client."),
+         "source_type": "commodity_price", "source_date": "2026-09-30", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": True,
+         "source_ref": ("https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010002028 "
+                        "(échantillon : D:/open_data/insee_ippmp_sucre/010002028.csv)")},
+        {"id": "S-09", "client_id": None, "category": "Nouvelle référence",
+         "description": ("Givaudan cite la demande de transparence, de produits durables et clean label, et "
+                         "d'ingrédients naturels parmi les tendances de sa stratégie 2030 (rapport intégré "
+                         "2025, pp. 49-50). Tendance mondiale, pas propre aux marques de distributeur."),
+         "source_type": "company_report", "source_date": "2026-01-29", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": True, "source_ref": f"{GIVAUDAN}, pp. 49-50"},
+        {"id": "S-10", "client_id": "C-03", "category": None,
+         "description": ("Premier projet en cours avec le client : P-07 (arôme vanille pour un yaourt de sa "
+                         "marque de distributeur)."),
+         "source_type": "project_history", "source_date": "2026-09-21", "confidence": "medium",
+         "evidence_type": "fact", "is_real_source": False, "source_ref": "data/demo_v2/projects.json#P-07"},
+        {"id": "S-11", "client_id": None, "category": "Nouvelle référence",
+         "description": ("Fait réglementaire : le limonène (note d'agrumes) figure dans la liste de l'Union des "
+                         "substances aromatisantes pour la catégorie « All categories of flavoured foods », "
+                         "sans restriction indiquée (règlement d'exécution (UE) n° 872/2012, JO L 267 du "
+                         "02/10/2012)."),
+         "source_type": "regulation", "source_date": "2012-10-02", "confidence": "high",
+         "evidence_type": "fact", "is_real_source": True,
+         "source_ref": ("https://ec.europa.eu/food/food-feed-portal/screen/food-flavourings/search/details/"
+                        "POL-FFL-IMPORT-3388 (échantillon : D:/open_data/eu_food_flavourings/"
+                        "food_flavourings_200.json)")},
+    ]
+
+
+# Meeting Copilot (doc v2, section 4.4) : checklist de rendez-vous, dans l'ordre de la doc.
+CHECKLIST = compte_rendu.CHECKLIST  # les 6 points, définis une seule fois
+FICHIER_BANQUE = DOSSIER.parent / "questions" / "questions.json"
+
+# Par opportunité : objectif du RDV, points déjà connus (avec le signal qui les apporte) et
+# 3 questions. ("Q-xx", point) = question reprise de la banque ; sinon question rédigée ici.
+CONTEXTE_RDV = {
+    "O-01": {
+        "objective": ("Comprendre les intentions du client concernant le développement d'une nouvelle gamme "
+                      "et déterminer les contraintes associées."),
+        "known": {},
+        "questions": [("Q-01", "client_objectives"), ("Q-02", "technical_constraints"), ("Q-03", "timeline")],
+    },
+    "O-02": {
+        # P-01 (projet en cours sur la gamme) est du contexte, pas une contrainte : aucun point connu.
+        "objective": ("Tester l'intérêt du client pour de nouvelles saveurs dans sa gamme aromatique existante "
+                      "(contexte : projet P-01 en cours sur cette gamme)."),
+        "known": {},
+        "questions": [
+            ("Quelles nouvelles saveurs aimeriez-vous voir rejoindre la gamme ?",
+             "Fait émerger l'ambition du client pour sa gamme.", "client_objectives"),
+            ("Qu'attendent vos clients de plus que ce que la gamme propose aujourd'hui ?",
+             "Vérifie qu'il existe un vrai besoin d'extension.", "real_need"),
+            ("Sur quels critères choisirez-vous les nouvelles saveurs de la gamme ?",
+             "Montre sur quels critères le client décidera.", "decision_criteria"),
+        ],
+    },
+    "O-03": {
+        "objective": "Qualifier la demande sur les alternatives végétales : produit visé, ambition et contraintes.",
+        "known": {"budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
+                                         "projets.", "S-07")},
+        "questions": [("Q-13", "client_objectives"), ("Q-14", "real_need"), ("Q-15", "technical_constraints")],
+    },
+    "O-04": {
+        "objective": "Comprendre le problème de texture de P-06 et ce qu'il faudrait pour le résoudre.",
+        "known": {
+            "technical_constraints": ("Texture de P-06 jugée trop épaisse en bouche (retour technique).", "S-06"),
+            "budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
+                                   "projets.", "S-07"),
+        },
+        "questions": [
+            ("Sur quels produits ce problème de texture se pose-t-il encore aujourd'hui ?",
+             "Vérifie que le besoin d'amélioration existe toujours.", "real_need"),
+            ("Quels critères utiliserez-vous pour juger qu'une nouvelle texture vous convient ?",
+             "Donne les critères de réussite d'un nouvel essai.", "decision_criteria"),
+            ("Quel calendrier envisagez-vous pour tester une version améliorée ?",
+             "Mesure l'urgence et planifie les essais.", "timeline"),
+        ],
+    },
+    "O-05": {
+        "objective": "Identifier la formulation à optimiser et ce qui ne doit pas changer, dans le budget communiqué.",
+        "known": {"budget_constraints": ("Le client a communiqué une contrainte budgétaire pour ses prochains "
+                                         "projets.", "S-07")},
+        "questions": [
+            ("Quelle formulation existante souhaiteriez-vous optimiser en priorité ?",
+             "Précise le besoin réel derrière la contrainte budgétaire.", "real_need"),
+            ("Quelles caractéristiques du produit ne doivent pas changer pendant l'optimisation ?",
+             "Fixe les contraintes techniques avant tout essai.", "technical_constraints"),
+            ("Comment arbitrerez-vous entre le coût et le goût ?",
+             "Montre sur quels critères le client décidera.", "decision_criteria"),
+        ],
+    },
+    "O-06": {
+        "objective": "Découvrir les attentes du client pour sa marque de distributeur et tester l'intérêt pour des "
+                     "arômes naturels.",
+        "known": {},
+        "questions": [
+            ("Quelle place voulez-vous donner aux références naturelles dans votre marque de distributeur ?",
+             "Fait émerger l'ambition du client pour sa marque.", "client_objectives"),
+            ("Quelles attentes de vos clients voulez-vous couvrir avec une nouvelle référence aromatique ?",
+             "Vérifie qu'il existe un besoin réel.", "real_need"),
+            # DATA-US10 : faisabilité et complexité inconnues, la question technique remplace celle
+            # sur les critères de décision.
+            ("Quelles contraintes techniques ou d'étiquetage cette nouvelle référence devra-t-elle respecter ?",
+             "Renseigne la faisabilité et la complexité de la nouvelle référence.", "technical_constraints"),
+        ],
+    },
+}
+
+
+def lien_question(question, opp):
+    """DATA-US10 : relie la question à l'opportunité (titre), au point manquant qu'elle remplit et à
+    son utilité pour le commercial (critères inconnus de la grille qu'elle renseigne, sinon son « why »)."""
+    point = question["information_sought"]
+    texte = (f"Opportunité « {opp['title']} » ({opp['id']}) : la question sert à remplir le point manquant "
+             f"« {CHECKLIST[point]} ».")
+    criteres = [c for c in opp["missing_criteria"] if CRITERES[c]["point_de_rdv_si_inconnu"] == point]
+    if criteres:
+        noms = " et ".join(CRITERES[c]["nom"].lower() for c in criteres)
+        pluriel = len(criteres) > 1
+        quoi = "des critères encore inconnus" if pluriel else "un critère encore inconnu"
+        tant_que = "tant qu'ils restent inconnus" if pluriel else "tant qu'il reste inconnu"
+        texte += f" Utile au commercial : elle renseigne {quoi} de la grille de qualification ({noms})"
+        if opp["priority_status"] == "provisional":
+            texte += (f" ; {tant_que}, la priorité est provisoire "
+                      f"({justification.LIBELLES_PRIORITE[opp['priority']]} à "
+                      f"{justification.LIBELLES_PRIORITE[opp['priority_max']]}).")
+        else:
+            texte += "."
+    else:
+        why = question["why"].rstrip(".")
+        texte += f" Utile au commercial : {why[0].lower() + why[1:]}."
+    return texte
+
+
+def ajouter_liens(contextes, opportunites):
+    """Ajoute opportunity_link à chaque question (après information_sought)."""
+    par_id = {o["id"]: o for o in opportunites}
+    resultat = []
+    for c in contextes:
+        questions = []
+        for q in c["questions"]:
+            champs = list(q.items())
+            i = [k for k, _ in champs].index("information_sought") + 1
+            questions.append(dict(champs[:i] + [("opportunity_link", lien_question(q, par_id[c["opportunity_id"]]))]
+                                  + champs[i:]))
+        resultat.append({**c, "questions": questions})
+    return resultat
+
+
+def construire_contexte_rdv(banque):
+    """meeting_context.json : objectif, points connus et manquants de la checklist, 3 questions."""
+    par_id = {q["id"]: q for q in banque}
+    contextes = []
+    for opp_id, c in CONTEXTE_RDV.items():
+        questions = []
+        for q in c["questions"]:
+            if len(q) == 2:  # reprise de la banque
+                b = par_id[q[0]]
+                questions.append({"id": q[0], "opportunity_id": opp_id, "question": b["question"],
+                                  "why": b["pourquoi"], "information_sought": q[1], "origin": "banque de questions"})
+            else:
+                questions.append({"id": f"{opp_id}-Q{len(questions) + 1}", "opportunity_id": opp_id,
+                                  "question": q[0], "why": q[1], "information_sought": q[2],
+                                  "origin": "rédigée pour la démo"})
+        contextes.append({
+            "opportunity_id": opp_id,
+            "objective": c["objective"],
+            "known": [{"point": p, "information": info, "signal_id": s} for p, (info, s) in c["known"].items()],
+            "missing": [p for p in CHECKLIST if p not in c["known"]],
+            "questions": questions,
+        })
+    return contextes
+
+
+CHAMPS_SIGNAL = ["id", "opportunity_id", "client_id", "category", "description", "source_type", "source_date",
+                 "confidence", "evidence_type", "is_real_source", "source_ref"]
+
+
+def detecter_demo(signaux_bruts, regles=None):
+    """Applique les règles de détection (DATA-US07) aux clients, projets et signaux bruts de la démo.
+
+    Renvoie (opportunités détectées, signaux avec opportunity_id). Chaque signal de la démo doit
+    être rattaché : sinon la démo affirmerait un signal qui ne justifie rien.
+    """
+    detectees, signaux = detection.detecter(CLIENTS, PROJETS, signaux_bruts,
+                                            regles if regles is not None else detection.charger_regles())
+    orphelins = [s["id"] for s in signaux if s["opportunity_id"] is None]
+    if orphelins:
+        raise ValueError(f"Signaux rattachés à aucune opportunité : {', '.join(orphelins)}")
+    return detectees, [{k: s[k] for k in CHAMPS_SIGNAL} for s in signaux]
+
+
+def construire_opportunites(detectees, signaux):
+    """Opportunité détectée + qualification commerciale ; la priorité et son statut (grille de
+    qualification) suivent status, dans l'ordre des champs du modèle."""
+    resultat = []
+    for d in detectees:
+        cle = (d["client_id"], d["category"])
+        if cle not in QUALIFICATIONS:
+            raise KeyError(f"{d['id']} ({cle}) détectée par {d['rule_id']} mais sans qualification dans QUALIFICATIONS")
+        q = QUALIFICATIONS[cle]
+        o = {"id": d["id"], "client_id": d["client_id"], "title": d["title"], "description": q["description"][0],
+             "category": d["category"], "status": d["status"]}
+        criteres = {k: valeur_qualifiee(q, k) for k in CRITERES_QUALIFIES}
+        p = evaluer_priorite({**o, **criteres}, signaux)
+        o.update({k: p[k] for k in ("priority", "priority_max", "priority_status", "missing_criteria")})
+        o.update(criteres)
+        o["next_action"] = q["next_action"][0]
+        resultat.append(o)
+    return resultat
+
+
+def ajouter_justifications(opportunites, signaux, contextes):
+    """Ajoute la justification commerciale (DATA-US08) après next_action."""
+    clients = {c["id"]: c for c in CLIENTS}
+    par_opp = {c["opportunity_id"]: c for c in contextes}
+    resultat = []
+    for o in opportunites:
+        q = QUALIFICATIONS[(o["client_id"], o["category"])]
+        sources = {c: sources_qualifiees(q, c) for c in CRITERES_QUALIFIES}
+        propres = [s for s in signaux if s["opportunity_id"] == o["id"]]
+        resultat.append({**o, "justification": justification.justifier(
+            o, clients[o["client_id"]], propres, par_opp[o["id"]], CRITERES, sources, CHECKLIST)})
+    return resultat
+
+
+# Rendez-vous de démo (DATA-US11) : 2 exemples statiques pour TECH. Notes fictives, écrites comme un
+# commercial les saisirait ; le compte rendu est produit par rules_v1 à partir de ces seules notes.
+RENDEZ_VOUS = [
+    {"id": "M-01", "opportunity_id": "O-01", "date": "2026-11-10",
+     "notes": ("Le client veut lancer deux boissons fonctionnelles sous sa propre marque. "
+               "Leur besoin : un arôme agrumes qui masque l'amertume des extraits de plantes. "
+               "Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation. "
+               "Lancement envisagé pour septembre 2027, à confirmer avec leur marketing. "
+               "Ils choisiront selon le goût lors du test consommateur.")},
+    {"id": "M-02", "opportunity_id": "O-03", "date": "2026-11-09",
+     "notes": ("Le client souhaite une alternative végétale à sa sauce au fromage. "
+               "Il leur faut un arôme fromage sans lait. "
+               "Côté technique, la sauce doit rester fluide après réchauffage. "
+               "Le budget reste serré, peut-être en baisse par rapport au projet précédent. "
+               "Calendrier : pas encore fixé.")},
+]
+
+
+def construire_rendez_vous(contextes, opportunites, signaux):
+    """meetings.json : Meeting complets, compte rendu rules_v1 (aucun appel au LLM à la génération)."""
+    clients = {c["id"]: c for c in CLIENTS}
+    opps = {o["id"]: o for o in opportunites}
+    par_opp = {c["opportunity_id"]: c for c in contextes}
+    return [compte_rendu.construire_meeting(
+        r["id"], opps[r["opportunity_id"]], clients[opps[r["opportunity_id"]]["client_id"]], par_opp[r["opportunity_id"]],
+        [s for s in signaux if s["opportunity_id"] == r["opportunity_id"]], r["date"], notes=r["notes"])
+        for r in RENDEZ_VOUS]
+
+
+def texte_json(objets):
+    return json.dumps(objets, ensure_ascii=False, indent=2) + "\n"
+
+
+def generer():
+    """Renvoie le texte JSON exact de clients.json, sans rien écrire."""
+    return texte_json(CLIENTS)
+
+
+def generer_fichiers(signaux_off=None, banque=None):
+    """Renvoie {nom de fichier: texte JSON exact}, sans rien écrire."""
+    if signaux_off is None:
+        signaux_off = json.loads(FICHIER_OFF.read_text(encoding="utf-8"))
+    if banque is None:
+        banque = json.loads(FICHIER_BANQUE.read_text(encoding="utf-8"))["questions"]
+    detectees, signaux = detecter_demo(construire_signaux(signaux_off))
+    contextes = construire_contexte_rdv(banque)
+    opportunites = ajouter_justifications(construire_opportunites(detectees, signaux), signaux, contextes)
+    return {
+        "clients.json": generer(),
+        "projects.json": texte_json(PROJETS),
+        "opportunities.json": texte_json(opportunites),
+        "signals.json": texte_json(signaux),
+        "meeting_context.json": texte_json(ajouter_liens(contextes, opportunites)),
+        "meetings.json": texte_json(construire_rendez_vous(contextes, opportunites, signaux)),
+    }
+
+
+def main():
+    for nom, texte in generer_fichiers().items():
+        with open(DOSSIER / nom, "w", encoding="utf-8", newline="\n") as fichier:
+            fichier.write(texte)
+        print(f"{nom} : {len(json.loads(texte))} objets")
+
+
+if __name__ == "__main__":
+    main()

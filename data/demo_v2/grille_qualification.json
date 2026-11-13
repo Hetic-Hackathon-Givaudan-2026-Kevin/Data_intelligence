@@ -1,0 +1,77 @@
+{
+  "description": "Grille de qualification des opportunités (ticket DATA-US09). Pour chaque critère : les niveaux possibles, leur définition, d'où vient l'information et les points attribués. La priorité se calcule à partir de ces points. Lue par data/demo_v2/generer_demo_v2.py.",
+  "criteres": [
+    {
+      "id": "confidence",
+      "nom": "Confiance du meilleur signal",
+      "d_ou_vient_l_information": "Signal : le champ « confidence » du signal le plus fiable de l'opportunité.",
+      "peut_etre_inconnu": false,
+      "valeur_inconnue": null,
+      "point_de_rdv_si_inconnu": null,
+      "niveaux": [
+        {"valeur": "high", "libelle": "élevée", "definition": "Information directe et vérifiable : échange avec le client, projet, texte réglementaire.", "points": 2},
+        {"valeur": "medium", "libelle": "moyenne", "definition": "Information indirecte ou partielle : tendance sur un petit échantillon, indice de prix, rapport général.", "points": 1},
+        {"valeur": "low", "libelle": "faible", "definition": "Information éloignée du client ou du marché visé (par exemple un chiffre d'un autre pays).", "points": 0}
+      ]
+    },
+    {
+      "id": "estimated_potential",
+      "nom": "Potentiel commercial",
+      "d_ou_vient_l_information": "Signal ou projet qui dit l'ampleur du besoin ; sinon réponse de RDV (objectifs du client).",
+      "peut_etre_inconnu": true,
+      "valeur_inconnue": null,
+      "point_de_rdv_si_inconnu": "client_objectives",
+      "niveaux": [
+        {"valeur": "high", "libelle": "élevé", "definition": "Le besoin porte sur une nouvelle catégorie ou une nouvelle gamme, donc plusieurs produits.", "points": 2},
+        {"valeur": "medium", "libelle": "moyen", "definition": "Le besoin porte sur une nouvelle formulation ou l'extension d'une gamme existante.", "points": 1},
+        {"valeur": "low", "libelle": "faible", "definition": "Le besoin porte sur la modification d'un produit existant : amélioration ou optimisation.", "points": 0}
+      ]
+    },
+    {
+      "id": "feasibility",
+      "nom": "Faisabilité",
+      "d_ou_vient_l_information": "Projet du client sur le même produit, la même gamme ou la même base ; sinon réponse de RDV (contraintes techniques).",
+      "peut_etre_inconnu": true,
+      "valeur_inconnue": "to_confirm",
+      "point_de_rdv_si_inconnu": "technical_constraints",
+      "niveaux": [
+        {"valeur": "high", "libelle": "élevée", "definition": "Un projet sur le même produit ou la même gamme est en cours ou livré, sans problème signalé.", "points": 2},
+        {"valeur": "medium", "libelle": "moyenne", "definition": "Un projet comparable existe, mais avec un retour technique à traiter.", "points": 1},
+        {"valeur": "low", "libelle": "faible", "definition": "Un obstacle technique ou réglementaire connu empêche de répondre au besoin.", "points": 0}
+      ]
+    },
+    {
+      "id": "complexity",
+      "nom": "Complexité technique",
+      "d_ou_vient_l_information": "Signal ou projet qui dit la nature du travail ; sinon réponse de RDV (contraintes techniques). Une complexité élevée fait baisser la priorité.",
+      "pourquoi_ces_points": "La complexité ne retire qu'un point, et seulement si elle est élevée : la nouveauté (nouvelle catégorie, base jamais travaillée) compte déjà dans le potentiel. Lui retirer autant de points qu'elle en apporte au potentiel compterait deux fois le même fait, en sens inverse, et annulerait le potentiel.",
+      "peut_etre_inconnu": true,
+      "valeur_inconnue": "to_confirm",
+      "point_de_rdv_si_inconnu": "technical_constraints",
+      "niveaux": [
+        {"valeur": "low", "libelle": "faible", "definition": "Déclinaison d'un arôme déjà travaillé pour le client dans un projet existant.", "points": 0},
+        {"valeur": "medium", "libelle": "moyenne", "definition": "Base déjà travaillée pour le client mais avec un problème technique connu, ou optimisation d'un produit existant.", "points": 0},
+        {"valeur": "high", "libelle": "élevée", "definition": "Nouvelle catégorie, ou base de formulation jamais travaillée pour le client.", "points": -1}
+      ]
+    },
+    {
+      "id": "urgency",
+      "nom": "Urgence",
+      "d_ou_vient_l_information": "Signal : un compte rendu ou une demande du client daté de 30 jours au plus avant la date du jeu (2026-11-12).",
+      "peut_etre_inconnu": false,
+      "valeur_inconnue": null,
+      "point_de_rdv_si_inconnu": null,
+      "niveaux": [
+        {"valeur": true, "libelle": "oui", "definition": "Le client s'est exprimé lui-même dans les 30 derniers jours.", "points": 1},
+        {"valeur": false, "libelle": "non", "definition": "Pas d'expression récente du client.", "points": 0}
+      ]
+    }
+  ],
+  "seuils": {
+    "high": 5,
+    "medium": 3,
+    "explication": "Score de -1 à 7. high à partir de 5, medium de 3 à 4, low en dessous : les seuils d'avant la grille sont gardés, la complexité ne retirant au plus qu'un point."
+  },
+  "critere_inconnu": "Inconnu n'est pas faible. Pour chaque critère inconnu, le score est calculé avec le niveau qui rapporte le moins de points, puis avec celui qui en rapporte le plus. Si les deux scores donnent le même niveau de priorité, la priorité est stable ; sinon elle est provisoire, et les critères inconnus deviennent des points à vérifier au prochain rendez-vous.",
+  "priorite_enregistree": "priority = niveau obtenu avec les valeurs les plus basses (prudent) ; priority_max = niveau obtenu avec les plus hautes ; priority_status = stable ou provisional ; missing_criteria = critères inconnus."
+}

@@ -1,0 +1,438 @@
+# Modèle de données — démo v2
+
+Dictionnaire de données et schéma relationnel du jeu de démo de Givaudan
+Opportunity Radar (doc fonctionnelle v2, section 8), établis à partir des
+fichiers réels de `data/demo_v2/`. Ticket DATA-US02.
+
+Toutes les données sont fictives, sauf les signaux marqués `is_real_source`.
+
+## Conventions
+
+- **Fichiers** : un fichier JSON par entité stockée, contenant une liste
+  d'objets (`clients.json`, `projects.json`, `opportunities.json`,
+  `signals.json`, `meetings.json`). `MeetingReport` n'a pas de fichier : il est
+  rangé dans `Meeting.summary`.
+- **Clés** en anglais, `snake_case` ; valeurs d'énumération en anglais (codes),
+  les libellés français étant affichés par l'app.
+- **Obligatoire** : `oui` = la clé est présente dans chaque objet. Une clé
+  obligatoire peut valoir `null` ou une liste vide quand la colonne « Valeurs
+  possibles » le précise.
+- **Types** : `string`, `enum` (liste fermée), `date` (AAAA-MM-JJ),
+  `bool`, `liste de …`, `objet`, `null`.
+- **Champs « extension »** : absents de la structure minimale de la section 8,
+  ajoutés pour la démo.
+
+### Format des identifiants
+
+| Entité | Format | Exemple |
+| --- | --- | --- |
+| Client | `C-` + 2 chiffres | `C-01` |
+| Project | `P-` + 2 chiffres | `P-01` |
+| Opportunity | `O-` + 2 chiffres | `O-01` |
+| Signal | `S-` + 2 chiffres | `S-01` |
+| Meeting | `M-` + 2 chiffres | `M-01` |
+
+`MeetingReport` n'a pas d'identifiant propre : il appartient à son `Meeting`.
+
+## Entités
+
+### Client
+
+Fichier `clients.json`. Un client du portefeuille.
+
+| Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
+| --- | --- | --- | --- | --- | --- |
+| `id` | string | oui | `C-\d{2}`, unique | Identifiant | `C-01` |
+| `name` | string | oui | texte | Nom (fictif) de l'entreprise | `Maison Nova Drinks` |
+| `sector` | string | oui | texte | Secteur d'activité | `Boissons` |
+| `country` | string | oui | texte, en français | Pays | `France` |
+| `account_manager` | string | oui | texte, rôle fictif, jamais un nom de personne | Responsable commercial | `KAM senior Boissons (fictif)` |
+| `relationship_status` | enum | oui | `strategic`, `active`, `to_develop` | Statut de la relation | `strategic` |
+| `last_updated` | date | oui | AAAA-MM-JJ | Dernière mise à jour des informations | `2026-11-05` |
+| `commercial_situation` | string | oui | 2 phrases au plus | Situation commerciale (extension) | `Client établi en croissance, …` |
+| `history_summary` | string | oui | 2 à 3 phrases | Résumé de l'historique (extension) | `Partenaire de longue date …` |
+
+### Project
+
+Fichier `projects.json`. Un travail **déjà engagé** avec le client (à
+distinguer d'une opportunité, besoin pas encore engagé).
+
+| Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
+| --- | --- | --- | --- | --- | --- |
+| `id` | string | oui | `P-\d{2}`, unique | Identifiant | `P-01` |
+| `client_id` | string | oui | `id` d'un Client | Client du projet | `C-01` |
+| `name` | string | oui | texte, sans vrai nom de produit ni de marque | Nom du projet | `Reformulation de l'arôme agrumes de la gamme existante` |
+| `description` | string | oui | texte | Description courte | `Travail en cours sur la gamme …` |
+| `status` | enum | oui | `active`, `completed` | Statut | `active` |
+| `start_date` | date | oui | AAAA-MM-JJ, ≤ `last_updated` du client | Date de début | `2026-10-10` |
+
+### Opportunity
+
+Fichier `opportunities.json`. Un besoin potentiel, pas encore engagé.
+
+Une opportunité n'est jamais écrite à la main : elle est **détectée** à partir
+des signaux et des projets du client par les règles de
+`regles_detection.json` (voir « Détection des opportunités »). La détection
+fixe `id`, `client_id`, `title`, `category` et `status` ; `description`,
+`estimated_potential`, `feasibility`, `complexity` et `next_action` sont
+l'appréciation commerciale, saisie dans le générateur par client et
+catégorie, chaque valeur citant sa source (id de signal ou de projet) ou
+valant « inconnu » ; `priority` et ses champs associés sont calculés avec la
+grille de qualification (`grille_qualification.json`, DATA-US09).
+
+| Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
+| --- | --- | --- | --- | --- | --- |
+| `id` | string | oui | `O-\d{2}`, unique | Identifiant | `O-01` |
+| `client_id` | string | oui | `id` d'un Client | Client concerné | `C-01` |
+| `title` | string | oui | texte | Intitulé | `Nouvelle gamme de boissons fonctionnelles` |
+| `description` | string | oui | texte | Explication brève | `Le client s'intéresse à …` |
+| `category` | string | oui | texte ; dans la démo : `Nouvelle gamme`, `Extension de gamme`, `Nouvelle formulation`, `Amélioration produit`, `Optimisation`, `Nouvelle référence` | Catégorie | `Nouvelle gamme` |
+| `status` | enum | oui | `detected`, `to_qualify`, `confirmed` | Détectée, à qualifier, confirmée (section 4.3) | `to_qualify` |
+| `priority` | enum | oui | `high`, `medium`, `low` | Priorité, calculée à la génération par la grille de qualification (section 5.3) puis stockée ; si des critères sont inconnus, niveau obtenu avec leurs valeurs les plus basses | `medium` |
+| `priority_max` | enum | oui | `high`, `medium`, `low` | Priorité obtenue avec les valeurs les plus hautes des critères inconnus ; égale à `priority` si rien n'est inconnu (extension) | `high` |
+| `priority_status` | enum | oui | `stable`, `provisional` | `stable` si `priority` = `priority_max`, sinon `provisional` : la priorité peut changer quand les critères inconnus seront connus (extension) | `provisional` |
+| `missing_criteria` | liste d'enum | oui | parmi `estimated_potential`, `feasibility`, `complexity` ; liste vide si tout est connu | Critères inconnus, à vérifier au prochain rendez-vous (extension) | `["feasibility"]` |
+| `estimated_potential` | enum | oui | `low`, `medium`, `high` ou `null` (inconnu) | Potentiel indicatif, **jamais un montant** | `high` |
+| `feasibility` | enum | oui | `low`, `medium`, `high`, `to_confirm` (inconnue) | Faisabilité | `to_confirm` |
+| `complexity` | enum | oui | `low`, `medium`, `high`, `to_confirm` (inconnue, nouvelle valeur DATA-US09) | Complexité technique ; une complexité élevée fait baisser la priorité | `high` |
+| `next_action` | string | oui | texte actionnable | Recommandation | `Organiser un échange avec le client …` |
+| `justification` | objet | oui | objet Justification (voir ci-dessous), généré par règles, sans LLM | Justification commerciale (DATA-US08, extension) | voir ci-dessous |
+
+Objet `justification` : chaque rubrique est une liste de phrases (sauf
+`internal_teams`). Chaque phrase vient d'un champ des données ; aucun montant,
+aucune affirmation sur les produits ou technologies de Givaudan absente des
+sources.
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `client_need` | liste de phrases | signaux client de l'opportunité | Besoin du client : ce qu'il a dit ou fait, avec l'id du signal |
+| `why_now` | liste de phrases | signal le plus récent, puis signaux de marché rattachés, hors règlements | Pourquoi maintenant : date et source du signal le plus récent, tendance de marché |
+| `value_for_givaudan` | liste de phrases | potentiel (niveau de la grille, jamais un montant), statut de la relation, cadre réglementaire (signaux `regulation` et piste en hypothèse), équipes | Intérêt pour Givaudan |
+| `internal_teams` | liste d'enum | parmi `application`, `creation`, `marketing`, `regulatory` | Équipes à mobiliser : selon la catégorie, plus marketing (signal de marché ou rapport) et regulatory (règlement) |
+| `facts` | liste de phrases | signaux `fact` | Faits |
+| `hypotheses` | liste de phrases | signaux `hypothesis`, et toutes les phrases marquées `hypothesis` des autres rubriques | Hypothèses |
+| `to_confirm` | liste de phrases | signaux `to_confirm`, statut non confirmé, critères inconnus de la grille, priorité provisoire | À confirmer |
+| `risks` | liste de phrases | complexité, faisabilité moyenne ou faible, contraintes connues (`meeting_context.json`) | Risques |
+
+Objet phrase :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `text` | string | texte en français | La phrase |
+| `evidence_type` | enum | `fact`, `hypothesis`, `to_confirm` | Nature de la phrase ; une estimation par la grille est une `hypothesis` |
+| `sources` | liste de string | ids de signal ou de projet (`S-01`, `P-01`), ou champ (`clients.json#C-01`, `opportunities.json#O-01`, `grille_qualification.json#feasibility`) ; jamais vide | D'où vient la phrase |
+
+### Signal
+
+Fichier `signals.json`. Une information qui justifie une opportunité
+(section 5.1).
+
+Deux sortes de signaux :
+
+- **signal client** : propre à un client (`client_id` renseigné, `category`
+  à `null`) — compte rendu, demande, historique de projet. Seuls ces signaux
+  déclenchent une règle de détection ;
+- **signal de marché** : réel et propre à aucun client (Open Food Facts,
+  INSEE, rapport Givaudan, règlement UE) — `client_id` à `null`, `category`
+  renseignée. Il ne crée jamais d'opportunité : il se rattache, par sa
+  catégorie, à l'opportunité détectée de cette catégorie.
+
+Le signal brut ne porte pas d'`opportunity_id` : ce champ est **rempli par la
+détection**, jamais à la main.
+
+| Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
+| --- | --- | --- | --- | --- | --- |
+| `id` | string | oui | `S-\d{2}`, unique | Identifiant | `S-01` |
+| `opportunity_id` | string | oui | `id` d'une Opportunity ; rempli par la détection, jamais à la main | Opportunité justifiée | `O-01` |
+| `client_id` | string | oui | `id` d'un Client pour un signal client ; `null` pour un signal de marché | Client dont parle le signal | `C-01` |
+| `category` | string | oui | `category` d'une Opportunity pour un signal de marché ; `null` pour un signal client | Catégorie à laquelle se rattache un signal de marché (extension) | `Nouvelle gamme` |
+| `description` | string | oui | texte | Ce que dit le signal | `Compte rendu de l'échange commercial du 05/11/2026 : …` |
+| `source_type` | enum | oui | `meeting_report`, `project_history`, `client_request`, `market_trend`, `commodity_price`, `company_report`, `regulation` | Type de source | `meeting_report` |
+| `source_date` | date | oui | AAAA-MM-JJ ; pour une tendance, fin de la période observée | Date de l'information | `2026-11-05` |
+| `confidence` | enum | oui | `low`, `medium`, `high` | Niveau de fiabilité | `high` |
+| `evidence_type` | enum | oui | `fact`, `hypothesis`, `to_confirm` | Fait, hypothèse ou à confirmer (section 5.5) | `fact` |
+| `is_real_source` | bool | oui | `true`, `false` | Source réelle (extension) | `false` |
+| `source_ref` | string | oui | URL ou fichier ; `null` autorisé seulement si `is_real_source` vaut `false` | Référence de la source (extension) | `data/signaux/signaux_marche.json#OPP-01 (…)` |
+
+### Meeting
+
+Fichier `meetings.json` : 2 exemples statiques pour TECH (DATA-US11), un RDV sur
+O-01 et un sur O-03, notes fictives et compte rendu produit par `rules_v1`. Un
+rendez-vous commercial préparé avec le Meeting Copilot (section 4.4).
+
+| Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
+| --- | --- | --- | --- | --- | --- |
+| `id` | string | oui | `M-\d{2}`, unique | Identifiant | `M-01` |
+| `client_id` | string | oui | `id` d'un Client, le même que celui de l'opportunité | Client rencontré | `C-01` |
+| `opportunity_id` | string | oui | `id` d'une Opportunity | Opportunité concernée | `O-01` |
+| `date` | date | oui | AAAA-MM-JJ | Date du rendez-vous (extension) | `2026-11-18` |
+| `status` | enum | oui | `planned`, `completed` | Statut (extension) | `planned` |
+| `objective` | string | oui | texte | Objectif du rendez-vous | `Comprendre les intentions du client …` |
+| `questions` | liste d'objets | oui | 3 objets `{question, why, information_sought}` (voir ci-dessous) | Questions suggérées | `[{"question": "…", "why": "…", "information_sought": "timeline"}]` |
+| `answers` | liste d'objets | oui | objets `{information_sought, answer}` (voir ci-dessous) ; liste vide si `planned` | Réponses obtenues, chacune reliée à un point de la checklist | `[{"information_sought": "timeline", "answer": "Premier test au printemps."}]` |
+| `collected_points` | liste d'enum | oui | parmi `client_objectives`, `real_need`, `technical_constraints`, `budget_constraints`, `timeline`, `decision_criteria` ; liste vide si `planned` | Points cochés de la checklist (extension) | `["client_objectives", "timeline"]` |
+| `notes` | string | oui | texte libre ; chaîne vide si `planned` | Notes du rendez-vous | `Lancement visé au printemps.` |
+| `summary` | objet MeetingReport | oui | objet MeetingReport, ou `null` tant que le compte rendu n'est pas généré | Compte rendu | voir MeetingReport |
+| `next_actions` | liste de string | oui | liste vide si `planned` ; sinon les textes de `summary.next_actions` | Prochaines actions recommandées (champ de la section 8, copie texte de `summary.next_actions`) | `["Obtenir le budget visé."]` |
+
+Objet `questions[]` :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `question` | string | question ouverte | La question à poser |
+| `why` | string | texte | Pourquoi elle est importante |
+| `information_sought` | enum | un des 6 points de la checklist, encore manquant | L'information recherchée |
+
+Objet `answers[]` :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `information_sought` | enum | un des 6 points de la checklist | Le point auquel la réponse se rapporte |
+| `answer` | string | texte | La réponse obtenue |
+
+Les trois champs se répondent : un point qui a une réponse dans `answers`
+figure dans `collected_points` ; un point absent de `collected_points` figure
+dans `summary.missing_information`.
+
+### MeetingReport
+
+Contenu de `Meeting.summary` : le compte rendu du rendez-vous (section 4.4 F,
+DATA-US11). Les rubriques sont séparées et chaque élément porte un statut :
+`confirmed` (dit explicitement dans les notes) ou `to_verify` (déduit,
+hésitant, contradictoire ou seulement coché). Rien n'est inventé : un élément
+extrait porte l'`excerpt` exact des notes (ou d'une réponse) dont il vient ;
+les rubriques déduites (informations manquantes, prochaines actions, équipes)
+sont toujours `to_verify`. Moteurs et règles : `data/demo_v2/compte_rendu.py`.
+
+| Champ | Type | Obligatoire | Valeurs possibles | Description | Exemple |
+| --- | --- | --- | --- | --- | --- |
+| `summary` | string | oui | texte construit à partir des données (client, opportunité, nombre d'éléments) | Résumé du rendez-vous | `Rendez-vous avec Maison Nova Drinks au sujet de …` |
+| `needs` | liste d'éléments | oui | éléments des points `client_objectives`, `real_need`, `decision_criteria` ; liste éventuellement vide | Besoins (objectifs, besoin réel, critères de décision) | voir élément |
+| `technical_constraints` | liste d'éléments | oui | éléments du point `technical_constraints` | Contraintes techniques | voir élément |
+| `budget_constraints` | liste d'éléments | oui | éléments du point `budget_constraints` | Contraintes budgétaires | voir élément |
+| `timeline` | liste d'éléments | oui | éléments du point `timeline` ; tous `to_verify` si les notes citent deux dates différentes | Calendrier | voir élément |
+| `missing_information` | liste d'éléments | oui | un élément `to_verify` sans extrait par point de la checklist absent des notes (« connu avant le rendez-vous … À reconfirmer » si le point était connu) | Informations encore manquantes | `[{"point": "timeline", "text": "Calendrier", "status": "to_verify", "excerpt": null}]` |
+| `next_actions` | liste d'éléments | oui | éléments `to_verify` : vérifier chaque élément `to_verify`, obtenir chaque information manquante, intégrer le budget, transmettre aux équipes | Prochaines actions | `[{"text": "Obtenir l'information manquante : calendrier.", …}]` |
+| `internal_teams` | liste d'éléments | oui | éléments `to_verify` avec `team` parmi `application`, `creation`, `marketing`, `regulatory` (équipes de la section 2.4 ; libellés français dans l'app) ; liste éventuellement vide | Équipes à mobiliser, avec la raison | `[{"team": "application", "text": "Application : une contrainte technique est notée.", …}]` |
+| `opportunity_decision` | enum | oui | `confirmed`, `to_qualify`, `discarded` (mêmes noms que `Opportunity.status` ; `discarded` = « écartée », prévu par la doc pour plus tard) | Statut proposé : `confirmed` si objectifs et besoin réel sont `confirmed` | `to_qualify` |
+| `decision_reason` | string | oui | texte | Raison de la décision | `Pas encore confirmé dans les notes : besoin réel.` |
+| `generated_by` | enum | oui | `rules_v1` (règles), `llm_v2` (qwen2.5:3b local) ; le moteur réellement utilisé | Mode de génération | `rules_v1` |
+| `engine` | objet | oui | objet engine (voir ci-dessous) | Moteur demandé, moteur utilisé, retour éventuel à rules_v1 (extension) | `{"requested": "llm_v2", "used": "rules_v1", …}` |
+| `validated` | bool | oui | `true`, `false` | Validé par le commercial | `false` |
+
+Objet élément (rubriques de `MeetingReport`) :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `point` | enum | un des 6 points de la checklist, ou `null` (action ou équipe sans point) | Point de la checklist |
+| `text` | string | texte ; pour un élément extrait : libellé du point + extrait | L'élément |
+| `status` | enum | `confirmed`, `to_verify` | Dit explicitement dans les notes, ou déduit / incertain |
+| `excerpt` | string | passage copié mot pour mot des notes ou d'une réponse ; `null` pour un élément déduit sans passage (point manquant, point coché sans détail) ; jamais `null` si `confirmed` | Où le retrouver dans les notes |
+| `team` | enum | `application`, `creation`, `marketing`, `regulatory` ; seulement dans `internal_teams` | Équipe |
+
+Objet `engine` :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `requested` | enum | `rules_v1`, `llm_v2` | Mode demandé (`mode` de `POST /v2/meetings/report`) |
+| `used` | enum | `rules_v1`, `llm_v2` | Mode réellement utilisé (= `generated_by`) |
+| `model` | string | `qwen2.5:3b` ou `null` | Modèle local utilisé |
+| `fallback_reason` | string | texte ou `null` | Pourquoi `llm_v2` est retombé sur `rules_v1` (Ollama injoignable, délai dépassé, JSON invalide) |
+| `guard` | objet | `{kept, downgraded, dropped}` ou `null` | Garde-fou llm_v2 : éléments gardés, passés en `to_verify` (retrouvés en partie), écartés (introuvables) |
+
+## Contexte de rendez-vous (`meeting_context.json`)
+
+Fichier généré, une entrée par opportunité : ce que le Meeting Copilot affiche
+avant le rendez-vous (section 4.4). Ce n'est pas une entité de la section 8.
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `opportunity_id` | string | `id` d'une Opportunity | Opportunité préparée |
+| `objective` | string | texte | Objectif du rendez-vous |
+| `known` | liste d'objets | `{point, information, signal_id}` | Points de la checklist déjà connus, avec le signal qui les apporte |
+| `missing` | liste d'enum | points de la checklist absents de `known` | Points encore manquants |
+| `questions` | liste d'objets | au moins 3 (voir ci-dessous) | Questions suggérées |
+
+Objet `questions[]` (DATA-US10) :
+
+| Champ | Type | Valeurs possibles | Description |
+| --- | --- | --- | --- |
+| `id` | string | `Q-xx` (banque de questions) ou `O-xx-Qn` | Identifiant |
+| `opportunity_id` | string | celui de l'entrée | Opportunité de la question |
+| `question` | string | question ouverte, une seule idée | La question |
+| `why` | string | texte | Pourquoi elle est importante |
+| `information_sought` | enum | un point de `missing`, jamais un point de `known` | Point manquant qu'elle remplit |
+| `opportunity_link` | string | texte en français | Lien avec l'opportunité : titre, point manquant rempli, utilité pour le commercial (critères inconnus de la grille qu'elle renseigne et effet sur la priorité provisoire, sinon `why`) |
+| `origin` | string | `banque de questions`, `rédigée pour la démo` | Origine |
+
+Les questions visent d'abord les critères inconnus de l'opportunité
+(`missing_criteria`) : chaque critère inconnu est couvert par au moins une
+question sur le point de RDV que la grille lui associe
+(`point_de_rdv_si_inconnu`).
+
+## Champs calculés, jamais stockés
+
+Ils se calculent à partir des fichiers à chaque lecture, pour ne jamais se
+contredire :
+
+| Champ | Portée | Calcul |
+| --- | --- | --- |
+| `active_projects` | Client | nombre de projets du client dont `status` vaut `active` |
+| `detected_opportunities` | Client | nombre d'opportunités du client, **quel que soit leur statut** |
+| `to_qualify` | Client | nombre d'opportunités du client dont `status` vaut `to_qualify` |
+| `last_signal_date` | Opportunity | plus grande `source_date` des signaux de l'opportunité |
+| `followed_clients` | Tableau de bord | nombre de clients |
+| `detected_opportunities` | Tableau de bord | nombre total d'opportunités |
+| `to_qualify` | Tableau de bord | nombre total d'opportunités `to_qualify` |
+| `meetings_to_prepare` | Tableau de bord | nombre de rendez-vous `planned` (0 dans la démo : les 2 de `meetings.json` sont `completed`) |
+
+Dans la démo : Maison Nova Drinks a 3 projets actifs, 2 opportunités détectées
+et 1 à qualifier ; Nordic Food Industries 2, 3 et 1 ; Alimenta Distribution 1,
+1 et 0.
+
+## Relations
+
+| Relation | Cardinalité | Clé |
+| --- | --- | --- |
+| Client → Project | un client a 0..n projets ; un projet a 1 client | `Project.client_id` |
+| Client → Opportunity | un client a 0..n opportunités ; une opportunité a 1 client | `Opportunity.client_id` |
+| Opportunity → Signal | une opportunité a **1..n** signaux ; un signal a 1 opportunité, fixée par la détection | `Signal.opportunity_id` |
+| Client → Signal | un client a 0..n signaux ; un signal client a 1 client, un signal de marché aucun | `Signal.client_id` |
+| Client → Meeting | un client a 0..n rendez-vous ; un rendez-vous a 1 client | `Meeting.client_id` |
+| Opportunity → Meeting | une opportunité a 0..n rendez-vous ; un rendez-vous a 1 opportunité | `Meeting.opportunity_id` |
+| Meeting → MeetingReport | un rendez-vous a 0..1 compte rendu (inclus) | `Meeting.summary` |
+| Project → Signal | un projet est cité par 0..n signaux ; un signal cite 0..1 projet | `Signal.source_ref` (`data/demo_v2/projects.json#P-01`) |
+
+```mermaid
+erDiagram
+    CLIENT ||--o{ PROJECT : "a"
+    CLIENT ||--o{ OPPORTUNITY : "a"
+    OPPORTUNITY ||--|{ SIGNAL : "est justifiée par"
+    CLIENT |o--o{ SIGNAL : "émet (signal client)"
+    CLIENT ||--o{ MEETING : "est rencontré dans"
+    OPPORTUNITY ||--o{ MEETING : "est préparée dans"
+    MEETING ||--o| MEETING_REPORT : "summary"
+    PROJECT |o--o{ SIGNAL : "est cité par"
+
+    CLIENT {
+        string id PK "C-01"
+        string name
+        string sector
+        string country
+        string account_manager "rôle fictif"
+        enum relationship_status "strategic, active, to_develop"
+        date last_updated
+        string commercial_situation
+        string history_summary
+    }
+    PROJECT {
+        string id PK "P-01"
+        string client_id FK
+        string name
+        string description
+        enum status "active, completed"
+        date start_date
+    }
+    OPPORTUNITY {
+        string id PK "O-01"
+        string client_id FK
+        string title
+        string description
+        string category
+        enum status "detected, to_qualify, confirmed"
+        enum priority "high, medium, low"
+        enum priority_max "high, medium, low"
+        enum priority_status "stable, provisional"
+        list missing_criteria "critères inconnus"
+        enum estimated_potential "low, medium, high, null"
+        enum feasibility "low, medium, high, to_confirm"
+        enum complexity "low, medium, high, to_confirm"
+        string next_action
+        object justification "DATA-US08"
+    }
+    SIGNAL {
+        string id PK "S-01"
+        string opportunity_id FK "rempli par la détection"
+        string client_id FK "null si signal de marché"
+        string category "signal de marché"
+        string description
+        enum source_type
+        date source_date
+        enum confidence "low, medium, high"
+        enum evidence_type "fact, hypothesis, to_confirm"
+        bool is_real_source
+        string source_ref "obligatoire si réel"
+    }
+    MEETING {
+        string id PK "M-01"
+        string client_id FK
+        string opportunity_id FK
+        date date
+        enum status "planned, completed"
+        string objective
+        list questions "3 x question, why, information_sought"
+        list answers "information_sought, answer"
+        list collected_points "checklist"
+        string notes
+        object summary "MeetingReport"
+        list next_actions
+    }
+    MEETING_REPORT {
+        string summary
+        list needs "éléments : point, text, status, excerpt"
+        list technical_constraints
+        list budget_constraints
+        list timeline
+        list missing_information
+        list next_actions
+        list internal_teams "application, creation, marketing, regulatory"
+        enum opportunity_decision "confirmed, to_qualify, discarded"
+        string decision_reason
+        enum generated_by "rules_v1, llm_v2"
+        object engine "requested, used, fallback_reason"
+        bool validated
+    }
+```
+
+## Règles
+
+1. **Identifiants uniques** dans chaque fichier, au format ci-dessus ; chaque
+   clé étrangère (`client_id`, `opportunity_id`) pointe un objet existant, et
+   `Meeting.client_id` est celui de l'opportunité du rendez-vous.
+   `Signal.client_id` vaut `null` pour un signal de marché ; sinon c'est le
+   `client_id` de l'opportunité du signal.
+2. **Dates ISO** AAAA-MM-JJ, fixes (elles ne se décalent pas avec le temps) ;
+   la date de référence du jeu est le 2026-11-12.
+3. **Pas de montant en euros** : `estimated_potential` est un niveau
+   indicatif ; aucune estimation fictive n'est présentée comme un montant
+   commercial réel (section 4.3).
+4. **Signaux réels sourcés** : si `is_real_source` vaut `true`, `source_ref`
+   est obligatoire (URL ou fichier, avec page si besoin).
+5. **Fait, hypothèse, à confirmer** (section 5.5) : `evidence_type` vaut
+   `fact` si l'information est présente dans une source, `hypothesis` si c'est
+   une interprétation, `to_confirm` si elle manque ou est incertaine.
+6. **Une opportunité a au moins un signal** (section 5.1).
+7. **Aucun compteur stocké** : voir « Champs calculés, jamais stockés ».
+8. **Aucune donnée personnelle** : pas de nom de personne ; clients fictifs,
+   sans lien avec de vrais clients de Givaudan.
+9. **Opportunités détectées** : opportunités et `Signal.opportunity_id`
+   viennent des règles de détection, jamais d'une saisie à la main.
+
+## Détection des opportunités
+
+Fichiers `regles_detection.json` (règles, lisibles sans coder) et
+`detection.py` (application), ticket DATA-US07. Une règle par type
+d'opportunité. Règles communes :
+
+- seuls les signaux client déclenchent une règle (type de signal, mot-clé
+  dans la description, nombre minimal de signaux, secteur du client et statut
+  du projet cité si la règle le demande) ;
+- une hypothèse seule (`evidence_type` = `hypothesis`) ne suffit pas ;
+- anti-doublon : une règle produit au plus une opportunité par client, qui
+  porte tous les signaux qui l'ont déclenchée ;
+- un travail déjà engagé (projet actif du client qui fait déjà ce que
+  propose l'opportunité) ne devient pas une opportunité ;
+- un signal de marché se rattache à l'opportunité détectée de sa
+  `category` (et qui mentionne son thème, quand l'opportunité en a un) ;
+- statut initial : `to_qualify` si le client a exprimé lui-même le besoin,
+  sinon `detected` (fixé par règle).

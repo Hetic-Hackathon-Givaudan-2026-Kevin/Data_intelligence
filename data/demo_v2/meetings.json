@@ -1,0 +1,327 @@
+[
+  {
+    "id": "M-01",
+    "client_id": "C-01",
+    "opportunity_id": "O-01",
+    "date": "2026-11-10",
+    "status": "completed",
+    "objective": "Comprendre les intentions du client concernant le développement d'une nouvelle gamme et déterminer les contraintes associées.",
+    "questions": [
+      {
+        "question": "Quels nouveaux segments de boissons envisagez-vous de développer dans les prochains mois ?",
+        "why": "Comprendre les ambitions du client et repérer de nouveaux besoins.",
+        "information_sought": "client_objectives"
+      },
+      {
+        "question": "Qu'est-ce qui freine aujourd'hui le développement de votre gamme : le goût, le coût ou la réglementation ?",
+        "why": "Le frein cité montre où Givaudan peut aider.",
+        "information_sought": "technical_constraints"
+      },
+      {
+        "question": "Si vous lanciez une boisson fonctionnelle, à quelle échéance pourriez-vous faire un premier test ?",
+        "why": "Teste l'intérêt réel et donne le délai du brief.",
+        "information_sought": "timeline"
+      }
+    ],
+    "answers": [],
+    "collected_points": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "timeline",
+      "decision_criteria"
+    ],
+    "notes": "Le client veut lancer deux boissons fonctionnelles sous sa propre marque. Leur besoin : un arôme agrumes qui masque l'amertume des extraits de plantes. Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation. Lancement envisagé pour septembre 2027, à confirmer avec leur marketing. Ils choisiront selon le goût lors du test consommateur.",
+    "summary": {
+      "summary": "Rendez-vous avec Maison Nova Drinks au sujet de « Nouvelle gamme de boissons fonctionnelles ». 4 élément(s) confirmé(s) et 1 à vérifier dans les notes ; 1 point(s) de la checklist encore manquant(s).",
+      "needs": [
+        {
+          "point": "client_objectives",
+          "text": "Objectifs du client : Le client veut lancer deux boissons fonctionnelles sous sa propre marque.",
+          "status": "confirmed",
+          "excerpt": "Le client veut lancer deux boissons fonctionnelles sous sa propre marque."
+        },
+        {
+          "point": "real_need",
+          "text": "Besoin réel : Leur besoin : un arôme agrumes qui masque l'amertume des extraits de plantes.",
+          "status": "confirmed",
+          "excerpt": "Leur besoin : un arôme agrumes qui masque l'amertume des extraits de plantes."
+        },
+        {
+          "point": "decision_criteria",
+          "text": "Critères de décision : Ils choisiront selon le goût lors du test consommateur.",
+          "status": "confirmed",
+          "excerpt": "Ils choisiront selon le goût lors du test consommateur."
+        }
+      ],
+      "technical_constraints": [
+        {
+          "point": "technical_constraints",
+          "text": "Contraintes techniques : Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation.",
+          "status": "confirmed",
+          "excerpt": "Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation."
+        }
+      ],
+      "budget_constraints": [],
+      "timeline": [
+        {
+          "point": "timeline",
+          "text": "Calendrier : Lancement envisagé pour septembre 2027, à confirmer avec leur marketing.",
+          "status": "to_verify",
+          "excerpt": "Lancement envisagé pour septembre 2027, à confirmer avec leur marketing."
+        }
+      ],
+      "missing_information": [
+        {
+          "point": "budget_constraints",
+          "text": "Contraintes budgétaires",
+          "status": "to_verify",
+          "excerpt": null
+        }
+      ],
+      "next_actions": [
+        {
+          "point": "timeline",
+          "text": "Vérifier auprès du client : Lancement envisagé pour septembre 2027, à confirmer avec leur marketing.",
+          "status": "to_verify",
+          "excerpt": "Lancement envisagé pour septembre 2027, à confirmer avec leur marketing."
+        },
+        {
+          "point": "budget_constraints",
+          "text": "Obtenir l'information manquante : contraintes budgétaires.",
+          "status": "to_verify",
+          "excerpt": null
+        },
+        {
+          "point": null,
+          "text": "Transmettre les éléments recueillis à l'équipe Application.",
+          "status": "to_verify",
+          "excerpt": "Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation."
+        },
+        {
+          "point": null,
+          "text": "Transmettre les éléments recueillis à l'équipe Création.",
+          "status": "to_verify",
+          "excerpt": "Le client veut lancer deux boissons fonctionnelles sous sa propre marque."
+        },
+        {
+          "point": null,
+          "text": "Transmettre les éléments recueillis à l'équipe Marketing.",
+          "status": "to_verify",
+          "excerpt": "Le client veut lancer deux boissons fonctionnelles sous sa propre marque."
+        }
+      ],
+      "internal_teams": [
+        {
+          "point": null,
+          "text": "Application : une contrainte technique est notée.",
+          "status": "to_verify",
+          "excerpt": "Contrainte technique : l'arôme doit rester stable à pH 3 après pasteurisation.",
+          "team": "application"
+        },
+        {
+          "point": null,
+          "text": "Création : un nouvel arôme est à créer (catégorie « Nouvelle gamme ») et le besoin est noté.",
+          "status": "to_verify",
+          "excerpt": "Le client veut lancer deux boissons fonctionnelles sous sa propre marque.",
+          "team": "creation"
+        },
+        {
+          "point": null,
+          "text": "Marketing : objectif noté et signal de marché rattaché (S-02).",
+          "status": "to_verify",
+          "excerpt": "Le client veut lancer deux boissons fonctionnelles sous sa propre marque.",
+          "team": "marketing"
+        }
+      ],
+      "opportunity_decision": "confirmed",
+      "decision_reason": "Objectifs du client et besoin réel confirmés dans les notes : statut proposé « confirmed », à valider par le commercial.",
+      "generated_by": "rules_v1",
+      "engine": {
+        "requested": "rules_v1",
+        "used": "rules_v1",
+        "model": null,
+        "fallback_reason": null,
+        "guard": null
+      },
+      "validated": false
+    },
+    "next_actions": [
+      "Vérifier auprès du client : Lancement envisagé pour septembre 2027, à confirmer avec leur marketing.",
+      "Obtenir l'information manquante : contraintes budgétaires.",
+      "Transmettre les éléments recueillis à l'équipe Application.",
+      "Transmettre les éléments recueillis à l'équipe Création.",
+      "Transmettre les éléments recueillis à l'équipe Marketing."
+    ]
+  },
+  {
+    "id": "M-02",
+    "client_id": "C-02",
+    "opportunity_id": "O-03",
+    "date": "2026-11-09",
+    "status": "completed",
+    "objective": "Qualifier la demande sur les alternatives végétales : produit visé, ambition et contraintes.",
+    "questions": [
+      {
+        "question": "Quelle place voulez-vous donner aux protéines végétales dans votre gamme d'ici deux ans ?",
+        "why": "Mesure l'ambition du client et l'horizon du projet végétal.",
+        "information_sought": "client_objectives"
+      },
+      {
+        "question": "Qu'est-ce qui retient encore vos consommateurs face aux produits végétaux ?",
+        "why": "Si le goût est en cause, c'est là que Givaudan peut apporter quelque chose.",
+        "information_sought": "real_need"
+      },
+      {
+        "question": "Quels allergènes ou ingrédients devez-vous exclure d'une recette végétale ?",
+        "why": "Remplit les contraintes du brief avant tout essai.",
+        "information_sought": "technical_constraints"
+      }
+    ],
+    "answers": [],
+    "collected_points": [
+      "client_objectives",
+      "real_need",
+      "technical_constraints",
+      "budget_constraints",
+      "timeline"
+    ],
+    "notes": "Le client souhaite une alternative végétale à sa sauce au fromage. Il leur faut un arôme fromage sans lait. Côté technique, la sauce doit rester fluide après réchauffage. Le budget reste serré, peut-être en baisse par rapport au projet précédent. Calendrier : pas encore fixé.",
+    "summary": {
+      "summary": "Rendez-vous avec Nordic Food Industries au sujet de « Développement d'une formulation végétale ». 3 élément(s) confirmé(s) et 2 à vérifier dans les notes ; 1 point(s) de la checklist encore manquant(s).",
+      "needs": [
+        {
+          "point": "client_objectives",
+          "text": "Objectifs du client : Le client souhaite une alternative végétale à sa sauce au fromage.",
+          "status": "confirmed",
+          "excerpt": "Le client souhaite une alternative végétale à sa sauce au fromage."
+        },
+        {
+          "point": "real_need",
+          "text": "Besoin réel : Il leur faut un arôme fromage sans lait.",
+          "status": "confirmed",
+          "excerpt": "Il leur faut un arôme fromage sans lait."
+        }
+      ],
+      "technical_constraints": [
+        {
+          "point": "technical_constraints",
+          "text": "Contraintes techniques : Côté technique, la sauce doit rester fluide après réchauffage.",
+          "status": "confirmed",
+          "excerpt": "Côté technique, la sauce doit rester fluide après réchauffage."
+        }
+      ],
+      "budget_constraints": [
+        {
+          "point": "budget_constraints",
+          "text": "Contraintes budgétaires : Le budget reste serré, peut-être en baisse par rapport au projet précédent.",
+          "status": "to_verify",
+          "excerpt": "Le budget reste serré, peut-être en baisse par rapport au projet précédent."
+        }
+      ],
+      "timeline": [
+        {
+          "point": "timeline",
+          "text": "Calendrier : pas encore fixé.",
+          "status": "to_verify",
+          "excerpt": "Calendrier : pas encore fixé."
+        }
+      ],
+      "missing_information": [
+        {
+          "point": "decision_criteria",
+          "text": "Critères de décision",
+          "status": "to_verify",
+          "excerpt": null
+        }
+      ],
+      "next_actions": [
+        {
+          "point": "budget_constraints",
+          "text": "Vérifier auprès du client : Le budget reste serré, peut-être en baisse par rapport au projet précédent.",
+          "status": "to_verify",
+          "excerpt": "Le budget reste serré, peut-être en baisse par rapport au projet précédent."
+        },
+        {
+          "point": "timeline",
+          "text": "Vérifier auprès du client : Calendrier : pas encore fixé.",
+          "status": "to_verify",
+          "excerpt": "Calendrier : pas encore fixé."
+        },
+        {
+          "point": "decision_criteria",
+          "text": "Obtenir l'information manquante : critères de décision.",
+          "status": "to_verify",
+          "excerpt": null
+        },
+        {
+          "point": "budget_constraints",
+          "text": "Intégrer la contrainte budgétaire à la proposition commerciale.",
+          "status": "to_verify",
+          "excerpt": "Le budget reste serré, peut-être en baisse par rapport au projet précédent."
+        },
+        {
+          "point": null,
+          "text": "Transmettre les éléments recueillis à l'équipe Application.",
+          "status": "to_verify",
+          "excerpt": "Côté technique, la sauce doit rester fluide après réchauffage."
+        },
+        {
+          "point": null,
+          "text": "Transmettre les éléments recueillis à l'équipe Création.",
+          "status": "to_verify",
+          "excerpt": "Le client souhaite une alternative végétale à sa sauce au fromage."
+        },
+        {
+          "point": null,
+          "text": "Transmettre les éléments recueillis à l'équipe Marketing.",
+          "status": "to_verify",
+          "excerpt": "Le client souhaite une alternative végétale à sa sauce au fromage."
+        }
+      ],
+      "internal_teams": [
+        {
+          "point": null,
+          "text": "Application : une contrainte technique est notée.",
+          "status": "to_verify",
+          "excerpt": "Côté technique, la sauce doit rester fluide après réchauffage.",
+          "team": "application"
+        },
+        {
+          "point": null,
+          "text": "Création : un nouvel arôme est à créer (catégorie « Nouvelle formulation ») et le besoin est noté.",
+          "status": "to_verify",
+          "excerpt": "Le client souhaite une alternative végétale à sa sauce au fromage.",
+          "team": "creation"
+        },
+        {
+          "point": null,
+          "text": "Marketing : objectif noté et signal de marché rattaché (S-05).",
+          "status": "to_verify",
+          "excerpt": "Le client souhaite une alternative végétale à sa sauce au fromage.",
+          "team": "marketing"
+        }
+      ],
+      "opportunity_decision": "confirmed",
+      "decision_reason": "Objectifs du client et besoin réel confirmés dans les notes : statut proposé « confirmed », à valider par le commercial.",
+      "generated_by": "rules_v1",
+      "engine": {
+        "requested": "rules_v1",
+        "used": "rules_v1",
+        "model": null,
+        "fallback_reason": null,
+        "guard": null
+      },
+      "validated": false
+    },
+    "next_actions": [
+      "Vérifier auprès du client : Le budget reste serré, peut-être en baisse par rapport au projet précédent.",
+      "Vérifier auprès du client : Calendrier : pas encore fixé.",
+      "Obtenir l'information manquante : critères de décision.",
+      "Intégrer la contrainte budgétaire à la proposition commerciale.",
+      "Transmettre les éléments recueillis à l'équipe Application.",
+      "Transmettre les éléments recueillis à l'équipe Création.",
+      "Transmettre les éléments recueillis à l'équipe Marketing."
+    ]
+  }
+]

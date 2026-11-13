@@ -1,0 +1,1558 @@
+{
+  "protocole": {
+    "date": "2026-11-12",
+    "cas": 30,
+    "graine": 42,
+    "modele": "qwen2.5:3b",
+    "ollama_url": "http://localhost:11434",
+    "delai_s": 120.0,
+    "machine": "poste local, CPU, Ollama Windows"
+  },
+  "rules_v1": {
+    "par_rubrique": {
+      "needs": {
+        "vp": 54,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "rappel": 1.0
+      },
+      "technical_constraints": {
+        "vp": 19,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "rappel": 1.0
+      },
+      "budget_constraints": {
+        "vp": 18,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "rappel": 1.0
+      },
+      "timeline": {
+        "vp": 20,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "rappel": 1.0
+      },
+      "missing_information": {
+        "vp": 69,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "rappel": 1.0
+      },
+      "total": {
+        "vp": 111,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "rappel": 1.0
+      }
+    },
+    "elements": 123,
+    "inventes_texte_sortie": 0,
+    "taux_inventes_texte_sortie": 0.0,
+    "elements_point_absent": 0,
+    "taux_elements_point_absent": 0.0,
+    "garde_fou": null,
+    "justesse_statut": {
+      "justes": 111,
+      "evalues": 111,
+      "taux": 1.0
+    },
+    "hors_sujet_avec_elements": 0,
+    "retours_rules_v1": 0,
+    "depassements_delai": 0,
+    "temps_moyen_s": 0.0,
+    "temps_max_s": 0.0
+  },
+  "llm_v2": {
+    "par_rubrique": {
+      "needs": {
+        "vp": 45,
+        "fp": 19,
+        "fn": 9,
+        "precision": 0.703,
+        "rappel": 0.833
+      },
+      "technical_constraints": {
+        "vp": 18,
+        "fp": 5,
+        "fn": 1,
+        "precision": 0.783,
+        "rappel": 0.947
+      },
+      "budget_constraints": {
+        "vp": 17,
+        "fp": 3,
+        "fn": 1,
+        "precision": 0.85,
+        "rappel": 0.944
+      },
+      "timeline": {
+        "vp": 17,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.895,
+        "rappel": 0.85
+      },
+      "missing_information": {
+        "vp": 40,
+        "fp": 14,
+        "fn": 29,
+        "precision": 0.741,
+        "rappel": 0.58
+      },
+      "total": {
+        "vp": 97,
+        "fp": 29,
+        "fn": 14,
+        "precision": 0.77,
+        "rappel": 0.874
+      }
+    },
+    "elements": 126,
+    "inventes_texte_sortie": 0,
+    "taux_inventes_texte_sortie": 0.0,
+    "elements_point_absent": 29,
+    "taux_elements_point_absent": 0.23,
+    "garde_fou": {
+      "elements_bruts": 151,
+      "gardes": 124,
+      "passes_to_verify": 2,
+      "ecartes_introuvables": 25,
+      "taux_inventes_texte_brut": 0.166
+    },
+    "justesse_statut": {
+      "justes": 93,
+      "evalues": 97,
+      "taux": 0.959
+    },
+    "hors_sujet_avec_elements": 2,
+    "retours_rules_v1": 0,
+    "depassements_delai": 0,
+    "temps_moyen_s": 43.15,
+    "temps_max_s": 75.9
+  },
+  "par_cas": [
+    {
+      "client_id": "T-01",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "budget_constraints"
+      ],
+      "rules_v1": {
+        "points": {
+          "budget_constraints": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "real_need": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 2,
+            "downgraded": 0,
+            "dropped": 4
+          }
+        },
+        "secondes": 31.84
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{ \"point\": \"client_objectives\", \"text\": \"\", \"status\": \"to_verify\", \"excerpt\": \"\" },\n{ \"point\": \"real_need\", \"text\": \"un besoin réel : un parfum de vanille naturel\", \"status\": \"confirmed\", \"excerpt\": \"The underlying need: a natural vanilla flavour.\" },\n{ \"point\": \"technical_constraints\", \"text\": \"\", \"status\": \"to_verify\", \"excerpt\": \"\" },\n{ \"point\": \"budget_constraints\", \"text\": \"un budget limité à 66 EUR par kg\", \"status\": \"confirmed\", \"excerpt\": \"Budget is capped at 66 EUR per kg.\" },\n{ \"point\": \"timeline\", \"text\": \"\", \"status\": \"to_verify\", \"excerpt\": \"\" },\n{ \"point\": \"decision_criteria\", \"text\": \"\", \"status\": \"to_verify\", \"excerpt\": \"\" }\n] }"
+    },
+    {
+      "client_id": "T-02",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "technical_constraints",
+        "timeline"
+      ],
+      "rules_v1": {
+        "points": {
+          "technical_constraints": "confirmed",
+          "real_need": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 3,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 26.75
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"target go-to-market: June 2028.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Target go-to-market: June 2028.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"What they really need is a clean-label smoky flavour.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"What they really need is a clean-label smoky flavour.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"it must stay stable at pH 3.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"it must stay stable at pH 3.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-03",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "timeline"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "confirmed",
+          "technical_constraints": "confirmed",
+          "client_objectives": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 4,
+            "downgraded": 0,
+            "dropped": 2
+          }
+        },
+        "secondes": 36.11
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{ \"point\": \"client_objectives\", \"text\": \"Launch planned for July 2028.\", \"status\": \"confirmed\", \"excerpt\": \"Launch planned for July 2028.\" },\n{ \"point\": \"real_need\", \"text\": \"What they really need is a natural vanilla flavour.\", \"status\": \"confirmed\", \"excerpt\": \"What they really need is a natural vanilla flavour.\" },\n{ \"point\": \"technical_constraints\", \"text\": \"Technical constraint: it must stay stable at pH 3.\", \"status\": \"confirmed\", \"excerpt\": \"Technical constraint: it must stay stable at pH 3.\" },\n{ \"point\": \"budget_constraints\", \"text\": \"\", \"status\": \"confirmed\", \"excerpt\": \"\" },\n{ \"point\": \"timeline\", \"text\": \"Launch planned for July 2028.\", \"status\": \"confirmed\", \"excerpt\": \"Launch planned for July 2028.\" },\n{ \"point\": \"decision_criteria\", \"text\": \"\", \"status\": \"confirmed\", \"excerpt\": \"\" }\n]\n}"
+    },
+    {
+      "client_id": "T-04",
+      "scenario": "hors_sujet",
+      "langue": "en",
+      "points_presents": [],
+      "rules_v1": {
+        "points": {},
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 71.44
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Not specified in the excerpt provided, no information about the client's objectives or project is available from the excerpt provided. Therefore, no entry for client_objectives is provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"Not specified in the excerpt provided, no information about the client's need is available from the excerpt provided. Therefore, no entry for real_need is provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Not specified in the excerpt provided, no information about technical constraints is available from the excerpt provided. Therefore, no entry for technical_constraints is provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"Not specified in the excerpt provided, no information about budget constraints is available from the excerpt provided. Therefore, no entry for budget_constraints is provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"Not specified in the excerpt provided, no information about the timeline is available from the excerpt provided. Therefore, no entry for timeline is provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"Not specified in the excerpt provided, no information about decision criteria is available from the excerpt provided. Therefore, no entry for decision_criteria is provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 6804 is held at customs, delivery note resent.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-05",
+      "scenario": "contradiction",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "budget_constraints",
+        "timeline"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "to_verify",
+          "budget_constraints": "confirmed",
+          "client_objectives": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "to_verify"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 48.41
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"client veut créer une ligne de bougies parfumées\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"Le client veut créer une ligne de bougies parfumées.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"arôme, parfum, ingrédient\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"client veut créer une ligne de bougies parfumées.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"budget plafonné à 82 € le kilo\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"Le budget est plafonné à 82 € le kilo.\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"budget plafonné à 82 € le kilo\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"Le budget est plafonné à 82 € le kilo.\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"octobre 2027 (initialement) / septembre 2027 (plus tard dans la réunion)\",\n      \"status\": \"to_verify\",\n    \"excerpt\": \"Lancement prévu en octobre 2027. Plus tard dans la réunion, l'acheteur a parlé d'une sortie en septembre 2027.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-06",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "budget_constraints": "confirmed",
+          "real_need": "confirmed",
+          "timeline": "confirmed",
+          "technical_constraints": "confirmed",
+          "decision_criteria": "confirmed",
+          "client_objectives": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "to_verify",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 1,
+            "dropped": 0
+          }
+        },
+        "secondes": 45.2
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"Lancer un parfum féminin premium.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Leur objectif : lancer un parfum féminin premium.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"Un parfum boisé ambré.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Il leur faut un parfum boisé ambré.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"La formule doit rester stable en base alcool.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Contrainte technique : la formule doit rester stable en base alcool.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"Budget plafonné à 58 € le kilo.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Budget plafonné à 58 € le kilo.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"Lancement prévu en novembre 2028.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Lancement prévu en novembre 2028.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"La qualité sensorielle lors du test consommateur.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Critères de choix : la qualité sensorielle lors du test consommateur.\"\n}\n]\n}"
+    },
+    {
+      "client_id": "T-07",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "confirmed",
+          "real_need": "confirmed",
+          "decision_criteria": "confirmed",
+          "client_objectives": "confirmed",
+          "budget_constraints": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 1
+          }
+        },
+        "secondes": 67.64
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"Lancer une crème glacée vegan\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Leur objectif : lancer une crème glacée vegan.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"Un arôme fumé sans additif\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Le vrai besoin, c'est un arôme fumé sans additif.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"L'arôme doit tenir une cuisson à 180 °C\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"Enveloppe de 378 k€ pour le projet\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Enveloppe de 378 k€ pour le projet.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"Mise sur le marché visée pour février 2027\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Mise sur le marché visée pour février 2027.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"Leur choix se fera selon le prix et le délai de livraison\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Leur objectif : lancer une crème glacée vegan. Enveloppe de 378 k€ pour le projet. Contrainte technique : l'arôme doit tenir une cuisson à 180 °C. Leur choix se fera selon le prix et le délai de livraison.\"\n}\n]\n}"
+    },
+    {
+      "client_id": "T-08",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "technical_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "client_objectives": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 4,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 31.87
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\"point\": \"client_objectives\", \"text\": \"client wants to launch a vegan ice cream\", \"status\": \"confirmed\", \"excerpt\": \"The customer wants to launch a vegan ice cream.\"},\n{\"point\": \"real_need\", \"text\": \"technical constraint: natural labelling is mandatory\", \"status\": \"confirmed\", \"excerpt\": \"Technical constraint: natural labelling is mandatory.\"},\n{\"point\": \"budget_constraints\", \"text\": \"selection criteria: cost and performance\", \"status\": \"confirmed\", \"excerpt\": \"Selection criteria: cost and performance.\"}, {\"point\": \"timeline\", \"text\": \"launch planned for October 2028\", \"status\": \"confirmed\", \"excerpt\": \"Launch planned for October 2028.\"}\n]\n}"
+    },
+    {
+      "client_id": "T-09",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "technical_constraints",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "technical_constraints": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "technical_constraints": "confirmed",
+          "client_objectives": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 2,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 23.57
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Stability at pH 3 is required.\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"On the technical side, it must stay stable at pH 3.\"\n    },\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"They will decide based on sensory quality in the consumer test.\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"They will decide based on sensory quality in the consumer test.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-10",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 38.38
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\"point\": \"client_objectives\", \"text\": \"A need for a clean-label smoky flavor.\",\"status\": \"confirmed\", \"excerpt\": \"The underlying need: a clean-label smoky flavour.\"},\n{\"point\": \"real_need\", \"text\": \"a clean-label smoky flavor.\",\"status\": \"confirmed\", \"excerpt\": \"The underlying need: a clean-label smoky flavour.\"},\n{\"point\": \"technical_constraints\", \"text\": \"natural labelling is mandatory.\",\"status\": \"confirmed\", \"excerpt\": \"Technical constraint: natural labelling is mandatory.\"},\n{\"point\": \"decision_criteria\", \"text\": \"sensory quality in the consumer test.\",\"status\": \"confirmed\", \"excerpt\": \"They will decide based on sensory quality in the consumer test.\"},\n{\"point\": \"budget_constraints\", \"text\": \"budget is capped at 39 EUR per kg.\",\"status\": \"confirmed\", \"excerpt\": \"Budget is capped at 39 EUR per kg.\"}\n]\n}"
+    },
+    {
+      "client_id": "T-11",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "client_objectives": "confirmed",
+          "decision_criteria": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "timeline": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 44.47
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"The customer wants to create a scented candle line.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"The customer wants to create a scented candle line.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"a fresh note that lasts after washing.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"The underlying need: a fresh note that lasts after washing.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"it must be compatible with a surfactant base.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"On the technical side, it must be compatible with a surfactant base.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"Budget is capped at 55 EUR per kg.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Budget is capped at 55 EUR per kg.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"Target go-to-market: April 2027.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Target go-to-market: April 2027.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"selection criteria: price and lead time.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Selection criteria: price and lead time.\"\n}\n]\n}"
+    },
+    {
+      "client_id": "T-12",
+      "scenario": "hors_sujet",
+      "langue": "en",
+      "points_presents": [],
+      "rules_v1": {
+        "points": {},
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {},
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 0,
+            "downgraded": 0,
+            "dropped": 6
+          }
+        },
+        "secondes": 53.83
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Aucune information fournie sur les objectifs du client concernant l'ordre 2647.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"Aucune information fournie sur les besoins du client concernant l'ordre 2647.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Aucune information fournie sur les contraintes techniques concernant l'ordre 2647.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"Aucune information fournie sur les contraintes budgétaires concernant l'ordre 2647.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"Aucune information fournie sur la date de livraison concernant l'ordre 2647.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"Aucune information fournie sur les critères de décision concernant l'ordre 2647.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-13",
+      "scenario": "hors_sujet",
+      "langue": "fr",
+      "points_presents": [],
+      "rules_v1": {
+        "points": {},
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {},
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 0,
+            "downgraded": 0,
+            "dropped": 6
+          }
+        },
+        "secondes": 51.26
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Aucune information fournie sur les objectifs du client concernant l'appel logistique.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"Aucune information fournie sur ce dont le client a besoin de notre part concernant l'appel logistique.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Aucune information fournie sur les contraintes techniques concernant l'appel logistique.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"Aucune information fournie sur les contraintes budgétaires concernant l'appel logistique.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"Aucune information fournie sur les échéances concernant l'appel logistique.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"Aucune information fournie sur les critères sur lesquels le client choisira concernant l'appel logistique.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-14",
+      "scenario": "contradiction",
+      "langue": "fr",
+      "points_presents": [
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "to_verify"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 3,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 34.53
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Lancement d'un nouveau produit en novembre 2027 avec une sortie prévue en avril 2027 (plus tard dans la réunion).\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Plus tard dans la réunion, l'acheteur a parlé d'une sortie en avril 2027.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"La qualité sensorielle lors du test consommateur.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Critères de choix : la qualité sensorielle lors du test consommateur.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Budget plafonné à 59 € le kilo.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Le budget est plafonné à 59 € le kilo.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-15",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "real_need",
+        "timeline"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 1,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 13.6
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Launch planned for May 2028. The underlying need: a natural vanilla flavour.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Launch planned for May 2028. The underlying need: a natural vanilla flavour.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-16",
+      "scenario": "hors_sujet",
+      "langue": "fr",
+      "points_presents": [],
+      "rules_v1": {
+        "points": {},
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {},
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 0,
+            "downgraded": 0,
+            "dropped": 6
+          }
+        },
+        "secondes": 44.58
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Aucune information fournie concernant les objectifs du client pour ce rendez-vous commercial.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"Aucune information fournie concernant ce dont le client a besoin de notre part.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Aucune information fournie concernant les contraintes techniques.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"Aucune information fournie concernant les contraintes budgétaires.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"Aucune information fournie concernant les échéances ou dates.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"Aucune information fournie concernant les critères sur lesquels le client choisira.\",\n      \"status\": \"to_verify\",\n      \"excerpt\": \"\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-17",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "technical_constraints": "confirmed",
+          "client_objectives": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed",
+          "real_need": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 38.25
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\"point\": \"client_objectives\", \"text\": \"customer wants to launch a premium women's fragrance\", \"status\": \"confirmed\", \"excerpt\": \"The customer wants to launch a premium women's fragrance.\"},\n{\"point\": \"real_need\", \"text\": \"woody amber fragrance\", \"status\": \"confirmed\", \"excerpt\": \"What they really need is a woody amber fragrance.\"},\n{\"point\": \"technical_constraints\", \"text\": \"formula must stay stable in an alcohol base\", \"status\": \"confirmed\", \"excerpt\": \"On the technical side, the formula must stay stable in an alcohol base.\"},\n{\"point\": \"budget_constraints\", \"text\": \"budget is capped at 44 EUR per kg\", \"status\": \"confirmed\", \"excerpt\": \"Budget is capped at 44 EUR per kg.\"},\n{\"point\": \"timeline\", \"text\": \"target go-to-market: May 2027\", \"status\": \"confirmed\", \"excerpt\": \"What they really need is a woody amber fragrance.\"}\n]\n}"
+    },
+    {
+      "client_id": "T-18",
+      "scenario": "partiel",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "budget_constraints",
+        "timeline"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "confirmed",
+          "budget_constraints": "confirmed",
+          "client_objectives": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 58.61
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"renouveler l'odeur de sa lessive phare\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"Mise sur le marché visée pour novembre 2027. Le budget est plafonné à 82 € le kilo. Leur objectif : renouveler l'odeur de sa lessive phare.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"arôme\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Leur objectif : renouveler l'odeur de sa lessive phare.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"budget\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Le budget est plafonné à 82 € le kilo.\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"budget\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Le budget est plafonné à 82 € le kilo.\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"novembre 2027\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Mise sur le marché visée pour novembre 2027.\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"budget\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Le budget est plafonné à 82 € le kilo.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-19",
+      "scenario": "partiel",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need"
+      ],
+      "rules_v1": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 2,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 20.6
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"réduire le sucre de ses boissons de 30 %\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Le client veut réduire le sucre de ses boissons de 30 %.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"un arôme fumé sans additif\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Le vrai besoin, c'est un arôme fumé sans additif.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-20",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "client_objectives": "confirmed",
+          "timeline": "confirmed",
+          "technical_constraints": "confirmed",
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 36.27
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\"point\": \"client_objectives\", \"text\": \"They want to launch a vegan ice cream.\",\"status\": \"confirmed\", \"excerpt\": \"The customer wants to launch a vegan ice cream.\"},\n{\"point\": \"real_need\", \"text\": \"They need a citrus flavour that masks bitterness.\",\"status\": \"confirmed\", \"excerpt\": \"They will decide based on cost and performance. They have set aside 113k EUR for the project. What they really need is a citrus flavour that masks bitterness.\"},\n{\"point\": \"technical_constraints\", \"text\": \"Natural labelling is mandatory.\",\"status\": \"confirmed\", \"excerpt\": \"Technical constraint: natural labelling is mandatory.\"},\n{\"point\": \"budget_constraints\", \"text\": \"They have set aside 113k EUR for the project.\",\"status\": \"confirmed\", \"excerpt\": \"They have set aside 113k EUR for the project.\"},\n{\"point\": \"timeline\", \"text\": \"Launch planned for November 2028.\",\"status\": \"confirmed\", \"excerpt\": \"What they really need is a citrus flavour that masks bitterness. Launch planned for November 2028.\"}\n]\n}"
+    },
+    {
+      "client_id": "T-21",
+      "scenario": "partiel",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "decision_criteria": "confirmed",
+          "client_objectives": "confirmed",
+          "technical_constraints": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 4,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 35.71
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"le client veut revamping son gamme de soupes.\",\n      \"status\": \"confirmed\",\n    \"excerpt\": \"The customer wants to revamp its soup range.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"un besoin de parfum clairsemé fumé.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"The underlying need: a clean-label smoky flavour.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"la saveur doit survivre à la cuisson à 180 °C.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Technical constraint: the flavour must survive baking at 180 °C.\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"critères de décision : coût et performance.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Selection criteria: cost and performance.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-22",
+      "scenario": "hors_sujet",
+      "langue": "en",
+      "points_presents": [],
+      "rules_v1": {
+        "points": {},
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 75.9
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\n      \"point\": \"client_objectives\",\n      \"text\": \"Not mentioned in the excerpt provided, no information on the client's objectives or needs regarding the order 7240 delivery note resent issue. No client objectives provided in the excerpt provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"real_need\",\n      \"text\": \"Not mentioned in the excerpt provided, no information on what the client needs regarding the order 7240 delivery note resent issue. No real need provided in the excerpt provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"technical_constraints\",\n      \"text\": \"Not mentioned in the excerpt provided, no information on technical constraints related to the order 7240 delivery note resent issue. No technical constraints provided in the excerpt provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"budget_constraints\",\n      \"text\": \"Not mentioned in the excerpt provided, no information on budget constraints related to the order 7240 delivery note resent issue. No budget constraints provided in the excerpt provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"timeline\",\n      \"text\": \"Not mentioned in the excerpt provided, no information on the timeline for the order 7240 delivery note resent issue. No timeline provided in the excerpt provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.\"\n    },\n    {\n      \"point\": \"decision_criteria\",\n      \"text\": \"Not mentioned in the excerpt provided, no information on decision criteria related to the order 7240 delivery note resent issue. No decision criteria provided in the excerpt provided.\",\n      \"status\": \"confirmed\",\n      \"excerpt\": \"Logistics call: the pallet for order 7240 is held at customs, delivery note resent.\"\n    }\n  ]\n}"
+    },
+    {
+      "client_id": "T-23",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "client_objectives": "confirmed",
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "technical_constraints": "confirmed",
+          "real_need": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 35.0
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\"point\": \"client_objectives\", \"text\": \"The customer wants to renew the scent of its flagship detergent.\",\"status\": \"confirmed\", \"excerpt\": \"The customer wants to renew the scent of its flagship detergent.\" },\n{\"point\": \"real_need\", \"text\": \"an underlying need: a woody amber fragrance.\",\"status\": \"confirmed\", \"excerpt\": \"The underlying need: a woody amber fragrance.\" },\n{\"point\": \"technical_constraints\", \"text\": \"the formula must stay stable in an alcohol base.\",\"status\": \"confirmed\", \"excerpt\": \"On the technical side, the formula must stay stable in an alcohol base.\" },\n{\"point\": \"budget_constraints\", \"text\": \"Budget is capped at 48 EUR per kg.\",\"status\": \"confirmed\", \"excerpt\": \"Budget is capped at 48 EUR per kg.\" },\n{\"point\": \"timeline\", \"text\": \"Target go-to-market: January 2028.\",\"status\": \"confirmed\", \"excerpt\": \"Target go-to-market: January 2028.\" }\n]\n}"
+    },
+    {
+      "client_id": "T-24",
+      "scenario": "contradiction",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline"
+      ],
+      "rules_v1": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "timeline": "to_verify",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "to_verify"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 52.81
+      },
+      "llm_v2_sortie_brute": "{\n  \"items\": [\n    {\"point\": \"client_objectives\", \"text\": \"Renew the scent of its flagship detergent.\",\"status\": \"confirmed\", \"excerpt\": \"Their goal is to renew the scent of its flagship detergent.\"},\n    {\"point\": \"real_need\", \"text\": \"a floral scent without declarable allergens.\",\"status\": \"confirmed\", \"excerpt\": \"What they really need is a floral scent without declarable allergens.\"},\n    {\"point\": \"technical_constraints\", \"text\": \"no IFRA allergens above thresholds.\",\"status\": \"confirmed\", \"excerpt\": \"Technical constraint: no IFRA allergens above thresholds.\"},\n    {\"point\": \"budget_constraints\", \"text\": \"set aside 273k EUR for the project.\",\"status\": \"confirmed\", \"excerpt\": \"They have set aside 273k EUR for the project.\"},\n    {\"point\": \"timeline\", \"text\": \"Launch planned for September 2028.\",\"status\": \"confirmed\", \"excerpt\": \"Launch planned for September 2028.\"},\n    {\"point\": \"decision_criteria\", \"text\": \"Later in the meeting, the buyer mentioned a release in February 2028.\",\"status\": \"to_verify\", \"excerpt\": \"Later in the meeting, the buyer mentioned a release in February 2028.\"}\n  ]\n}"
+    },
+    {
+      "client_id": "T-25",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed",
+          "real_need": "confirmed",
+          "budget_constraints": "confirmed",
+          "client_objectives": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 52.01
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"Lancer une crème glacée vegan\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Leur objectif : lancer une crème glacée vegan.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"un arôme vanille naturel\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Le vrai besoin, c'est un arôme vanille naturel.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"l'arôme doit tenir une cuisson à 180 °C\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"enveloppe de 306 k€ pour le projet\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Enveloppe de 306 k€ pour le projet.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"lancement prévu en juin 2027\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Lancement prévu en juin 2027.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"le prix et le délai de livraison\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Leur objectif : lancer une crème glacée vegan. Leur objectif : lancer une crème glacée vegan.\"\n}\n]\n}"
+    },
+    {
+      "client_id": "T-26",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed",
+          "real_need": "confirmed",
+          "client_objectives": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "to_verify"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 1,
+            "dropped": 0
+          }
+        },
+        "secondes": 59.6
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"Le client veut lancer une crème glacée vegan.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Le client veut lancer une crème glacée vegan.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"Le vrai besoin, c'est un arôme agrumes masquant l'amertume.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Le vrai besoin, c'est un arôme agrumes masquant l'amertume.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Contrainte technique : l'arôme doit tenir une cuisson à 180 °C.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"Enveloppe de 149 k€ pour le projet.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Enveloppe de 149 k€ pour le projet.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"Mise sur le marché visée pour mai 2028. Ils trancheront selon la qualité sensorielle lors du test consommateur.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Mise sur le marché visée pour mai 2028. Ils trancheront selon la qualité sensorielle lors du test consommateur.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"Le client choisira selon la qualité sensorielle.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Le client choisira selon la qualité sensorielle.\"\n}\n]\n}"
+    },
+    {
+      "client_id": "T-27",
+      "scenario": "contradiction",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "technical_constraints": "confirmed",
+          "timeline": "to_verify",
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed",
+          "client_objectives": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "to_verify"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 5,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 40.78
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\"point\": \"client_objectives\", \"text\": \"lancer une crème glacée vegan\", \"status\": \"confirmed\", \"excerpt\": \"Le client veut lancer une crème glacée vegan.\"},\n{\"point\": \"real_need\", \"text\": \"stabilité à pH 3\", \"status\": \"confirmed\", \"excerpt\": \"Contrainte technique : stabilité à pH 3 exigée.\"},\n{\"point\": \"technical_constraints\", \"text\": \"stabilité à pH 3\", \"status\": \"confirmed\", \"excerpt\": \"Contrainte technique : stabilité à pH 3 exigée.\"},\n{\"point\": \"budget_constraints\", \"text\": \"budget plafonné à 50 € le kilo\", \"status\": \"confirmed\", \"excerpt\": \"Le budget est plafonné à 50 € le kilo.\"},\n{\"point\": \"timeline\", \"text\": \"lancement prévu en février 2028, sortie en septembre 2028\", \"status\": \"to_verify\", \"excerpt\": \"Lancement prévu en février 2028. Plus tard dans la réunion, l'acheteur a parlé d'une sortie en septembre 2028. Ils trancheront selon le coût et la tenue.\"}\n]\n}"
+    },
+    {
+      "client_id": "T-28",
+      "scenario": "complet",
+      "langue": "fr",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "real_need": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed",
+          "client_objectives": "confirmed",
+          "budget_constraints": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 45.88
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"Le client veut relancer sa gamme de bouillons.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Le client veut relancer sa gamme de bouillons.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"un arôme fumé sans additif.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"un arôme fumé sans additif.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"l'arôme doit tenir une cuisson à 180 °C.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"l'arôme doit tenir une cuisson à 180 °C.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"le budget est plafonné à 77 € le kilo.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"le budget est plafonné à 77 € le kilo.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"mise sur le marché visée pour juin 2028.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"mise sur le marché visée pour juin 2028.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"le coût et la tenue.\",\n\"status\": \"confirmed\",\n\"excerpt\": \"le coût et la tenue.\"\n}\n] }"
+    },
+    {
+      "client_id": "T-29",
+      "scenario": "complet",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "real_need",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "budget_constraints": "confirmed",
+          "real_need": "confirmed",
+          "client_objectives": "confirmed",
+          "decision_criteria": "confirmed",
+          "timeline": "confirmed",
+          "technical_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 35.84
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{ \"point\": \"client_objectives\", \"text\": \"Their goal is to create a scented candle line.\", \"status\": \"confirmed\", \"excerpt\": \"\" },\n{ \"point\": \"real_need\", \"text\": \"What they really need is a fresh note that lasts after washing.\", \"status\": \"confirmed\", \"excerpt\": \"\" },\n{ \"point\": \"technical_constraints\", \"text\": \"On the technical side, no IFRA allergens above thresholds.\", \"status\": \"confirmed\", \"excerpt\": \"\" },\n{ \"point\": \"budget_constraints\", \"text\": \"Budget is capped at 81 EUR per kg.\", \"status\": \"confirmed\", \"excerpt\": \"\" },\n{ \"point\": \"timeline\", \"text\": \"Launch planned for June 2027.\", \"status\": \"confirmed\", \"excerpt\": \"\" },\n{ \"point\": \"decision_criteria\", \"text\": \"They will decide based on sensory quality in the consumer test.\", \"status\": \"confirmed\", \"excerpt\": \"\" }\n] }"
+    },
+    {
+      "client_id": "T-30",
+      "scenario": "contradiction",
+      "langue": "en",
+      "points_presents": [
+        "client_objectives",
+        "technical_constraints",
+        "budget_constraints",
+        "timeline",
+        "decision_criteria"
+      ],
+      "rules_v1": {
+        "points": {
+          "technical_constraints": "confirmed",
+          "timeline": "to_verify",
+          "client_objectives": "confirmed",
+          "decision_criteria": "confirmed",
+          "budget_constraints": "confirmed"
+        },
+        "engine": {
+          "requested": "rules_v1",
+          "used": "rules_v1",
+          "model": null,
+          "fallback_reason": null,
+          "guard": null
+        },
+        "secondes": 0.0
+      },
+      "llm_v2": {
+        "points": {
+          "client_objectives": "confirmed",
+          "real_need": "confirmed",
+          "technical_constraints": "confirmed",
+          "budget_constraints": "confirmed",
+          "timeline": "confirmed",
+          "decision_criteria": "confirmed"
+        },
+        "engine": {
+          "requested": "llm_v2",
+          "used": "llm_v2",
+          "model": "qwen2.5:3b",
+          "fallback_reason": null,
+          "guard": {
+            "kept": 6,
+            "downgraded": 0,
+            "dropped": 0
+          }
+        },
+        "secondes": 43.7
+      },
+      "llm_v2_sortie_brute": "{\n\"items\": [\n{\n\"point\": \"client_objectives\",\n\"text\": \"créer une gamme de bougies parfumées\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Their goal is to create a scented candle line.\"\n},\n{\n\"point\": \"real_need\",\n\"text\": \"compatible avec une base surfactante\",\n\"status\": \"confirmed\",\n\"excerpt\": \"On the technical side, it must be compatible with a surfactant base.\"\n},\n{\n\"point\": \"technical_constraints\",\n\"text\": \"compatibilité avec une base surfactante\",\n\"status\": \"confirmed\",\n\"excerpt\": \"On the technical side, it must be compatible with a surfactant base.\"\n},\n{\n\"point\": \"budget_constraints\",\n\"text\": \"budget de 64 EUR par kg\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Budget is capped at 64 EUR per kg.\"\n},\n{\n\"point\": \"timeline\",\n\"text\": \"lancement prévu pour avril 2028\",\n\"status\": \"confirmed\",\n\"excerpt\": \"Launch planned for April 2028.\"\n},\n{\n\"point\": \"decision_criteria\",\n\"text\": \"qualité sensorielle dans les tests consommateurs\",\n\"status\": \"confirmed\",\n\"excerpt\": \"They will decide based on sensory quality in the consumer test.\"\n}\n] }"
+    }
+  ]
+}
