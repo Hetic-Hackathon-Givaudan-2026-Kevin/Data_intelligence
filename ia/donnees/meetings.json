@@ -1,0 +1,205 @@
+[
+  {
+    "id": "meet-1a",
+    "client_id": "1",
+    "opportunity_id": "opp-1a",
+    "objective": "Qualifier l'intérêt pour une gamme de boissons fonctionnelles.",
+    "questions": [
+      "Quel marché visez-vous en priorité ?",
+      "Quel calendrier de lancement ?"
+    ],
+    "answers": [
+      "Marché français en priorité",
+      "Lancement visé l'an prochain, à confirmer"
+    ],
+    "notes": "Le client semble motivé mais le budget n'a pas été évoqué.",
+    "summary": "Le client confirme un intérêt pour une gamme fonctionnelle. Budget et calendrier restent à confirmer.",
+    "next_actions": [
+      "Envoyer un compte rendu au client",
+      "Demander le budget prévisionnel"
+    ],
+    "date": "2026-11-05",
+    "status": "realise"
+  },
+  {
+    "id": "meet-2a",
+    "client_id": "2",
+    "opportunity_id": "opp-2a",
+    "objective": "Comprendre le besoin sur la formulation végétale.",
+    "questions": [
+      "Quels produits seraient concernés ?",
+      "Quelles contraintes de texture ?"
+    ],
+    "answers": [
+      "Deux produits laitiers à convertir",
+      "Texture crémeuse indispensable"
+    ],
+    "notes": "Besoin exprimé clairement, contraintes techniques à valider avec les équipes.",
+    "summary": "Besoin végétal confirmé sur deux produits. Faisabilité à confirmer avec l'équipe technique.",
+    "next_actions": [
+      "Valider la faisabilité en interne",
+      "Planifier un point technique"
+    ],
+    "date": "2026-11-04",
+    "status": "realise"
+  },
+  {
+    "id": "meet-3a",
+    "client_id": "3",
+    "opportunity_id": "opp-3a",
+    "objective": "Cadrer une nouvelle référence aromatique.",
+    "questions": [
+      "Quelle marque est concernée ?",
+      "Quel niveau de prix cible ?"
+    ],
+    "answers": [
+      "Marque de distributeur, nom non précisé",
+      "Prix cible non communiqué"
+    ],
+    "notes": "Peu d'informations chiffrées.",
+    "summary": "Piste identifiée sans éléments de prix. À reconfirmer lors d'un prochain échange.",
+    "next_actions": [
+      "Relancer sur le prix cible"
+    ],
+    "date": "2026-11-02",
+    "status": "realise"
+  },
+  {
+    "id": "meet-4a",
+    "client_id": "4",
+    "opportunity_id": "opp-4a",
+    "objective": "Confirmer les objectifs de réduction du sucre.",
+    "questions": [
+      "Quel taux de réduction visé ?",
+      "Quelles contraintes de goût ?"
+    ],
+    "answers": [
+      "Objectif évoqué mais non chiffré",
+      "Goût identique exigé"
+    ],
+    "notes": "Le client n'a pas donné de chiffre précis.",
+    "summary": "Intention de réduire le sucre confirmée, objectif chiffré à obtenir.",
+    "next_actions": [
+      "Obtenir un objectif chiffré",
+      "Préparer des pistes de masquage"
+    ],
+    "date": "2026-11-01",
+    "status": "realise"
+  },
+  {
+    "id": "meet-5a",
+    "client_id": "5",
+    "opportunity_id": "opp-5a",
+    "objective": "Qualifier l'intérêt pour une gamme végétale.",
+    "questions": [
+      "Quel type de produit végétal ?",
+      "Quel horizon de temps ?"
+    ],
+    "answers": [
+      "Dessert végétal envisagé",
+      "Horizon non défini"
+    ],
+    "notes": "Simple réflexion à ce stade.",
+    "summary": "Intérêt exploratoire, pas de projet défini.",
+    "next_actions": [
+      "Proposer un atelier de découverte"
+    ],
+    "date": "2026-10-30",
+    "status": "realise"
+  },
+  {
+    "id": "meet-6a",
+    "client_id": "6",
+    "opportunity_id": "opp-6a",
+    "objective": "Confirmer le besoin de masquage d'amertume.",
+    "questions": [
+      "Quelle protéine est utilisée ?",
+      "Quel seuil d'amertume est acceptable ?"
+    ],
+    "answers": [
+      "Protéine de pois",
+      "Seuil non défini"
+    ],
+    "notes": "Retour technique fiable, contraintes à préciser.",
+    "summary": "Besoin confirmé sur une boisson à base de protéine de pois.",
+    "next_actions": [
+      "Envoyer des échantillons de test"
+    ],
+    "date": "2026-10-28",
+    "status": "realise"
+  },
+  {
+    "id": "meet-11a",
+    "client_id": "11",
+    "opportunity_id": "opp-11a",
+    "objective": "Clarifier le calendrier de la négociation.",
+    "questions": [
+      "Quand le client souhaite-t-il décider ?",
+      "Quel budget est prévu ?"
+    ],
+    "answers": [
+      "Décision attendue en fin d'année",
+      "Budget à confirmer"
+    ],
+    "notes": "Négociation en cours, tension sur le délai.",
+    "summary": "Décision attendue d'ici fin d'année. Budget non communiqué.",
+    "next_actions": [
+      "Confirmer le budget",
+      "Préparer la proposition finale"
+    ],
+    "date": "2026-10-18",
+    "status": "realise"
+  },
+  {
+    "id": "meet-1b",
+    "client_id": "1",
+    "opportunity_id": "opp-1b",
+    "objective": "Présenter une extension de la gamme aromatique.",
+    "questions": [],
+    "answers": [],
+    "notes": "",
+    "summary": "",
+    "next_actions": [],
+    "date": "2026-11-17",
+    "status": "a_preparer"
+  },
+  {
+    "id": "meet-2b",
+    "client_id": "2",
+    "opportunity_id": "opp-2b",
+    "objective": "Valider les attentes sur la texture du produit.",
+    "questions": [],
+    "answers": [],
+    "notes": "",
+    "summary": "",
+    "next_actions": [],
+    "date": "2026-11-19",
+    "status": "a_preparer"
+  },
+  {
+    "id": "meet-4b",
+    "client_id": "4",
+    "opportunity_id": "opp-4b",
+    "objective": "Qualifier le niveau de réduction de sel attendu.",
+    "questions": [],
+    "answers": [],
+    "notes": "",
+    "summary": "",
+    "next_actions": [],
+    "date": "2026-11-20",
+    "status": "a_preparer"
+  },
+  {
+    "id": "meet-8a",
+    "client_id": "8",
+    "opportunity_id": "opp-8a",
+    "objective": "Confirmer l'objectif de durée de parfum.",
+    "questions": [],
+    "answers": [],
+    "notes": "",
+    "summary": "",
+    "next_actions": [],
+    "date": "2026-11-24",
+    "status": "a_preparer"
+  }
+]

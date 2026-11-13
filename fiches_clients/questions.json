@@ -1,0 +1,32 @@
+{
+ "1": [
+  ["Pour cette nouvelle gamme de boissons fonctionnelles, quel bénéfice voulez-vous mettre en avant en priorité (énergie, détente, immunité…) ?", "Le dernier échange confirme l'intérêt, mais pas le bénéfice visé : c'est la base du brief pour les équipes de création.", "Besoin réel", "opp-1a"],
+  ["Quel budget prévisionnel avez-vous prévu pour ce lancement ?", "Le budget n'a pas été évoqué lors du rendez-vous du 05/11 ; sans lui, impossible de choisir entre une solution existante et un développement spécifique.", "Contraintes budgétaires", "opp-1a"],
+  ["Souhaitez-vous que vos prochains produits reprennent les profils naturels de vos thés glacés, ou partir sur une nouvelle signature aromatique ?", "L'extension de gamme est une hypothèse tirée de l'historique : la question vérifie l'intérêt sans l'affirmer.", "Objectifs du client", "opp-1b"]
+ ],
+ "2": [
+  ["Pour la formulation végétale, quels critères de goût et de texture sont non négociables pour vous ?", "Le besoin végétal est confirmé sur deux produits, mais la faisabilité dépend de ces critères.", "Contraintes techniques", "opp-2a"],
+  ["Sur la sauce crémeuse, qu'est-ce qui ne vous a pas convenu dans la texture lors du dernier essai ?", "Le retour technique du 22/10 existe, mais son contenu précis n'est pas documenté.", "Besoin réel", "opp-2b"],
+  ["Quel coût cible devons-nous respecter pour la revue de votre formulation existante ?", "Une contrainte budgétaire a été communiquée le 09/10, sans montant : il faut un chiffre pour proposer une solution compatible.", "Contraintes budgétaires", "opp-2c"]
+ ],
+ "3": [
+  ["Quelles nouvelles saveurs vos clients en magasin vous demandent-ils le plus en ce moment ?", "L'opportunité repose sur une veille de marché, pas sur une demande du client : la question vérifie si le besoin existe vraiment.", "Besoin réel", "opp-3a"],
+  ["Quel prix de vente visez-vous pour une nouvelle référence de votre marque distributeur ?", "Le prix cible a été demandé le 02/11, sans réponse : il conditionne le choix de l'arôme.", "Contraintes budgétaires", "opp-3a"],
+  ["Qui décide du lancement d'une nouvelle référence chez vous, et selon quels critères ?", "Aucune information sur le processus de décision du distributeur.", "Critères de décision", "opp-3a"]
+ ],
+ "4": [
+  ["Quel taux de réduction du sucre visez-vous, et sur quelles boissons en priorité ?", "L'intention est confirmée depuis le 01/11, mais l'objectif chiffré reste à obtenir.", "Objectifs du client", "opp-4a"],
+  ["Comment allez-vous valider que le goût reste acceptable après la réduction (tests consommateurs, panel interne) ?", "Le critère de réussite conditionne le niveau de complexité technique du projet.", "Critères de décision", "opp-4a"],
+  ["Pour vos snacks, quel niveau de réduction du sel attendez-vous, et pour quelle échéance ?", "La demande d'étude du 14/10 ne précise ni l'objectif ni le calendrier.", "Calendrier", "opp-4b"]
+ ],
+ "5": [
+  ["Si vous lanciez une première référence végétale, sur quel produit de votre gamme commenceriez-vous ?", "L'intérêt est exploratoire et aucun projet n'est défini : il faut un point de départ concret.", "Besoin réel", "opp-5a"],
+  ["Qu'est-ce qui vous retient aujourd'hui de lancer un projet végétal (goût, texture, coût, demande des consommateurs) ?", "Identifier le frein principal permet de savoir où Givaudan peut aider.", "Contraintes techniques", "opp-5a"],
+  ["Votre retour sur l'échantillon d'arôme fruits rouges du yaourt à boire est-il positif, et que faudrait-il ajuster ?", "Un retour sur l'échantillon a eu lieu le 08/10, mais son contenu n'est pas documenté ; le projet en cours conditionne la relation.", "Objectifs du client", "proj-5b"]
+ ],
+ "6": [
+  ["Quelles contraintes d'étiquetage devons-nous respecter pour masquer l'amertume de la boisson protéinée (arômes naturels uniquement, allergènes) ?", "Le besoin est confirmé sur une protéine de pois ; il manque les contraintes réglementaires de la formulation.", "Contraintes techniques", "opp-6a"],
+  ["À quelle date souhaitez-vous disposer de la version reformulée de la boisson ?", "Aucun calendrier n'est connu pour cette opportunité à priorité haute.", "Calendrier", "opp-6a"],
+  ["Quels nouveaux profils de goût envisagez-vous pour élargir votre gamme de barres protéinées ?", "L'intérêt pour de nouveaux goûts est une hypothèse issue d'un suivi de projet : la question le vérifie.", "Objectifs du client", "opp-6b"]
+ ]
+}
